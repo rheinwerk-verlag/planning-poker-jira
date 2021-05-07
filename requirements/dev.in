@@ -1,6 +1,5 @@
 -r tox.in
 
-Django==3.0.3
 isort==4.3.20
 pip-tools
 recommonmark==0.4.0

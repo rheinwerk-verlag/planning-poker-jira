@@ -1,5 +1,9 @@
 coverage
+django==3.0.3
 flake8
+jira==2.0.0
+more-itertools
+planning-poker
 pydocstyle==2.1.1
 pylint==1.8.2
 pytest
