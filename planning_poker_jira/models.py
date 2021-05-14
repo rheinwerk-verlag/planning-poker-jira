@@ -2,7 +2,7 @@
 import logging
 from urllib.parse import urljoin
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
@@ -14,10 +14,9 @@ logger = logging.getLogger(__name__)
 
 
 class JiraConnection(models.Model):
-    api_url = models.CharField(verbose_name=_('API Url'))
-    username = models.CharField(verbose_name=_('API Username'))
-    password = models.CharField(verbose_name=_('API Password'))
-    story_points_field = models.CharField(verbose_name=_('Story Points Field'))
+    api_url = models.CharField(verbose_name=_('API Url'), max_length=200)
+    username = models.CharField(verbose_name=_('API Username'), max_length=200)
+    story_points_field = models.CharField(verbose_name=_('Story Points Field'), max_length=200)
 
     class Meta:
         verbose_name = _('Jira Connection')
@@ -26,13 +25,12 @@ class JiraConnection(models.Model):
     def __str__(self):
         return self.api_url
 
-    @cached_property
-    def client(self):
-        return JIRA(self.api_url, basic_auth=(self.username, self.password))
+    def client(self, password):
+        return JIRA(self.api_url, basic_auth=(self.username, password))
 
-    def create_stories(self, query_string, poker_session):
+    def create_stories(self, query_string, poker_session, password):
         try:
-            results = self.client.search_issues(
+            results = self.client(password).search_issues(
                 jql_str=query_string,
                 expand='renderedFields',
                 fields=['summary', 'description']
@@ -40,20 +38,19 @@ class JiraConnection(models.Model):
         except JIRAError as e:
             logger.warning(e)
         else:
-            JiraStory.objects.bulk_create([
-                JiraStory(
-                    number=story.key,
-                    title=story.fields.summary,
-                    description=story.renderedFields.description,
-                    poker_session=poker_session,
-                    jira_instance=self
-                )
-                for story in results
-            ])
+            with transaction.atomic():
+                for story in results:
+                    JiraStory.objects.create(
+                        ticket_number=story.key,
+                        title=story.fields.summary,
+                        description=story.renderedFields.description,
+                        poker_session=poker_session,
+                        jira_instance=self
+                    )
 
 
 class JiraStory(Story):
-    jira_instance = models.ForeignKey(JiraConnection, on_delete=models.SET_NULL)
+    jira_instance = models.ForeignKey(JiraConnection, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _('Jira Story')

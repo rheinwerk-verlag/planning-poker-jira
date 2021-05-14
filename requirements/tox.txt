@@ -20,7 +20,7 @@ astroid==1.6.6
     # via pylint
 async-timeout==3.0.1
     # via aioredis
-attrs==21.1.0
+attrs==21.2.0
     # via
     #   automat
     #   pytest
@@ -34,9 +34,9 @@ certifi==2020.12.5
     # via requests
 cffi==1.14.5
     # via cryptography
-channels-redis==3.2.0
+channels-redis==3.0.0
     # via planning-poker
-channels==3.0.3
+channels==2.4.0
     # via
     #   channels-redis
     #   planning-poker
@@ -54,20 +54,23 @@ cryptography==3.4.7
     #   oauthlib
     #   pyopenssl
     #   service-identity
-daphne==3.0.2
+daphne==2.5.0
     # via channels
 defusedxml==0.7.1
     # via jira
+django-auth-ldap==2.4.0
+    # via planning-poker
 django-channels-presence==1.0.0
     # via planning-poker
 django==3.0.3
     # via
     #   -r tox.in
     #   channels
+    #   django-auth-ldap
     #   planning-poker
 execnet==1.8.0
     # via pytest-cache
-flake8==3.9.1
+flake8==3.9.2
     # via -r tox.in
 hiredis==2.0.0
     # via aioredis
@@ -119,13 +122,18 @@ planning-poker==0.1.0
     # via -r tox.in
 pluggy==0.13.1
     # via pytest
+psycopg2==2.8.6
+    # via planning-poker
 py==1.10.0
     # via pytest
 pyasn1-modules==0.2.8
-    # via service-identity
+    # via
+    #   python-ldap
+    #   service-identity
 pyasn1==0.4.8
     # via
     #   pyasn1-modules
+    #   python-ldap
     #   service-identity
 pycodestyle==2.7.0
     # via flake8
@@ -161,6 +169,8 @@ pytest==6.2.4
     #   pytest-django
     #   pytest-pep8
     #   pytest-pythonpath
+python-ldap==3.3.1
+    # via django-auth-ldap
 pytz==2021.1
     # via django
 requests-oauthlib==1.3.0
@@ -172,7 +182,7 @@ requests==2.25.1
     #   jira
     #   requests-oauthlib
     #   requests-toolbelt
-service-identity==18.1.0
+service-identity==21.1.0
     # via twisted
 six==1.16.0
     # via
@@ -182,6 +192,7 @@ six==1.16.0
     #   pydocstyle
     #   pylint
     #   pyopenssl
+    #   service-identity
 snowballstemmer==2.1.0
     # via pydocstyle
 sqlparse==0.4.1
