@@ -2,6 +2,7 @@ from datetime import datetime
 from django import forms
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from jira import JIRAError
 
 from planning_poker.models import PokerSession
 
@@ -24,6 +25,17 @@ class JiraConnectionForm(forms.ModelForm):
         if jql_query and not password:
             self.add_error('password', _('Enter the correct password for the user {user}'.format(
                 user=cleaned_data.get('username'))))
+        if jql_query and password:
+            try:
+                self.instance.client(password)
+            except JIRAError as e:
+                if e.status_code == 401:
+                    msg = _(
+                        """Could not authenticate the user with the username '{username}'.
+                        Make sure that you entered the correct password"""
+                    )
+                    msg.format(username=self.cleaned_data.get('username'))
+                    self.add_error('password', msg)
         return cleaned_data
 
     def save(self, commit=True):
