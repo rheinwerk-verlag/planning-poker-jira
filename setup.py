@@ -40,27 +40,6 @@ class ToxTestCommand(distutils.cmd.Command):
         return subprocess.call(['tox'])
 
 
-def run_wrapper(self):
-    """
-    Wrapper around the `run` method of distutils or setuptools commands.
-
-    The method creates the Javascript bundle file before the `run` method of the superclass is run.
-    """
-    self.announce("Creating the javascript bundle file...", level=distutils.log.INFO)
-    return_code = subprocess.call(['npm', 'run', 'build'])
-    if return_code is not 0:
-        msg = "Error creating the javascript bundle file. Command exited with return code {}".format(return_code)
-        self.announce(msg, level=distutils.log.ERROR)
-        raise RuntimeError(msg)
-
-    super(self.__class__, self).run()
-
-
-def command_factory(name, base_class):
-    """Factory method to create a distutils or setuptools command with a patched `run` method."""
-    return type(str(name), (base_class, object), {'run': run_wrapper})
-
-
 exec(read('planning_poker_jira', 'version.py'))
 
 classifiers = """\
@@ -120,7 +99,7 @@ setup(
     cmdclass={
         'psycopg2>=2.8.4'
         'test': ToxTestCommand,
-        'sdist': command_factory('SDistCommand', sdist),
-        'bdist_wheel': command_factory('BDistWheelCommand', bdist_wheel),
+        'sdist': sdist,
+        'bdist_wheel': bdist_wheel,
     }
 )

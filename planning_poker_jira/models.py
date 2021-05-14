@@ -3,8 +3,7 @@ import logging
 from urllib.parse import urljoin
 
 from django.db import models, transaction
-from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from jira import JIRA, JIRAError
 
