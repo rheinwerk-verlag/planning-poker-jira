@@ -4,9 +4,22 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from jira import JIRAError
 
+from planning_poker.admin import StoryAdmin
 from planning_poker.models import PokerSession
 
 from .models import JiraConnection
+
+
+def send_points_to_backend(modeladmin, request, queryset):
+    """Send the story points for each story in the queryset to the backend.
+
+    :param modeladmin: The current ModelAdmin.
+    :param request: The current HTTP request.
+    :param queryset: Containing the set of stories selected by the user.
+    :return:
+    """
+    for story in queryset.filter(jirastory__isnull=False):
+        pass
 
 
 class JiraConnectionForm(forms.ModelForm):
@@ -72,3 +85,6 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         if obj is not None:
             kwargs['form'] = JiraConnectionForm
         return super().get_form(request, obj, **kwargs)
+
+
+StoryAdmin.actions.append(send_points_to_backend)
