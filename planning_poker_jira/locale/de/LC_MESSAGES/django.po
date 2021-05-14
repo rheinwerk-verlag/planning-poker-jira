@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-14 11:17+0200\n"
+"PO-Revision-Date: 2021-05-14 11:18+0200\n"
+"Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.3\n"
+
+#: .\admin.py:24
+msgid "Choose a Poker Session to which the stories should be added"
+msgstr ""
+"Wähle Eine Poker-Runde zu welcher die Stories hinzugefügt werden sollen"
+
+#: .\admin.py:26
+#, python-brace-format
+msgid "Enter a correct password for the user '{user}'"
+msgstr "Gib ein korrektes Passwort für den Nutzer '{user}' ein"
+
+#: .\admin.py:34
+#, python-brace-format
+msgid ""
+"Could not authenticate the user with the username '{username}'. Make sure "
+"that you entered the correct password"
+msgstr ""
+"Nutzer mit dem Nutzernamen '{username}' konnte nicht hinzugefügt werden. "
+"Überprüfe ob das korrekte Passwort eingegeben wurde"
+
+#: .\admin.py:58
+msgid "Import Stories"
+msgstr "Stories importieren"
+
+#: .\models.py:17
+msgid "API Url"
+msgstr "API Url"
+
+#: .\models.py:18
+msgid "API Username"
+msgstr "API Benutzername"
+
+#: .\models.py:19
+msgid "Story Points Field"
+msgstr "Storypunktefeld"
+
+#: .\models.py:22
+msgid "Jira Connection"
+msgstr "Jiraverbindung"
+
+#: .\models.py:23
+msgid "Jira Connections"
+msgstr "Jiraverbindungen"
+
+#: .\models.py:56
+msgid "Jira Story"
+msgstr "Jirastory"
+
+#: .\models.py:57
+msgid "Jira Stories"
+msgstr "Jirastories"

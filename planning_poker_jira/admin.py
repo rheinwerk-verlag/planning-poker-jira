@@ -23,7 +23,7 @@ class JiraConnectionForm(forms.ModelForm):
         if jql_query and not poker_session:
             self.add_error('poker_session', _('Choose a Poker Session to which the stories should be added'))
         if jql_query and not password:
-            self.add_error('password', _('Enter the correct password for the user {user}'.format(
+            self.add_error('password', _('Enter a correct password for the user \'{user}\''.format(
                 user=cleaned_data.get('username'))))
         if jql_query and password:
             try:
@@ -31,8 +31,8 @@ class JiraConnectionForm(forms.ModelForm):
             except JIRAError as e:
                 if e.status_code == 401:
                     msg = _(
-                        """Could not authenticate the user with the username '{username}'.
-                        Make sure that you entered the correct password"""
+                        "Could not authenticate the user with the username '{username}'. "
+                        + "Make sure that you entered the correct password"
                     )
                     msg.format(username=self.cleaned_data.get('username'))
                     self.add_error('password', msg)
