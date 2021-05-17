@@ -20,13 +20,15 @@ astroid==1.6.6
     # via pylint
 async-timeout==3.0.1
     # via aioredis
+atomicwrites==1.4.0
+    # via pytest
 attrs==21.2.0
     # via
     #   automat
     #   pytest
     #   service-identity
     #   twisted
-autobahn==21.2.1
+autobahn==21.3.1
     # via daphne
 automat==20.2.0
     # via twisted
@@ -34,14 +36,18 @@ certifi==2020.12.5
     # via requests
 cffi==1.14.5
     # via cryptography
-channels-redis==3.2.0
+channels-redis==2.4.2
     # via planning-poker
-channels==3.0.3
+channels==2.4.0
     # via
     #   channels-redis
     #   planning-poker
 chardet==4.0.0
     # via requests
+colorama==0.4.4
+    # via
+    #   pylint
+    #   pytest
 constantly==15.1.0
     # via twisted
 coverage[toml]==5.5
@@ -54,7 +60,7 @@ cryptography==3.4.7
     #   oauthlib
     #   pyopenssl
     #   service-identity
-daphne==3.0.2
+daphne==2.5.0
     # via channels
 defusedxml==0.7.1
     # via jira
@@ -80,11 +86,6 @@ idna==2.10
     #   hyperlink
     #   requests
     #   twisted
-importlib-metadata==4.0.1
-    # via
-    #   flake8
-    #   pluggy
-    #   pytest
 incremental==21.3.0
     # via twisted
 iniconfig==1.1.1
@@ -99,7 +100,7 @@ mccabe==0.6.1
     # via
     #   flake8
     #   pylint
-msgpack==1.0.2
+msgpack==0.6.2
     # via channels-redis
 oauthlib[signedtoken]==3.1.0
     # via
@@ -187,20 +188,16 @@ toml==0.10.2
     # via
     #   coverage
     #   pytest
+twisted-iocpsupport==1.0.1
+    # via twisted
 twisted[tls]==21.2.0
     # via daphne
 txaio==21.2.1
     # via autobahn
-typing-extensions==3.10.0.0
-    # via
-    #   asgiref
-    #   importlib-metadata
 urllib3==1.26.4
     # via requests
 wrapt==1.12.1
     # via astroid
-zipp==3.4.1
-    # via importlib-metadata
 zope.interface==5.4.0
     # via twisted
 
