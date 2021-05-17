@@ -97,9 +97,6 @@ setup(
     install_requires=install_requires,
     tests_require=tests_require,
     cmdclass={
-        'psycopg2>=2.8.4'
         'test': ToxTestCommand,
-        'sdist': sdist,
-        'bdist_wheel': bdist_wheel,
     }
 )
