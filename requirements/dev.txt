@@ -38,21 +38,21 @@ certifi==2020.12.5
     # via requests
 cffi==1.14.5
     # via cryptography
-channels-redis==3.0.0
+channels-redis==3.2.0
     # via planning-poker
-channels==2.4.0
+channels==3.0.3
     # via
     #   channels-redis
     #   planning-poker
 chardet==4.0.0
     # via requests
-click==7.1.2
+click==8.0.0
     # via pip-tools
 commonmark==0.5.4
     # via recommonmark
 constantly==15.1.0
     # via twisted
-coverage==5.5
+coverage[toml]==5.5
     # via
     #   -r tox.in
     #   pytest-cov
@@ -62,7 +62,7 @@ cryptography==3.4.7
     #   oauthlib
     #   pyopenssl
     #   service-identity
-daphne==2.5.0
+daphne==3.0.2
     # via channels
 defusedxml==0.7.1
     # via jira
@@ -115,9 +115,7 @@ jinja2==2.11.3
     #   sphinx
     #   sphinx-js
 jira==2.0.0
-    # via
-    #   -r tox.in
-    #   planning-poker
+    # via -r tox.in
 lazy-object-proxy==1.6.0
     # via astroid
 markupsafe==1.1.1
@@ -128,8 +126,6 @@ mccabe==0.6.1
     # via
     #   flake8
     #   pylint
-more-itertools==8.7.0
-    # via -r tox.in
 msgpack==1.0.2
     # via channels-redis
 oauthlib[signedtoken]==3.1.0
@@ -150,17 +146,14 @@ pep8==1.7.1
     # via pytest-pep8
 pip-tools==6.1.0
     # via -r dev.in
-planning-poker==0.1.0
+planning-poker==0.2.0
     # via -r tox.in
 pluggy==0.13.1
     # via pytest
-psycopg2==2.8.6
-    # via planning-poker
 py==1.10.0
     # via pytest
 pyasn1-modules==0.2.8
-    # via
-    #   service-identity
+    # via service-identity
 pyasn1==0.4.8
     # via
     #   pyasn1-modules
@@ -185,9 +178,9 @@ pyparsing==2.4.7
     # via packaging
 pytest-cache==1.0
     # via pytest-pep8
-pytest-cov==2.11.1
+pytest-cov==2.12.0
     # via -r tox.in
-pytest-django==4.2.0
+pytest-django==4.3.0
     # via -r tox.in
 pytest-pep8==1.0.6
     # via -r tox.in
@@ -258,6 +251,7 @@ sqlparse==0.4.1
     # via django
 toml==0.10.2
     # via
+    #   coverage
     #   pep517
     #   pytest
 twisted[tls]==21.2.0
