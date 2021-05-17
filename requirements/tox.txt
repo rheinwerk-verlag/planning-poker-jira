@@ -188,8 +188,6 @@ toml==0.10.2
     # via
     #   coverage
     #   pytest
-twisted-iocpsupport==1.0.1
-    # via twisted
 twisted[tls]==21.2.0
     # via daphne
 txaio==21.2.1
