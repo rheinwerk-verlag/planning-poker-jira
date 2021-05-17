@@ -34,6 +34,7 @@ pages:
 publish:
   stage: deploy
   script:
+    - apt-get update -qq && apt-get install -y -qq gettext
     - pip install "Django>=3.0,<3.1" "devpi-client"
     - cd planning_poker_jira
     - /usr/local/bin/django-admin.py compilemessages
