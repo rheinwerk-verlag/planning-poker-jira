@@ -28,6 +28,12 @@ class JiraConnection(models.Model):
         return JIRA(self.api_url, basic_auth=(self.username, password))
 
     def create_stories(self, query_string, poker_session, password):
+        """Fetch issues from the Jira client with the given query string and add them to the poker session.
+
+        :param str query_string: The string which should be used to query the stories.
+        :param planning_poker.models.PokerSession poker_session: The poker session to which the stories should be added.
+        :param str password: The password used to authenticate the jira api user.
+        """
         try:
             results = self.client(password).search_issues(
                 jql_str=query_string,
