@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 11:17+0200\n"
-"PO-Revision-Date: 2021-05-14 11:18+0200\n"
+"POT-Creation-Date: 2021-05-17 11:41+0200\n"
+"PO-Revision-Date: 2021-05-17 11:47+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,17 +18,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.3\n"
 
-#: .\admin.py:24
+#: .\admin.py:37
 msgid "Choose a Poker Session to which the stories should be added"
 msgstr ""
 "Wähle Eine Poker-Runde zu welcher die Stories hinzugefügt werden sollen"
 
-#: .\admin.py:26
+#: .\admin.py:39
 #, python-brace-format
 msgid "Enter a correct password for the user '{user}'"
 msgstr "Gib ein korrektes Passwort für den Nutzer '{user}' ein"
 
-#: .\admin.py:34
+#: .\admin.py:47
 #, python-brace-format
 msgid ""
 "Could not authenticate the user with the username '{username}'. Make sure "
@@ -37,34 +37,38 @@ msgstr ""
 "Nutzer mit dem Nutzernamen '{username}' konnte nicht hinzugefügt werden. "
 "Überprüfe ob das korrekte Passwort eingegeben wurde"
 
-#: .\admin.py:58
+#: .\admin.py:71
 msgid "Import Stories"
 msgstr "Stories importieren"
 
-#: .\models.py:17
+#: .\apps.py:7
+msgid "Planning Poker Jira"
+msgstr "Planungspoker Jira"
+
+#: .\models.py:15
 msgid "API Url"
 msgstr "API Url"
 
-#: .\models.py:18
+#: .\models.py:16
 msgid "API Username"
 msgstr "API Benutzername"
 
-#: .\models.py:19
+#: .\models.py:17
 msgid "Story Points Field"
 msgstr "Storypunktefeld"
 
-#: .\models.py:22
+#: .\models.py:20
 msgid "Jira Connection"
 msgstr "Jiraverbindung"
 
-#: .\models.py:23
+#: .\models.py:21
 msgid "Jira Connections"
 msgstr "Jiraverbindungen"
 
-#: .\models.py:56
+#: .\models.py:60
 msgid "Jira Story"
 msgstr "Jirastory"
 
-#: .\models.py:57
+#: .\models.py:61
 msgid "Jira Stories"
 msgstr "Jirastories"
