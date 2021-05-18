@@ -1,5 +1,6 @@
 coverage
 django==3.0.3
+django-searchable-encrypted-fields
 flake8
 jira==2.0.0
 planning-poker

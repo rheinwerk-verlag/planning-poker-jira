@@ -66,10 +66,13 @@ defusedxml==0.7.1
     # via jira
 django-channels-presence==1.0.0
     # via planning-poker
+django-searchable-encrypted-fields==0.1.9
+    # via -r tox.in
 django==3.0.3
     # via
     #   -r tox.in
     #   channels
+    #   django-searchable-encrypted-fields
     #   planning-poker
 execnet==1.8.0
     # via pytest-cache
@@ -128,6 +131,8 @@ pycodestyle==2.7.0
     # via flake8
 pycparser==2.20
     # via cffi
+pycryptodome==3.10.1
+    # via django-searchable-encrypted-fields
 pydocstyle==2.1.1
     # via -r tox.in
 pyflakes==2.3.1
