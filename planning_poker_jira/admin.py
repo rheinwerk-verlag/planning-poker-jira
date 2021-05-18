@@ -44,10 +44,9 @@ class JiraConnectionForm(forms.ModelForm):
             except JIRAError as e:
                 if e.status_code == 401:
                     msg = _(
-                        "Could not authenticate the user with the username '{username}'. " +
+                        "Could not authenticate the user with the username '{username}'. "
                         'Make sure that you entered the correct password'
-                    )
-                    msg.format(username=self.cleaned_data.get('username'))
+                        .format(username=self.cleaned_data.get('username')))
                     self.add_error('password', msg)
         return cleaned_data
 

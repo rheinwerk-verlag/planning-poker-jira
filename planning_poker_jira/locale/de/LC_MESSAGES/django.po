@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-18 08:30+0200\n"
-"PO-Revision-Date: 2021-05-17 11:47+0200\n"
+"POT-Creation-Date: 2021-05-18 10:15+0200\n"
+"PO-Revision-Date: 2021-05-18 10:15+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -37,7 +37,7 @@ msgstr ""
 "Nutzer mit dem Nutzernamen '{username}' konnte nicht hinzugefügt werden. "
 "Überprüfe ob das korrekte Passwort eingegeben wurde"
 
-#: .\admin.py:71
+#: .\admin.py:70
 msgid "Import Stories"
 msgstr "Stories importieren"
 
@@ -45,22 +45,30 @@ msgstr "Stories importieren"
 msgid "Planning Poker Jira"
 msgstr "Planungspoker Jira"
 
-#: .\models.py:14
-msgid "API Url"
-msgstr "API Url"
-
 #: .\models.py:15
+msgid "Label"
+msgstr "Bezeichnung"
+
+#: .\models.py:16
+msgid "API URL"
+msgstr "API URL"
+
+#: .\models.py:17
 msgid "API Username"
 msgstr "API Benutzername"
 
-#: .\models.py:16
+#: .\models.py:18
+msgid "Password"
+msgstr "Passwort"
+
+#: .\models.py:19
 msgid "Story Points Field"
 msgstr "Storypunktefeld"
 
-#: .\models.py:19
+#: .\models.py:22
 msgid "Jira Connection"
 msgstr "Jiraverbindung"
 
-#: .\models.py:20
+#: .\models.py:23
 msgid "Jira Connections"
 msgstr "Jiraverbindungen"
