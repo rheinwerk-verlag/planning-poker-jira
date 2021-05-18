@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'channels',
     'channels_presence',
     'planning_poker',
+    'encrypted_fields',
     'planning_poker_jira',
 )
 

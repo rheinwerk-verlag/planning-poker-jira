@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 class JiraConnection(models.Model):
     label = models.CharField(verbose_name=_('Label'), max_length=200, null=True, blank=True)
     api_url = models.CharField(verbose_name=_('API URL'), max_length=200)
-    username = models.CharField(verbose_name=_('API Username'), max_length=200)
-    password = fields.EncryptedCharField(verbose_name=_('Password'), max_length=200)
+    username = models.CharField(verbose_name=_('API Username'), max_length=200, null=True, blank=True)
+    password = fields.EncryptedCharField(verbose_name=_('Password'), max_length=200, null=True, blank=True)
     story_points_field = models.CharField(verbose_name=_('Story Points Field'), max_length=200)
 
     class Meta:
@@ -41,7 +41,7 @@ class JiraConnection(models.Model):
         :param str password: The password used to authenticate the jira api user.
         """
         try:
-            results = self.get_client(password).search_issues(
+            results = self.get_client(password=password).search_issues(
                 jql_str=query_string,
                 expand='renderedFields',
                 fields=['summary', 'description']
@@ -50,5 +50,6 @@ class JiraConnection(models.Model):
             logger.warning(e)
         else:
             Story.objects.bulk_create([Story(ticket_number=story.key, title=story.fields.summary,
-                                             description=story.renderedFields.description, poker_session=poker_session)
-                                       for story in results])
+                                             description=story.renderedFields.description, poker_session=poker_session,
+                                             _order=index)
+                                       for index, story in enumerate(results)])

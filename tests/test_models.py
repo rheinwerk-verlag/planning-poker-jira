@@ -3,6 +3,8 @@ from unittest.mock import Mock, patch
 import pytest
 from jira import JIRAError
 
+from planning_poker_jira.models import JiraConnection
+
 
 class JiraFields:
     def __init__(self, **kwargs):
@@ -22,7 +24,7 @@ class TestJiraConnection:
     @patch('planning_poker_jira.models.JIRA')
     def test_client(self, mock_jira, jira_connection):
         password = 'supersecret'
-        jira_connection.client(password)
+        jira_connection.get_client(password=password)
         mock_jira.assert_called_with(jira_connection.api_url, basic_auth=(jira_connection.username, password))
 
     @patch('planning_poker_jira.models.JIRA')
