@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*
 import logging
 
-from django.db import models, transaction
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from jira import JIRA, JIRAError
 
@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class JiraConnection(models.Model):
+    label = models.CharField(verbose_name=_('Label'), max_length=200, null=True, blank=True)
     api_url = models.CharField(verbose_name=_('API Url'), max_length=200)
     username = models.CharField(verbose_name=_('API Username'), max_length=200)
     story_points_field = models.CharField(verbose_name=_('Story Points Field'), max_length=200)
@@ -20,7 +21,7 @@ class JiraConnection(models.Model):
         verbose_name_plural = _('Jira Connections')
 
     def __str__(self):
-        return self.api_url
+        return self.label or self.api_url
 
     def client(self, password):
         return JIRA(self.api_url, basic_auth=(self.username, password))
