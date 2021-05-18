@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*
 import logging
-from urllib.parse import urljoin
 
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
@@ -42,23 +41,6 @@ class JiraConnection(models.Model):
         except JIRAError as e:
             logger.warning(e)
         else:
-            with transaction.atomic():
-                for story in results:
-                    JiraStory.objects.create(
-                        ticket_number=story.key,
-                        title=story.fields.summary,
-                        description=story.renderedFields.description,
-                        poker_session=poker_session,
-                        jira_instance=self
-                    )
-
-
-class JiraStory(Story):
-    jira_instance = models.ForeignKey(JiraConnection, null=True, blank=True, on_delete=models.SET_NULL)
-
-    class Meta:
-        verbose_name = _('Jira Story')
-        verbose_name_plural = _('Jira Stories')
-
-    def url(self):
-        return urljoin(self.jira_instance.api_url, 'browse/' + self.ticket_number)
+            Story.objects.bulk_create([Story(ticket_number=story.key, title=story.fields.summary,
+                                             description=story.renderedFields.description, poker_session=poker_session)
+                                       for story in results])

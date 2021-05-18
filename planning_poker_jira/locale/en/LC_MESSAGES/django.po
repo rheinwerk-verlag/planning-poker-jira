@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-17 13:21+0200\n"
+"POT-Creation-Date: 2021-05-18 08:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,30 +42,22 @@ msgstr ""
 msgid "Planning Poker Jira"
 msgstr ""
 
-#: .\models.py:15
+#: .\models.py:14
 msgid "API Url"
 msgstr ""
 
-#: .\models.py:16
+#: .\models.py:15
 msgid "API Username"
 msgstr ""
 
-#: .\models.py:17
+#: .\models.py:16
 msgid "Story Points Field"
 msgstr ""
 
-#: .\models.py:20
+#: .\models.py:19
 msgid "Jira Connection"
 msgstr ""
 
-#: .\models.py:21
+#: .\models.py:20
 msgid "Jira Connections"
-msgstr ""
-
-#: .\models.py:60
-msgid "Jira Story"
-msgstr ""
-
-#: .\models.py:61
-msgid "Jira Stories"
 msgstr ""

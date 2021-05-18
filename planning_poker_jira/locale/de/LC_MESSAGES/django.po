@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-17 11:41+0200\n"
+"POT-Creation-Date: 2021-05-18 08:30+0200\n"
 "PO-Revision-Date: 2021-05-17 11:47+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
@@ -45,30 +45,22 @@ msgstr "Stories importieren"
 msgid "Planning Poker Jira"
 msgstr "Planungspoker Jira"
 
-#: .\models.py:15
+#: .\models.py:14
 msgid "API Url"
 msgstr "API Url"
 
-#: .\models.py:16
+#: .\models.py:15
 msgid "API Username"
 msgstr "API Benutzername"
 
-#: .\models.py:17
+#: .\models.py:16
 msgid "Story Points Field"
 msgstr "Storypunktefeld"
 
-#: .\models.py:20
+#: .\models.py:19
 msgid "Jira Connection"
 msgstr "Jiraverbindung"
 
-#: .\models.py:21
+#: .\models.py:20
 msgid "Jira Connections"
 msgstr "Jiraverbindungen"
-
-#: .\models.py:60
-msgid "Jira Story"
-msgstr "Jirastory"
-
-#: .\models.py:61
-msgid "Jira Stories"
-msgstr "Jirastories"
