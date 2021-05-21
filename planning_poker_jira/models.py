@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 class JiraConnection(models.Model):
-    label = models.CharField(verbose_name=_('Label'), max_length=200, null=True, blank=True)
+    label = models.CharField(verbose_name=_('Label'), max_length=200, blank=True)
     api_url = models.CharField(verbose_name=_('API URL'), max_length=200)
-    username = models.CharField(verbose_name=_('API Username'), max_length=200, null=True, blank=True)
-    password = fields.EncryptedCharField(verbose_name=_('Password'), max_length=200, null=True, blank=True)
+    username = models.CharField(verbose_name=_('API Username'), max_length=200, blank=True)
+    password = fields.EncryptedCharField(verbose_name=_('Password'), max_length=200, blank=True)
     story_points_field = models.CharField(verbose_name=_('Story Points Field'), max_length=200)
 
     class Meta:

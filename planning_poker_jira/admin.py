@@ -23,67 +23,29 @@ def send_points_to_backend(modeladmin, request, queryset):
 
 
 class JiraConnectionForm(forms.ModelForm):
-    poker_session = forms.ModelChoiceField(PokerSession.objects.filter(poker_date__gte=datetime.now()), required=False)
-    jql_query = forms.CharField(required=False)
-    password = forms.CharField(required=False, widget=forms.PasswordInput)
+    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Repeat Password'), required=False, widget=forms.PasswordInput)
 
     def clean(self):
         cleaned_data = super().clean()
-        poker_session = cleaned_data.get('poker_session')
-        jql_query = cleaned_data.get('jql_query')
-        password = cleaned_data.get('password')
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
 
-        if jql_query and not poker_session:
-            self.add_error('poker_session', _('Choose a Poker Session to which the stories should be added'))
-        if jql_query and not password:
-            self.add_error('password', _("Enter a correct password for the user '{user}'".format(
-                user=cleaned_data.get('username'))))
-        if jql_query and password:
-            try:
-                self.instance.client(password)
-            except JIRAError as e:
-                if e.status_code == 401:
-                    msg = _(
-                        "Could not authenticate the user with the username '{username}'. "
-                        'Make sure that you entered the correct password'
-                        .format(username=self.cleaned_data.get('username')))
-                    self.add_error('password', msg)
+        if password1 != password2:
+            error_message = _("The passwords didn't match")
+            self.add_error('password1', error_message)
+            self.add_error('password2', error_message)
         return cleaned_data
 
     def save(self, commit=True):
-        instance = super().save(commit)
-        jql_query = self.cleaned_data['jql_query']
-        poker_session = self.cleaned_data['poker_session']
-        password = self.cleaned_data['password']
-        if jql_query and poker_session:
-            self.instance.create_stories(jql_query, poker_session, password)
-        return instance
+        self.instance.password = self.cleaned_data['password1']
+        return super().save(commit)
 
 
 @admin.register(JiraConnection)
 class JiraConnectionAdmin(admin.ModelAdmin):
-
-    def get_fieldsets(self, request, obj=None):
-        if obj is not None:
-            return (
-                (
-                    _('Import Stories'), {
-                        'fields': ('poker_session', 'jql_query', 'password')
-                    }
-                ),
-                (
-                    None, {
-                        'fields': ('api_url', 'username', 'story_points_field')
-                    }
-                )
-            )
-        else:
-            return super().get_fieldsets(request, obj)
-
-    def get_form(self, request, obj=None, **kwargs):
-        if obj is not None:
-            kwargs['form'] = JiraConnectionForm
-        return super().get_form(request, obj, **kwargs)
+    form = JiraConnectionForm
+    fields = ('label', 'api_url', 'username', 'password1', 'password2', 'story_points_field')
 
 
 StoryAdmin.actions.append(send_points_to_backend)

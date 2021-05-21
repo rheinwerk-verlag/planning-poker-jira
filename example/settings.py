@@ -96,3 +96,5 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+FIELD_ENCRYPTION_KEYS = [SECRET_KEY]
