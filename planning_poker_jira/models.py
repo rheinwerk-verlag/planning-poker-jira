@@ -4,9 +4,10 @@ import logging
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from encrypted_fields import fields
-from jira import JIRA, JIRAError
+from jira import JIRA
 
 from planning_poker.models import Story
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -33,23 +34,21 @@ class JiraConnection(models.Model):
         """
         return JIRA(self.api_url, basic_auth=(username or self.username, password or self.password))
 
-    def create_stories(self, query_string, poker_session, password) -> None:
+    def create_stories(self, query_string, poker_session, username=None, password=None) -> List[Story]:
         """Fetch issues from the Jira client with the given query string and add them to the poker session.
 
         :param str query_string: The string which should be used to query the stories.
         :param planning_poker.models.PokerSession poker_session: The poker session to which the stories should be added.
-        :param str password: The password used to authenticate the jira api user.
+        :param str username: The name of the user who should be authenticated. Default None.
+        :param str password: The password used to authenticate the jira api user. Default None.
+        :return: A list containing the created stories.
         """
-        try:
-            results = self.get_client(password=password).search_issues(
-                jql_str=query_string,
-                expand='renderedFields',
-                fields=['summary', 'description']
-            )
-        except JIRAError as e:
-            logger.warning(e)
-        else:
-            Story.objects.bulk_create([Story(ticket_number=story.key, title=story.fields.summary,
-                                             description=story.renderedFields.description, poker_session=poker_session,
-                                             _order=index)
-                                       for index, story in enumerate(results)])
+        results = self.get_client(username, password).search_issues(
+            jql_str=query_string,
+            expand='renderedFields',
+            fields=['summary', 'description']
+        )
+        return Story.objects.bulk_create([Story(ticket_number=story.key, title=story.fields.summary,
+                                          description=story.renderedFields.description, poker_session=poker_session,
+                                          _order=index)
+                                          for index, story in enumerate(results)])
