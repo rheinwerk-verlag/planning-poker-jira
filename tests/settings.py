@@ -32,3 +32,5 @@ INSTALLED_APPS = (
 )
 
 ROOT_URLCONF = 'planning_poker_jira.urls'
+
+FIELD_ENCRYPTION_KEYS = [SECRET_KEY]
