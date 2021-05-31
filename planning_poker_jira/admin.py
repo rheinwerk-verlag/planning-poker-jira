@@ -65,7 +65,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 'fields': ('jira_connection',)
             }),
             (_('Override Options'), {
-               'fields': ('username', 'password1', 'password2')
+                'fields': ('username', 'password1', 'password2')
             }),
         ),
         {},

@@ -4,8 +4,6 @@ from unittest.mock import Mock, patch
 import pytest
 from jira import JIRAError
 
-from planning_poker_jira.models import JiraConnection
-
 
 class JiraFields:
     def __init__(self, **kwargs):
