@@ -17,7 +17,7 @@ from planning_poker.models import PokerSession
 from .models import JiraConnection
 
 
-def send_points_to_backend(modeladmin, request, queryset):
+def export_stories(modeladmin, request, queryset):
     """Send the story points for each story in the queryset to the backend.
 
     :param modeladmin: The current ModelAdmin.
@@ -25,38 +25,56 @@ def send_points_to_backend(modeladmin, request, queryset):
     :param queryset: Containing the set of stories selected by the user.
     :return:
     """
-    for story in queryset.filter(jirastory__isnull=False):
-        pass
-
-
-class JiraConnectionForm(forms.ModelForm):
-    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Repeat Password'), required=False, widget=forms.PasswordInput)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
-
-        if password1 != password2:
-            error_message = _("The passwords didn't match")
-            self.add_error('password1', error_message)
-            self.add_error('password2', error_message)
-        return cleaned_data
-
-    def save(self, commit=True):
-        self.instance.password = self.cleaned_data['password1']
-        return super().save(commit)
-
-
-class ImportStoriesForm(forms.Form):
-    poker_session = forms.ModelChoiceField(
-        label=_('Poker Session'),
-        help_text=_('The poker session to which the imported stories should be added'),
-        queryset=PokerSession.objects.all(),
-        required=False
+    if 'export' in request.POST:
+        form = ExportStoriesForm(request.POST)
+        if form.is_valid():
+            jira_connection = form.cleaned_data['jira_connection']
+            credentials = {
+                'username': form.cleaned_data['username'] or jira_connection.username,
+                'password': form.cleaned_data['password1'] or jira_connection.password
+            }
+            connection = jira_connection.get_client(**credentials)
+            for story in queryset:
+                jira_story = connection.issue(id=story.ticket_number, fields='')
+                jira_story.update(fields={jira_connection.story_points_field: story.story_points})
+            num_stories = len(queryset)
+            modeladmin.message_user(request, ngettext_lazy(
+                '%d story was successfully exported.',
+                '%d stories were successfully exported.',
+                num_stories,
+            ) % num_stories, messages.SUCCESS)
+            redirect_url = f'admin:{modeladmin.model._meta.app_label}_{modeladmin.model._meta.model_name}_changelist'
+            return HttpResponseRedirect(reverse(redirect_url))
+    else:
+        form = ExportStoriesForm()
+    admin_form = helpers.AdminForm(
+        form,
+        (
+            (None, {
+                'fields': ('jira_connection',)
+            }),
+            (_('Override Options'), {
+               'fields': ('username', 'password1', 'password2')
+            }),
+        ),
+        {},
+        model_admin=modeladmin
     )
-    jql_query = forms.CharField(label=_('JQL Query'), required=True)
+    context = {
+        **modeladmin.admin_site.each_context(request),
+        'opts': queryset.model._meta,
+        'title': _('Export Stories'),
+        'stories': queryset,
+        'form': admin_form,
+        'media': modeladmin.media
+    }
+    return TemplateResponse(request, 'admin/planning_poker/story/export_stories.html', context)
+
+
+export_stories.short_description = _('Export Stories to Jira')
+
+
+class JiraAuthenticationForm(forms.Form):
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
@@ -76,6 +94,34 @@ class ImportStoriesForm(forms.Form):
             self.add_error('password1', error_message)
             self.add_error('password2', error_message)
         return cleaned_data
+
+
+class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
+    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Repeat Password'), required=False, widget=forms.PasswordInput)
+
+    def save(self, commit=True):
+        self.instance.password = self.cleaned_data['password1']
+        return super().save(commit)
+
+
+class ImportStoriesForm(JiraAuthenticationForm):
+    poker_session = forms.ModelChoiceField(
+        label=_('Poker Session'),
+        help_text=_('The poker session to which the imported stories should be added'),
+        queryset=PokerSession.objects.all(),
+        required=False
+    )
+    jql_query = forms.CharField(label=_('JQL Query'), required=True)
+
+
+class ExportStoriesForm(JiraAuthenticationForm):
+    jira_connection = forms.ModelChoiceField(
+        label=_('Jira Connection'),
+        help_text=_('The Jira Backend to which the stories should be exported'),
+        queryset=JiraConnection.objects.all(),
+        required=True
+    )
 
 
 @admin.register(JiraConnection)
@@ -145,7 +191,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                 (None, {
                     'fields': ('poker_session', 'jql_query')
                 }),
-                ('Override Options', {
+                (_('Override Options'), {
                     'fields': ('username', 'password1', 'password2'),
                 }),
             ),
@@ -160,7 +206,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
             'object_id': object_id,
         }
         context.update(extra_context or {})
-        return TemplateResponse(request, 'admin/planning_poker_jira/jira_connection/import_stories_form.html', context)
+        return TemplateResponse(request, 'admin/planning_poker_jira/jira_connection/import_stories.html', context)
 
 
-StoryAdmin.actions.append(send_points_to_backend)
+StoryAdmin.actions = [*StoryAdmin.actions, export_stories]
