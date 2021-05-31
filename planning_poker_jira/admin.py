@@ -116,15 +116,20 @@ class JiraAuthenticationForm(forms.Form):
         api_url = cleaned_data.get('api_url') or getattr(self.connection, 'api_url', None)
         username = cleaned_data.get('username') or getattr(self.connection, 'username', None)
         password = password1 or getattr(self.connection, 'password', None)
-        if not any([api_url, username, password]):
+        if not all([api_url, username]):
             self.add_error(None,
                            _('Missing credentials. Check whether you entered an API URL, an username and a password'))
-        try:
-            jira.JIRA(api_url, basic_auth=(username, password))
-        except JIRAError as e:
-            error_message = _('Could not authenticate the API user with the given credentials. '
-                              'Make sure that you entered the correct data.') if e.status_code == 401 else e.status_code
-            self.add_error(None, error_message)
+        # We don't have to verify the credentials if the user hasn't provided a password.
+        if password:
+            try:
+                jira.JIRA(api_url, basic_auth=(username, password))
+            except JIRAError as e:
+                if e.status_code == 401:
+                    error_message = _('Could not authenticate the API user with the given credentials. '
+                                      'Make sure that you entered the correct data.')
+                else:
+                    error_message = e.status_code
+                self.add_error(None, error_message)
         return cleaned_data
 
 
