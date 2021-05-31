@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from encrypted_fields import fields
 from jira import JIRA
 
-from planning_poker.models import Story
+from planning_poker.models import PokerSession, Story
 from typing import List
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class JiraConnection(models.Model):
     def __str__(self) -> str:
         return self.label or self.api_url
 
-    def get_client(self, username=None, password=None) -> JIRA:
+    def get_client(self, username: str = None, password:str = None) -> JIRA:
         """Authenticate at the jira backend and return a client to communicate with it.
 
         :param str username: The name of the user who should be authenticated. Default None.
@@ -34,7 +34,8 @@ class JiraConnection(models.Model):
         """
         return JIRA(self.api_url, basic_auth=(username or self.username, password or self.password))
 
-    def create_stories(self, query_string, poker_session, username=None, password=None) -> List[Story]:
+    def create_stories(self, query_string: str, poker_session: PokerSession, username: str = None,
+                       password: str = None) -> List[Story]:
         """Fetch issues from the Jira client with the given query string and add them to the poker session.
 
         :param str query_string: The string which should be used to query the stories.
