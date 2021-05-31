@@ -23,6 +23,11 @@
 
 {% block content %}<div id="content-main">
 <form method="post">{% csrf_token %}
+{% for error in form.non_field_errors %}
+  <div class="errornote">
+    <strong>{{ error|escape }}</strong>
+  </div>
+{% endfor %}
 <div>
 {% block field_sets %}
 {% for fieldset in form %}

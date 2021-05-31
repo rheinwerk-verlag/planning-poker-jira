@@ -1,6 +1,7 @@
 from functools import update_wrapper
 from typing import Dict, List, Union
 
+import jira
 from django import forms
 from django.db.models import QuerySet
 from django.contrib import admin, messages
@@ -38,15 +39,24 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 'password': form.cleaned_data['password1'] or jira_connection.password
             }
             connection = jira_connection.get_client(**credentials)
-            for story in queryset:
-                jira_story = connection.issue(id=story.ticket_number, fields='')
-                jira_story.update(fields={jira_connection.story_points_field: story.story_points})
-            num_stories = len(queryset)
-            modeladmin.message_user(request, ngettext_lazy(
-                '%d story was successfully exported.',
-                '%d stories were successfully exported.',
-                num_stories,
-            ) % num_stories, messages.SUCCESS)
+            try:
+                for story in queryset:
+                    jira_story = connection.issue(id=story.ticket_number, fields='')
+                    jira_story.update(fields={jira_connection.story_points_field: story.story_points})
+            except JIRAError:
+                modeladmin.message_user(
+                    request,
+                    _(f'The story "{story}" could not be exported because because it probably does not exist in '
+                      f'"{jira_connection}"'),
+                    messages.ERROR
+                )
+            else:
+                num_stories = len(queryset)
+                modeladmin.message_user(request, ngettext_lazy(
+                    '%d story was successfully exported.',
+                    '%d stories were successfully exported.',
+                    num_stories,
+                ) % num_stories, messages.SUCCESS)
             redirect_url = f'admin:{modeladmin.model._meta.app_label}_{modeladmin.model._meta.model_name}_changelist'
             return HttpResponseRedirect(reverse(redirect_url))
     else:
@@ -58,7 +68,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 'fields': ('jira_connection',)
             }),
             (_('Override Options'), {
-               'fields': ('username', 'password1', 'password2')
+               'fields': ('api_url', 'username', 'password1', 'password2')
             }),
         ),
         {},
@@ -79,6 +89,9 @@ export_stories.short_description = _('Export Stories to Jira')
 
 
 class JiraAuthenticationForm(forms.Form):
+    api_url = forms.CharField(label=_('API URL'),
+                              help_text=_('You can use this to override the API URL in the database.'),
+                              required=False)
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
@@ -87,6 +100,10 @@ class JiraAuthenticationForm(forms.Form):
                                 required=False,
                                 widget=forms.PasswordInput)
     password2 = forms.CharField(label=_('Confirm Password'), required=False, widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        self.connection = kwargs.pop('connection', None)
+        super().__init__(*args, **kwargs)
 
     def clean(self) -> dict:
         cleaned_data = super().clean()
@@ -97,6 +114,23 @@ class JiraAuthenticationForm(forms.Form):
             error_message = _("The passwords didn't match")
             self.add_error('password1', error_message)
             self.add_error('password2', error_message)
+            # We fail fast here because there is no need to validate the credentials if the passwords didn't match.
+            return cleaned_data
+
+        if connection := cleaned_data.get('jira_connection'):
+            self.connection = connection
+        api_url = cleaned_data.get('api_url') or getattr(self.connection, 'api_url', None)
+        username = cleaned_data.get('username') or getattr(self.connection, 'username', None)
+        password = password1 or getattr(self.connection, 'password', None)
+        if not any([api_url, username, password]):
+            self.add_error(None,
+                           _('Missing credentials. Check whether you entered an api_url, an username and a password'))
+        try:
+            jira.JIRA(api_url, basic_auth=(username, password))
+        except JIRAError as e:
+            error_message = _('Could not authenticate the API user with the given credentials. '
+                              'Make sure that you entered the correct data.') if e.status_code == 401 else e.status_code
+            self.add_error(None, error_message)
         return cleaned_data
 
 
@@ -183,7 +217,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
             return self._get_obj_does_not_exist_redirect(request, self.model._meta, object_id)
 
         if request.method == 'POST':
-            form = ImportStoriesForm(request.POST)
+            form = ImportStoriesForm(request.POST, connection=obj)
             if form.is_valid():
                 try:
                     stories = obj.create_stories(form.cleaned_data['jql_query'],
@@ -203,7 +237,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                     redirect_url = f'admin:{self.model._meta.app_label}_{self.model._meta.model_name}_changelist'
                     return HttpResponseRedirect(reverse(redirect_url))
         else:
-            form = ImportStoriesForm()
+            form = ImportStoriesForm(connection=obj)
         admin_form = helpers.AdminForm(
             form,
             (
@@ -211,7 +245,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                     'fields': ('poker_session', 'jql_query')
                 }),
                 (_('Override Options'), {
-                    'fields': ('username', 'password1', 'password2'),
+                    'fields': ('api_url', 'username', 'password1', 'password2'),
                 }),
             ),
             {},
