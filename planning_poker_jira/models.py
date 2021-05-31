@@ -26,7 +26,7 @@ class JiraConnection(models.Model):
     def __str__(self) -> str:
         return self.label or self.api_url
 
-    def get_client(self, username: str = None, password:str = None) -> JIRA:
+    def get_client(self, username: str = None, password: str = None) -> JIRA:
         """Authenticate at the jira backend and return a client to communicate with it.
 
         :param str username: The name of the user who should be authenticated. Default None.

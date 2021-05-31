@@ -34,11 +34,8 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
-            credentials = {
-                'username': form.cleaned_data['username'] or jira_connection.username,
-                'password': form.cleaned_data['password1'] or jira_connection.password
-            }
-            connection = jira_connection.get_client(**credentials)
+            connection = jira_connection.get_client(form.cleaned_data['username'] or jira_connection.username,
+                                                    form.cleaned_data['password1'] or jira_connection.password)
             try:
                 for story in queryset:
                     jira_story = connection.issue(id=story.ticket_number, fields='')
@@ -68,7 +65,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 'fields': ('jira_connection',)
             }),
             (_('Override Options'), {
-               'fields': ('api_url', 'username', 'password1', 'password2')
+               'fields': ('username', 'password1', 'password2')
             }),
         ),
         {},
@@ -89,9 +86,6 @@ export_stories.short_description = _('Export Stories to Jira')
 
 
 class JiraAuthenticationForm(forms.Form):
-    api_url = forms.CharField(label=_('API URL'),
-                              help_text=_('You can use this to override the API URL in the database'),
-                              required=False)
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
@@ -245,7 +239,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                     'fields': ('poker_session', 'jql_query')
                 }),
                 (_('Override Options'), {
-                    'fields': ('api_url', 'username', 'password1', 'password2'),
+                    'fields': ('username', 'password1', 'password2'),
                 }),
             ),
             {},
