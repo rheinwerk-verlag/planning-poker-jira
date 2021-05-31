@@ -90,13 +90,13 @@ export_stories.short_description = _('Export Stories to Jira')
 
 class JiraAuthenticationForm(forms.Form):
     api_url = forms.CharField(label=_('API URL'),
-                              help_text=_('You can use this to override the API URL in the database.'),
+                              help_text=_('You can use this to override the API URL in the database'),
                               required=False)
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
     password1 = forms.CharField(label=_('Password'),
-                                help_text=_('You can use this to override the username password in the database'),
+                                help_text=_('You can use this to override the password in the database'),
                                 required=False,
                                 widget=forms.PasswordInput)
     password2 = forms.CharField(label=_('Confirm Password'), required=False, widget=forms.PasswordInput)
@@ -124,7 +124,7 @@ class JiraAuthenticationForm(forms.Form):
         password = password1 or getattr(self.connection, 'password', None)
         if not any([api_url, username, password]):
             self.add_error(None,
-                           _('Missing credentials. Check whether you entered an api_url, an username and a password'))
+                           _('Missing credentials. Check whether you entered an API URL, an username and a password'))
         try:
             jira.JIRA(api_url, basic_auth=(username, password))
         except JIRAError as e:
