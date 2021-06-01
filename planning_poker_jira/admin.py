@@ -1,11 +1,11 @@
 from typing import Dict, List, Union
 
 from django import forms
-from django.db.models import QuerySet
 from django.contrib import admin, messages
 from django.contrib.admin import helpers, ModelAdmin
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.contrib.admin.utils import unquote
+from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template.response import TemplateResponse
 from django.urls import reverse, URLResolver, URLPattern
@@ -77,9 +77,6 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         'media': modeladmin.media
     }
     return TemplateResponse(request, 'admin/planning_poker/story/export_stories.html', context)
-
-
-export_stories.short_description = _('Export Stories to Jira')
 
 
 class JiraAuthenticationForm(forms.Form):
@@ -237,4 +234,4 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         return TemplateResponse(request, 'admin/planning_poker_jira/jira_connection/import_stories.html', context)
 
 
-StoryAdmin.actions = [*StoryAdmin.actions, export_stories]
+StoryAdmin.add_action(export_stories, _('Export Stories to Jira'))
