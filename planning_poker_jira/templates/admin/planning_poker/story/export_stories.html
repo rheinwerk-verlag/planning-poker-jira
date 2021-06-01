@@ -22,7 +22,7 @@
 
 {% block content %}
     <p>
-      {% blocktrans count num_stories=stories|length %}
+      {% blocktrans trimmed count num_stories=stories|length %}
         Are you sure you want to export the selected story?
       {% plural %}
         Are you sure you want to export the {{ num_stories }} selected stories?

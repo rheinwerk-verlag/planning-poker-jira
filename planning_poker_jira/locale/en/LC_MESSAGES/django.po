@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-01 15:05+0200\n"
+"POT-Creation-Date: 2021-06-01 15:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: .\admin.py:229
-#, python-brace-format
-msgid "Import stories from {obj}"
+msgid "Import stories from {}"
 msgstr ""
 
 #: .\admin.py:237
@@ -148,15 +147,9 @@ msgstr ""
 
 #: .\templates\admin\planning_poker\story\export_stories.html:25
 #, python-format
-msgid ""
-"\n"
-"        Are you sure you want to export the selected story?\n"
-"      "
+msgid "Are you sure you want to export the selected story?"
 msgid_plural ""
-"\n"
-"        Are you sure you want to export the %(num_stories)s selected "
-"stories?\n"
-"      "
+"Are you sure you want to export the %(num_stories)s selected stories?"
 msgstr[0] ""
 msgstr[1] ""
 

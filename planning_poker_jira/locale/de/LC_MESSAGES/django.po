@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-01 15:05+0200\n"
+"POT-Creation-Date: 2021-06-01 15:57+0200\n"
 "PO-Revision-Date: 2021-06-01 15:04+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
@@ -115,9 +115,9 @@ msgstr[0] "%d Story wurde erfolgreich importiert."
 msgstr[1] "%d wurden erfolgreich importiert."
 
 #: .\admin.py:229
-#, python-brace-format
-msgid "Import stories from {obj}"
-msgstr "Stories aus {obj} importieren"
+#| msgid "Import stories from {obj}"
+msgid "Import stories from {}"
+msgstr "Stories aus {} importieren"
 
 #: .\admin.py:237
 msgid "Export Stories to Jira"
@@ -158,20 +158,12 @@ msgstr "Stories exportieren"
 
 #: .\templates\admin\planning_poker\story\export_stories.html:25
 #, python-format
-msgid ""
-"\n"
-"        Are you sure you want to export the selected story?\n"
-"      "
+msgid "Are you sure you want to export the selected story?"
 msgid_plural ""
-"\n"
-"        Are you sure you want to export the %(num_stories)s selected "
-"stories?\n"
-"      "
+"Are you sure you want to export the %(num_stories)s selected stories?"
 msgstr[0] ""
-"\n"
 "Sind Sie sicher, dass Sie die ausgewählte Story exportieren wollen?"
 msgstr[1] ""
-"\n"
 "Sind Sie sicher, dass Sie die ausgewählten %(num_stories)s Stories "
 "exportieren wollen?"
 
