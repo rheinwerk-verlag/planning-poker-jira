@@ -6,6 +6,7 @@ from django import forms
 from django.db.models import QuerySet
 from django.contrib import admin, messages
 from django.contrib.admin import helpers, ModelAdmin
+from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.contrib.admin.utils import unquote
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template.response import TemplateResponse
@@ -20,7 +21,7 @@ from planning_poker.models import PokerSession
 from .models import JiraConnection
 
 
-def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> HttpResponse:
+def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> Union[HttpResponse, None]:
     """Send the story points for each story in the queryset to the selected backend.
 
     :param ModelAdmin modeladmin: The current ModelAdmin.
@@ -28,7 +29,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
     :param QuerySet queryset: Containing the set of stories selected by the user.
     :return: A http response which either redirects back to the changelist view on success or renders a template with
              the `ExportStoriesForm`.
-    :rtype: HttpResponse
+    :rtype: HttpResponse or None
     """
     if 'export' in request.POST:
         form = ExportStoriesForm(request.POST)
@@ -54,8 +55,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                     '%d stories were successfully exported.',
                     num_stories,
                 ) % num_stories, messages.SUCCESS)
-            redirect_url = f'admin:{modeladmin.model._meta.app_label}_{modeladmin.model._meta.model_name}_changelist'
-            return HttpResponseRedirect(reverse(redirect_url))
+            return None
     else:
         form = ExportStoriesForm()
     admin_form = helpers.AdminForm(
@@ -116,7 +116,7 @@ class JiraAuthenticationForm(forms.Form):
         api_url = cleaned_data.get('api_url') or getattr(self.connection, 'api_url', None)
         username = cleaned_data.get('username') or getattr(self.connection, 'username', None)
         password = password1 or getattr(self.connection, 'password', None)
-        if not all([api_url, username]):
+        if not api_url and username:
             self.add_error(None,
                            _('Missing credentials. Check whether you entered an API URL, an username and a password'))
         # We don't have to verify the credentials if the user hasn't provided a password.
@@ -180,7 +180,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
 
         info = self.model._meta.app_label, self.model._meta.model_name
 
-        import_stories_path = path('<path:object_id>/import_stories', wrap(self.import_stories_view),
+        import_stories_path = path('<path:object_id>/import_stories/', wrap(self.import_stories_view),
                                    name='%s_%s_import_stories' % info)
 
         urls.insert(-2, import_stories_path)
@@ -193,10 +193,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         :return: A string containing a html anchor tag where the href attribute points to the import stories view.
         :rtype: str
         """
-        model = type(obj)
-        app_label = model._meta.app_label
-        model_name = model._meta.model_name
-        import_stories_url = reverse(f'admin:{app_label}_{model_name}_import_stories', args=[obj.id])
+        import_stories_url = reverse(admin_urlname(obj._meta, 'import_stories'), args=[obj.id])
         return format_html('<a href="{}">{}</a>', import_stories_url, _('Import'))
     get_import_stories_url.short_description = _('Import Stories')
 
