@@ -1,7 +1,5 @@
-from functools import update_wrapper
 from typing import Dict, List, Union
 
-import jira
 from django import forms
 from django.db.models import QuerySet
 from django.contrib import admin, messages
@@ -13,7 +11,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse, URLResolver, URLPattern
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
-from jira import JIRAError
+from jira import JIRA, JIRAError
 
 from planning_poker.admin import StoryAdmin
 from planning_poker.models import PokerSession
@@ -35,15 +33,15 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
-            connection = jira_connection.get_client(form.cleaned_data['username'], form.cleaned_data['password1'])
+            client = form.client
             try:
                 for story in queryset:
-                    jira_story = connection.issue(id=story.ticket_number, fields='')
+                    jira_story = client.issue(id=story.ticket_number, fields='')
                     jira_story.update(fields={jira_connection.story_points_field: story.story_points})
             except JIRAError:
                 modeladmin.message_user(
                     request,
-                    _(f'The story "{story}" could not be exported because because it probably does not exist in '
+                    _(f'The story "{story}" could not be exported because it probably does not exist in '
                       f'"{jira_connection}"'),
                     messages.ERROR
                 )
@@ -64,7 +62,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 'fields': ('jira_connection',)
             }),
             (_('Override Options'), {
-                'fields': ('username', 'password1', 'password2')
+                'fields': ('username', 'password')
             }),
         ),
         {},
@@ -88,40 +86,31 @@ class JiraAuthenticationForm(forms.Form):
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
-    password1 = forms.CharField(label=_('Password'),
-                                help_text=_('You can use this to override the password in the database'),
-                                required=False,
-                                widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Confirm Password'), required=False, widget=forms.PasswordInput)
+    password = forms.CharField(label=_('Password'),
+                               help_text=_('You can use this to override the password in the database'),
+                               required=False,
+                               widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
         self.connection = kwargs.pop('connection', None)
+        self.client = kwargs.pop('client', None)
         super().__init__(*args, **kwargs)
 
     def clean(self) -> dict:
         cleaned_data = super().clean()
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
-
-        if password1 != password2:
-            error_message = _("The passwords didn't match")
-            self.add_error('password1', error_message)
-            self.add_error('password2', error_message)
-            # We fail fast here because there is no need to validate the credentials if the passwords didn't match.
-            return cleaned_data
 
         if connection := cleaned_data.get('jira_connection'):
             self.connection = connection
         api_url = cleaned_data.get('api_url') or getattr(self.connection, 'api_url', None)
         username = cleaned_data.get('username') or getattr(self.connection, 'username', None)
-        password = password1 or getattr(self.connection, 'password', None)
-        if not api_url and username:
+        password = cleaned_data.get('password') or getattr(self.connection, 'password', None)
+        if not (api_url and username):
             self.add_error(None,
                            _('Missing credentials. Check whether you entered an API URL, an username and a password'))
         # We don't have to verify the credentials if the user hasn't provided a password.
         if password:
             try:
-                jira.JIRA(api_url, basic_auth=(username, password))
+                self.client = JIRA(api_url, basic_auth=(username, password))
             except JIRAError as e:
                 if e.status_code == 401:
                     error_message = _('Could not authenticate the API user with the given credentials. '
@@ -133,12 +122,11 @@ class JiraAuthenticationForm(forms.Form):
 
 
 class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
-    password1 = forms.CharField(label=_('Password'), required=False, widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Repeat Password'), required=False, widget=forms.PasswordInput)
-
-    def save(self, commit: bool = True):
-        self.instance.password = self.cleaned_data['password1']
-        return super().save(commit)
+    username = forms.CharField(label=_('Username'),
+                               required=False)
+    password = forms.CharField(label=_('Password'),
+                               required=False,
+                               widget=forms.PasswordInput)
 
 
 class ImportStoriesForm(JiraAuthenticationForm):
@@ -163,7 +151,7 @@ class ExportStoriesForm(JiraAuthenticationForm):
 @admin.register(JiraConnection)
 class JiraConnectionAdmin(admin.ModelAdmin):
     form = JiraConnectionForm
-    fields = ('label', 'api_url', 'username', 'password1', 'password2', 'story_points_field')
+    fields = ('label', 'api_url', 'username', 'password', 'story_points_field')
     list_display = ('__str__', 'get_import_stories_url')
 
     def get_urls(self) -> List[Union[URLResolver, URLPattern]]:
@@ -210,8 +198,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                 try:
                     stories = obj.create_stories(form.cleaned_data['jql_query'],
                                                  form.cleaned_data['poker_session'],
-                                                 form.cleaned_data['username'] or obj.username,
-                                                 form.cleaned_data['password1'] or obj.password)
+                                                 form.client)
                 except JIRAError as e:
                     error_text = e.text if e.status_code == 400 else e.status_code
                     form.add_error('jql_query', error_text)
@@ -233,7 +220,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                     'fields': ('poker_session', 'jql_query')
                 }),
                 (_('Override Options'), {
-                    'fields': ('username', 'password1', 'password2'),
+                    'fields': ('username', 'password'),
                 }),
             ),
             {},
