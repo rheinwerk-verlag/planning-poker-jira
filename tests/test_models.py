@@ -47,7 +47,7 @@ class TestJiraConnection:
         ]
 
         with jira_error:
-            jira_connection.create_stories('project=FIAE', poker_session, 'supersecret')
+            jira_connection.create_stories('project=FIAE', poker_session)
         assert list(poker_session.stories.values_list('ticket_number', flat=True)) == [story['number'] for story in
                                                                                        expected_result]
         mock_client.search_issues.assert_called_with(
