@@ -171,18 +171,11 @@ class JiraConnectionAdmin(admin.ModelAdmin):
 
         urls = super().get_urls()
 
-        def wrap(view):
-            def wrapper(*args, **kwargs):
-                return self.admin_site.admin_view(view)(*args, **kwargs)
-            wrapper.model_admin = self
-            return update_wrapper(wrapper, view)
+        import_stories_path = path('<path:object_id>/import_stories/',
+                                   self.admin_site.admin_view(self.import_stories_view),
+                                   name='_'.join((self.opts.app_label, self.opts.model_name, 'import_stories')))
 
-        info = self.model._meta.app_label, self.model._meta.model_name
-
-        import_stories_path = path('<path:object_id>/import_stories/', wrap(self.import_stories_view),
-                                   name='%s_%s_import_stories' % info)
-
-        urls.insert(-2, import_stories_path)
+        urls.insert(0, import_stories_path)
         return urls
 
     def get_import_stories_url(self, obj: JiraConnection) -> str:
