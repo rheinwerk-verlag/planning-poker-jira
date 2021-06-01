@@ -41,8 +41,8 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
             except JIRAError:
                 modeladmin.message_user(
                     request,
-                    _(f'The story "{story}" could not be exported because it probably does not exist in '
-                      f'"{jira_connection}"'),
+                    _('The story "{}" could not be exported '
+                      'because it probably does not exist in "{}"').format(story, jira_connection),
                     messages.ERROR
                 )
             else:

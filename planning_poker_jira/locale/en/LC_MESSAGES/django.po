@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-31 13:28+0200\n"
+"POT-Creation-Date: 2021-06-01 15:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,120 +18,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\admin.py:49
-#, python-brace-format
+#: .\admin.py:44
 msgid ""
-"The story \"{story}\" could not be exported because because it probably does "
-"not exist in \"{jira_connection}\""
+"The story \"{}\" could not be exported because it probably does not exist in "
+"\"{}\""
 msgstr ""
 
-#: .\admin.py:55
+#: .\admin.py:51
 #, python-format
 msgid "%d story was successfully exported."
 msgid_plural "%d stories were successfully exported."
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\admin.py:69 .\admin.py:246
+#: .\admin.py:64 .\admin.py:219
 msgid "Override Options"
 msgstr ""
 
-#: .\admin.py:79
+#: .\admin.py:74
 msgid "Export Stories"
 msgstr ""
 
-#: .\admin.py:87
-msgid "Export Stories to Jira"
-msgstr ""
-
-#: .\admin.py:91 .\models.py:17
-msgid "API URL"
-msgstr ""
-
-#: .\admin.py:92
-msgid "You can use this to override the API URL in the database"
-msgstr ""
-
-#: .\admin.py:94
+#: .\admin.py:83 .\admin.py:122
 msgid "Username"
 msgstr ""
 
-#: .\admin.py:95
+#: .\admin.py:84
 msgid "You can use this to override the username saved in the database"
 msgstr ""
 
-#: .\admin.py:97 .\admin.py:137 .\models.py:19
+#: .\admin.py:86 .\admin.py:124 .\models.py:19
 msgid "Password"
 msgstr ""
 
-#: .\admin.py:98
+#: .\admin.py:87
 msgid "You can use this to override the password in the database"
 msgstr ""
 
-#: .\admin.py:101
-msgid "Confirm Password"
-msgstr ""
-
-#: .\admin.py:113
-msgid "The passwords didn't match"
-msgstr ""
-
-#: .\admin.py:126
+#: .\admin.py:106
 msgid ""
 "Missing credentials. Check whether you entered an API URL, an username and a "
 "password"
 msgstr ""
 
-#: .\admin.py:130
+#: .\admin.py:113
 msgid ""
 "Could not authenticate the API user with the given credentials. Make sure "
 "that you entered the correct data."
 msgstr ""
 
-#: .\admin.py:138
-msgid "Repeat Password"
-msgstr ""
-
-#: .\admin.py:147
+#: .\admin.py:131
 msgid "Poker Session"
 msgstr ""
 
-#: .\admin.py:148
+#: .\admin.py:132
 msgid "The poker session to which the imported stories should be added"
 msgstr ""
 
-#: .\admin.py:152
+#: .\admin.py:136
 msgid "JQL Query"
 msgstr ""
 
-#: .\admin.py:157 .\models.py:23
+#: .\admin.py:141 .\models.py:23
 msgid "Jira Connection"
 msgstr ""
 
-#: .\admin.py:158
+#: .\admin.py:142
 msgid "The Jira Backend to which the stories should be exported"
 msgstr ""
 
-#: .\admin.py:200
-#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:38
+#: .\admin.py:174
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:40
 msgid "Import"
 msgstr ""
 
-#: .\admin.py:201
-#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:20
+#: .\admin.py:175
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:21
 msgid "Import Stories"
 msgstr ""
 
-#: .\admin.py:232
+#: .\admin.py:205
 #, python-format
 msgid "%d story was successfully imported."
 msgid_plural "%d stories were successfully imported."
 msgstr[0] ""
 msgstr[1] ""
 
-#: .\admin.py:256
+#: .\admin.py:229
 #, python-brace-format
 msgid "Import stories from {obj}"
+msgstr ""
+
+#: .\admin.py:237
+msgid "Export Stories to Jira"
 msgstr ""
 
 #: .\apps.py:7
@@ -140,6 +119,10 @@ msgstr ""
 
 #: .\models.py:16
 msgid "Label"
+msgstr ""
+
+#: .\models.py:17
+msgid "API URL"
 msgstr ""
 
 #: .\models.py:18
@@ -155,7 +138,7 @@ msgid "Jira Connections"
 msgstr ""
 
 #: .\templates\admin\planning_poker\story\export_stories.html:16
-#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:17
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:18
 msgid "Home"
 msgstr ""
 
@@ -167,11 +150,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"      Are you sure you want to export the selected story?\n"
+"        Are you sure you want to export the selected story?\n"
 "      "
 msgid_plural ""
 "\n"
-"      Are you sure you want to export the %(num_stories)s selected stories?\n"
+"        Are you sure you want to export the %(num_stories)s selected "
+"stories?\n"
 "      "
 msgstr[0] ""
 msgstr[1] ""
