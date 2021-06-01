@@ -35,8 +35,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
-            connection = jira_connection.get_client(form.cleaned_data['username'] or jira_connection.username,
-                                                    form.cleaned_data['password1'] or jira_connection.password)
+            connection = jira_connection.get_client(form.cleaned_data['username'], form.cleaned_data['password1'])
             try:
                 for story in queryset:
                     jira_story = connection.issue(id=story.ticket_number, fields='')
