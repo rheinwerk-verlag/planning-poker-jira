@@ -1,3 +1,4 @@
+from requests.exceptions import ConnectionError
 from typing import Dict, List, Union
 
 from django import forms
@@ -44,6 +45,11 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                     _('The story "{}" could not be exported '
                       'because it probably does not exist in "{}"').format(story, jira_connection),
                     messages.ERROR
+                )
+            except ConnectionError:
+                modeladmin.message_user(
+                    request,
+                    _('The story "{}" could not be exported. Could not connect to server').format(story)
                 )
             else:
                 num_stories = len(queryset)
@@ -115,6 +121,8 @@ class JiraAuthenticationForm(forms.Form):
                 else:
                     error_message = e.status_code
                 self.add_error(None, error_message)
+            except ConnectionError:
+                self.add_error(None, _('Failed to connect to server'))
         return cleaned_data
 
 
@@ -197,8 +205,10 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                                                  form.cleaned_data['poker_session'],
                                                  form.client)
                 except JIRAError as e:
-                    error_text = e.text if e.status_code == 400 else e.status_code
+                    error_text = e.text if e.status_code == 400 else _('Received status code {}').format(e.status_code)
                     form.add_error('jql_query', error_text)
+                except ConnectionError:
+                    form.add_error(None, _('Failed to connect to server'))
                 else:
                     num_stories = len(stories)
                     self.message_user(request, ngettext_lazy(
