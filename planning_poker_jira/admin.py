@@ -1,4 +1,4 @@
-from requests.exceptions import ConnectionError
+from requests.exceptions import ConnectionError, RequestException
 from typing import Dict, List, Union
 
 from django import forms
@@ -19,6 +19,7 @@ from planning_poker.admin import StoryAdmin
 from planning_poker.models import PokerSession
 
 from .models import JiraConnection
+from .utils import get_jira_error_error_text
 
 
 def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> Union[HttpResponse, None]:
@@ -39,18 +40,25 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 for story in queryset:
                     jira_story = form.client.issue(id=story.ticket_number, fields='')
                     jira_story.update(fields={jira_connection.story_points_field: story.story_points})
-            except JIRAError:
+            except JIRAError as e:
                 modeladmin.message_user(
                     request,
-                    _('The story "{}" could not be exported '
-                      'because it probably does not exist in "{}"').format(story, jira_connection),
+                    get_jira_error_error_text(e, story=story, connection=jira_connection),
                     messages.ERROR
                 )
             except ConnectionError:
                 modeladmin.message_user(
                     request,
-                    _('The story "{}" could not be exported. Could not connect to server').format(story)
+                    _('Failed to connect to server. Is "{}" the correct API URL?').format(jira_connection.api_url),
+                    messages.ERROR
                 )
+            except RequestException:
+                modeladmin.message_user(
+                    request,
+                    _('There was an ambiguous error with your request. Check if all your data is correct.'),
+                    messages.ERROR
+                )
+
             else:
                 num_stories = len(queryset)
                 modeladmin.message_user(request, ngettext_lazy(
@@ -131,14 +139,12 @@ class JiraAuthenticationForm(forms.Form):
             try:
                 JIRA(api_url, basic_auth=(username, password))
             except JIRAError as e:
-                if e.status_code == 401:
-                    error_message = _('Could not authenticate the API user with the given credentials. '
-                                      'Make sure that you entered the correct data.')
-                else:
-                    error_message = e.status_code
-                self.add_error(None, error_message)
+                self.add_error(None, get_jira_error_error_text(e))
             except ConnectionError:
-                self.add_error(None, _('Failed to connect to server'))
+                self.add_error(None, _('Failed to connect to server. Is "{}" the correct API URL?').format(api_url))
+            except RequestException:
+                self.add_error(None,
+                               _('There was an ambiguous error with your request. Check if all your data is correct.'))
         return cleaned_data
 
 
@@ -221,10 +227,13 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                                                  form.cleaned_data['poker_session'],
                                                  form.client)
                 except JIRAError as e:
-                    error_text = e.text if e.status_code == 400 else _('Received status code {}').format(e.status_code)
-                    form.add_error('jql_query', error_text)
+                    form.add_error('jql_query', get_jira_error_error_text(e, connection=obj))
                 except ConnectionError:
-                    form.add_error(None, _('Failed to connect to server'))
+                    form.add_error(None,
+                                   _('Failed to connect to server. Is "{}" the correct API URL?').format(obj.api_url))
+                except RequestException:
+                    form.add_error(None, _(
+                        'There was an ambiguous error with your request. Check if all your data is correct.'))
                 else:
                     num_stories = len(stories)
                     self.message_user(request, ngettext_lazy(
