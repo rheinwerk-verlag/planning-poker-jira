@@ -10,6 +10,7 @@ from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template.response import TemplateResponse
 from django.urls import reverse, URLResolver, URLPattern
+from django.utils.functional import cached_property
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from jira import JIRA, JIRAError
@@ -34,10 +35,9 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
-            client = form.client
             try:
                 for story in queryset:
-                    jira_story = client.issue(id=story.ticket_number, fields='')
+                    jira_story = form.client.issue(id=story.ticket_number, fields='')
                     jira_story.update(fields={jira_connection.story_points_field: story.story_points})
             except JIRAError:
                 modeladmin.message_user(
@@ -95,25 +95,41 @@ class JiraAuthenticationForm(forms.Form):
                                widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
-        self.connection = kwargs.pop('connection', None)
-        self.client = kwargs.pop('client', None)
+        self._connection = kwargs.pop('connection', None)
         super().__init__(*args, **kwargs)
+
+    @cached_property
+    def client(self) -> JIRA:
+        if self.errors:
+            raise ValueError('Could not get the client because the data did not validate')
+        if self.connection:
+            client = self.connection.get_client()
+        else:
+            client = JIRA(self.cleaned_data.get('api_url'),
+                          basic_auth=(self.cleaned_data.get('username'), self.cleaned_data.get('password')))
+        return client
+
+    @cached_property
+    def connection(self) -> JiraConnection:
+        if self.errors:
+            raise ValueError('Could not get the connection because the data did not validate')
+        return self.cleaned_data.get('jira_connection') or self._connection or self.instance
 
     def clean(self) -> dict:
         cleaned_data = super().clean()
 
-        if connection := cleaned_data.get('jira_connection'):
-            self.connection = connection
         api_url = cleaned_data.get('api_url') or getattr(self.connection, 'api_url', None)
         username = cleaned_data.get('username') or getattr(self.connection, 'username', None)
-        password = cleaned_data.get('password') or getattr(self.connection, 'password', None)
+        # We override `cleaned_data['password']` because it would otherwise reset the model's password to an empty
+        # string if the user didn't enter anything in the form's password field.
+        password = cleaned_data['password'] = cleaned_data.get('password') or getattr(self.connection, 'password', None)
         if not (api_url and username):
             self.add_error(None,
                            _('Missing credentials. Check whether you entered an API URL, an username and a password'))
         # We don't have to verify the credentials if the user hasn't provided a password.
         if password:
             try:
-                self.client = JIRA(api_url, basic_auth=(username, password))
+                JIRA(api_url, basic_auth=(username, password))
             except JIRAError as e:
                 if e.status_code == 401:
                     error_message = _('Could not authenticate the API user with the given credentials. '
