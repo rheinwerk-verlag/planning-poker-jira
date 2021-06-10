@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-07 07:49-0500\n"
-"PO-Revision-Date: 2021-06-01 15:04+0200\n"
+"POT-Creation-Date: 2021-06-10 12:58+0200\n"
+"PO-Revision-Date: 2021-06-10 13:00+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,150 +16,139 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 
-#: admin.py:52
-msgid "The story \"{}\" could not be exported. Could not connect to server"
+#: .\admin.py:50 .\admin.py:149 .\forms.py:63
+msgid "Failed to connect to server. Is \"{}\" the correct API URL?"
 msgstr ""
-"Die Story \"{}\" konnte nicht exportiert werden. Es konnte keine Verbindung "
-"zum Server hergestellt werden"
+"Es konnte keine Verbindung zum Server hergestellt werden. Ist \"{}\" die "
+"korrekte API URL?"
 
-#: admin.py:57
+#: .\admin.py:56 .\admin.py:152 .\forms.py:66
+msgid ""
+"There was an ambiguous error with your request. Check if all your data is "
+"correct."
+msgstr ""
+"Es gab einen uneindeutigen Fehler mit Ihrer Anfrage. Überprüfen Sie, ob alle "
+"Ihre Daten korrekt sind."
+
+#: .\admin.py:63
 #, python-format
 msgid "%d story was successfully exported."
 msgid_plural "%d stories were successfully exported."
 msgstr[0] "%d Story wurde erfolgreich exportiert."
 msgstr[1] "%d Stories wurden erfolgreich exportiert."
 
-#: admin.py:70 admin.py:242
+#: .\admin.py:76 .\admin.py:170
 msgid "Override Options"
 msgstr "Optionen überschreiben"
 
-#: admin.py:80
+#: .\admin.py:86 .\templates\admin\planning_poker\story\export_stories.html:19
 msgid "Export Stories"
 msgstr "Stories exportieren"
 
-#: admin.py:89 admin.py:144
-msgid "Username"
-msgstr "Benutzername"
-
-#: admin.py:90
-msgid "You can use this to override the username saved in the database"
-msgstr ""
-"Benutzen Sie dieses Feld um den Benutzernamen aus der Datenbank zu "
-"überschreiben"
-
-#: admin.py:92 admin.py:146 models.py:19
-msgid "Password"
-msgstr "Passwort"
-
-#: admin.py:93
-msgid "You can use this to override the password in the database"
-msgstr ""
-"Benutzen Sie dieses Feld um das Passwort aus der Datenbank zu überschreiben"
-
-#: admin.py:128
-msgid ""
-"Missing credentials. Check whether you entered an API URL, an username and a "
-"password"
-msgstr ""
-"Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL, einen "
-"Benutzernamen und ein Passwort angegeben haben"
-
-#: admin.py:136
-msgid "Failed to connect to server. Is \"{}\" the correct API URL?"
-msgstr "Es konnte keine Verbindung zum Server hergestellt werden. Ist \"{}\" die korrekte API URL?"
-
-#: admin.py:139
-msgid ""
-"There was an ambiguous error with your request. Check if all your data is "
-"correct."
-msgstr "Es gab einen uneindeutigen Fehler mit Ihrer Anfrage. Überprüfen Sie, ob alle Ihre Daten korrekt sind."
-
-#: admin.py:153
-msgid "Poker Session"
-msgstr "Poker-Runde"
-
-#: admin.py:154
-msgid "The poker session to which the imported stories should be added"
-msgstr ""
-"Die Poker-Runde zu der die importieren Stories hinzugefügt werden sollen"
-
-#: admin.py:158
-msgid "JQL Query"
-msgstr "JQL Query"
-
-#: admin.py:163 models.py:23
-msgid "Jira Connection"
-msgstr "Jiraverbindung"
-
-#: admin.py:164
-msgid "The Jira Backend to which the stories should be exported"
-msgstr "Der Jira-Server zu dem die Stories exportiert werden sollen"
-
-#: admin.py:196
-#: templates/admin/planning_poker_jira/jira_connection/import_stories.html:40
+#: .\admin.py:120
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:40
 msgid "Import"
 msgstr "Importieren"
 
-#: admin.py:197
-#: templates/admin/planning_poker_jira/jira_connection/import_stories.html:21
+#: .\admin.py:121
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:21
 msgid "Import Stories"
 msgstr "Stories importieren"
 
-#: admin.py:224
-msgid "Failed to connect to server"
-msgstr "Es konnte keine Verbindung zum Server hergestellt werden"
-
-#: admin.py:228
+#: .\admin.py:156
 #, python-format
 msgid "%d story was successfully imported."
 msgid_plural "%d stories were successfully imported."
 msgstr[0] "%d Story wurde erfolgreich importiert."
 msgstr[1] "%d wurden erfolgreich importiert."
 
-#: admin.py:252
+#: .\admin.py:180
 msgid "Import stories from {}"
 msgstr "Stories aus {} importieren"
 
-#: admin.py:260
+#: .\admin.py:188
 msgid "Export Stories to Jira"
 msgstr "Stories zu Jira exportieren"
 
-#: apps.py:7
-msgid "Planning Poker Jira"
-msgstr "Planungspoker Jira"
+#: .\apps.py:7
+msgid "Planning Poker: Jira Extension"
+msgstr "Planungspoker: Jira-Erweiterung"
 
-#: models.py:16
+#: .\forms.py:16 .\forms.py:71
+msgid "Username"
+msgstr "Benutzername"
+
+#: .\forms.py:17
+msgid "You can use this to override the username saved in the database"
+msgstr ""
+"Benutzen Sie dieses Feld um den Benutzernamen aus der Datenbank zu "
+"überschreiben"
+
+#: .\forms.py:19 .\forms.py:73 .\models.py:19
+msgid "Password"
+msgstr "Passwort"
+
+#: .\forms.py:20
+msgid "You can use this to override the password in the database"
+msgstr ""
+"Benutzen Sie dieses Feld um das Passwort aus der Datenbank zu überschreiben"
+
+#: .\forms.py:55
+msgid ""
+"Missing credentials. Check whether you entered an API URL, and a username."
+msgstr ""
+"Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL, und einen "
+"Benutzernamen."
+
+#: .\forms.py:80
+msgid "Poker Session"
+msgstr "Poker-Runde"
+
+#: .\forms.py:81
+msgid "The poker session to which the imported stories should be added"
+msgstr ""
+"Die Poker-Runde zu der die importieren Stories hinzugefügt werden sollen"
+
+#: .\forms.py:85
+msgid "JQL Query"
+msgstr "JQL Query"
+
+#: .\forms.py:90 .\models.py:23
+msgid "Jira Connection"
+msgstr "Jira-Verbindung"
+
+#: .\forms.py:91
+msgid "The Jira Backend to which the stories should be exported"
+msgstr "Der Jira-Server zu dem die Stories exportiert werden sollen"
+
+#: .\models.py:16
 msgid "Label"
 msgstr "Bezeichnung"
 
-#: models.py:17
+#: .\models.py:17
 msgid "API URL"
 msgstr "API URL"
 
-#: models.py:18
+#: .\models.py:18
 msgid "API Username"
 msgstr "API Benutzername"
 
-#: models.py:20
+#: .\models.py:20
 msgid "Story Points Field"
 msgstr "Storypunktefeld"
 
-#: models.py:24
+#: .\models.py:24
 msgid "Jira Connections"
 msgstr "Jiraverbindungen"
 
-#: templates/admin/planning_poker/story/export_stories.html:16
-#: templates/admin/planning_poker_jira/jira_connection/import_stories.html:18
+#: .\templates\admin\planning_poker\story\export_stories.html:16
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:18
 msgid "Home"
 msgstr "Home"
 
-#: templates/admin/planning_poker/story/export_stories.html:19
-msgid "Export Stroies"
-msgstr "Stories exportieren"
-
-#: templates/admin/planning_poker/story/export_stories.html:25
+#: .\templates\admin\planning_poker\story\export_stories.html:25
 #, python-format
 msgid "Are you sure you want to export the selected story?"
 msgid_plural ""
@@ -169,15 +158,15 @@ msgstr[1] ""
 "Sind Sie sicher, dass Sie die ausgewählten %(num_stories)s Stories "
 "exportieren wollen?"
 
-#: templates/admin/planning_poker/story/export_stories.html:45
+#: .\templates\admin\planning_poker\story\export_stories.html:45
 msgid "Export"
 msgstr "Exportieren"
 
-#: templates/admin/planning_poker/story/export_stories.html:46
+#: .\templates\admin\planning_poker\story\export_stories.html:46
 msgid "No, take me back"
 msgstr "Abbrechen"
 
-#: utils.py:23
+#: .\utils.py:23
 msgid ""
 "Could not authenticate the API user with the given credentials. Make sure "
 "that you entered the correct data."
@@ -185,10 +174,10 @@ msgstr ""
 "Ein API Nutzer mit den gegebenen Anmeldedaten konnte nicht Authentifiziert "
 "werden. Überprüfen Sie, ob Sie die korrekten Daten eingegeben haben."
 
-#: utils.py:27
+#: .\utils.py:27
 msgid "The story \"{}\" does probably not exist inside \"{}\""
 msgstr "Die Story \"{}\" existiert vermutlich nicht in \"{}\""
 
-#: utils.py:30
+#: .\utils.py:30
 msgid "Received status code {}"
 msgstr "Statuscode {} erhalten"

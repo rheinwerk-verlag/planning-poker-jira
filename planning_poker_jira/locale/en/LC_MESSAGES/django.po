@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-07 07:49-0500\n"
+"POT-Creation-Date: 2021-06-10 12:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,140 +18,127 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin.py:52
-msgid "The story \"{}\" could not be exported. Could not connect to server"
+#: .\admin.py:50 .\admin.py:149 .\forms.py:63
+msgid "Failed to connect to server. Is \"{}\" the correct API URL?"
 msgstr ""
 
-#: admin.py:57
+#: .\admin.py:56 .\admin.py:152 .\forms.py:66
+msgid ""
+"There was an ambiguous error with your request. Check if all your data is "
+"correct."
+msgstr ""
+
+#: .\admin.py:63
 #, python-format
 msgid "%d story was successfully exported."
 msgid_plural "%d stories were successfully exported."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.py:70 admin.py:242
+#: .\admin.py:76 .\admin.py:170
 msgid "Override Options"
 msgstr ""
 
-#: admin.py:80
+#: .\admin.py:86 .\templates\admin\planning_poker\story\export_stories.html:19
 msgid "Export Stories"
 msgstr ""
 
-#: admin.py:89 admin.py:144
-msgid "Username"
-msgstr ""
-
-#: admin.py:90
-msgid "You can use this to override the username saved in the database"
-msgstr ""
-
-#: admin.py:92 admin.py:146 models.py:19
-msgid "Password"
-msgstr ""
-
-#: admin.py:93
-msgid "You can use this to override the password in the database"
-msgstr ""
-
-#: admin.py:128
-msgid ""
-"Missing credentials. Check whether you entered an API URL, an username and a "
-"password"
-msgstr ""
-
-#: admin.py:136
-msgid "Failed to connect to server. Is \"{}\" the correct API URL?"
-msgstr ""
-
-#: admin.py:139
-msgid ""
-"There was an ambiguous error with your request. Check if all your data is "
-"correct."
-msgstr ""
-
-#: admin.py:153
-msgid "Poker Session"
-msgstr ""
-
-#: admin.py:154
-msgid "The poker session to which the imported stories should be added"
-msgstr ""
-
-#: admin.py:158
-msgid "JQL Query"
-msgstr ""
-
-#: admin.py:163 models.py:23
-msgid "Jira Connection"
-msgstr ""
-
-#: admin.py:164
-msgid "The Jira Backend to which the stories should be exported"
-msgstr ""
-
-#: admin.py:196
-#: templates/admin/planning_poker_jira/jira_connection/import_stories.html:40
+#: .\admin.py:120
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:40
 msgid "Import"
 msgstr ""
 
-#: admin.py:197
-#: templates/admin/planning_poker_jira/jira_connection/import_stories.html:21
+#: .\admin.py:121
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:21
 msgid "Import Stories"
 msgstr ""
 
-#: admin.py:224
-msgid "Failed to connect to server"
-msgstr ""
-
-#: admin.py:228
+#: .\admin.py:156
 #, python-format
 msgid "%d story was successfully imported."
 msgid_plural "%d stories were successfully imported."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.py:252
+#: .\admin.py:180
 msgid "Import stories from {}"
 msgstr ""
 
-#: admin.py:260
+#: .\admin.py:188
 msgid "Export Stories to Jira"
 msgstr ""
 
-#: apps.py:7
-msgid "Planning Poker Jira"
+#: .\apps.py:7
+msgid "Planning Poker: Jira Extension"
 msgstr ""
 
-#: models.py:16
+#: .\forms.py:16 .\forms.py:71
+msgid "Username"
+msgstr ""
+
+#: .\forms.py:17
+msgid "You can use this to override the username saved in the database"
+msgstr ""
+
+#: .\forms.py:19 .\forms.py:73 .\models.py:19
+msgid "Password"
+msgstr ""
+
+#: .\forms.py:20
+msgid "You can use this to override the password in the database"
+msgstr ""
+
+#: .\forms.py:55
+msgid ""
+"Missing credentials. Check whether you entered an API URL, and a username."
+msgstr ""
+
+#: .\forms.py:80
+msgid "Poker Session"
+msgstr ""
+
+#: .\forms.py:81
+msgid "The poker session to which the imported stories should be added"
+msgstr ""
+
+#: .\forms.py:85
+msgid "JQL Query"
+msgstr ""
+
+#: .\forms.py:90 .\models.py:23
+msgid "Jira Connection"
+msgstr ""
+
+#: .\forms.py:91
+msgid "The Jira Backend to which the stories should be exported"
+msgstr ""
+
+#: .\models.py:16
 msgid "Label"
 msgstr ""
 
-#: models.py:17
+#: .\models.py:17
 msgid "API URL"
 msgstr ""
 
-#: models.py:18
+#: .\models.py:18
 msgid "API Username"
 msgstr ""
 
-#: models.py:20
+#: .\models.py:20
 msgid "Story Points Field"
 msgstr ""
 
-#: models.py:24
+#: .\models.py:24
 msgid "Jira Connections"
 msgstr ""
 
-#: templates/admin/planning_poker/story/export_stories.html:16
-#: templates/admin/planning_poker_jira/jira_connection/import_stories.html:18
+#: .\templates\admin\planning_poker\story\export_stories.html:16
+#: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:18
 msgid "Home"
 msgstr ""
 
-#: templates/admin/planning_poker/story/export_stories.html:19
-msgid "Export Stroies"
-msgstr ""
-
-#: templates/admin/planning_poker/story/export_stories.html:25
+#: .\templates\admin\planning_poker\story\export_stories.html:25
 #, python-format
 msgid "Are you sure you want to export the selected story?"
 msgid_plural ""
@@ -159,24 +146,24 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/admin/planning_poker/story/export_stories.html:45
+#: .\templates\admin\planning_poker\story\export_stories.html:45
 msgid "Export"
 msgstr ""
 
-#: templates/admin/planning_poker/story/export_stories.html:46
+#: .\templates\admin\planning_poker\story\export_stories.html:46
 msgid "No, take me back"
 msgstr ""
 
-#: utils.py:23
+#: .\utils.py:23
 msgid ""
 "Could not authenticate the API user with the given credentials. Make sure "
 "that you entered the correct data."
 msgstr ""
 
-#: utils.py:27
+#: .\utils.py:27
 msgid "The story \"{}\" does probably not exist inside \"{}\""
 msgstr ""
 
-#: utils.py:30
+#: .\utils.py:30
 msgid "Received status code {}"
 msgstr ""

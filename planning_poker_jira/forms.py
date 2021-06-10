@@ -52,7 +52,7 @@ class JiraAuthenticationForm(forms.Form):
         password = cleaned_data['password'] = cleaned_data.get('password') or getattr(self.connection, 'password', None)
         if not (api_url and username):
             self.add_error(None,
-                           _('Missing credentials. Check whether you entered an API URL, an username and a password'))
+                           _('Missing credentials. Check whether you entered an API URL, and a username.'))
         # We don't have to verify the credentials if the user hasn't provided a password.
         if password:
             try:
