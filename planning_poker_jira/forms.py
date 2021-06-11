@@ -70,11 +70,11 @@ class JiraAuthenticationForm(forms.Form):
 
 
 class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
-    username = forms.CharField(label=_('Username'),
-                               required=False)
-    password = forms.CharField(label=_('Password'),
-                               required=False,
-                               widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = None
+        self.fields['password'].help_text = None
 
 
 class ImportStoriesForm(JiraAuthenticationForm):
