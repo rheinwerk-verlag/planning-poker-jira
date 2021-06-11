@@ -22,47 +22,36 @@ class JiraAuthenticationForm(forms.Form):
                                widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
-        self._connection = kwargs.pop('connection', None)
         self._client = None
         super().__init__(*args, **kwargs)
 
     @cached_property
     def client(self) -> JIRA:
         """A client which can be used to communicate with the jira backend. E.g. to import/export stories."""
-        if self.errors:
+        if self._client is None:
             raise ValueError('Could not get the client because the data did not validate')
-        if self._client:
-            pass
-        elif self.connection:
-            self._client = self.connection.get_client()
-        else:
-            self._client = JIRA(self.cleaned_data.get('api_url'),
-                                basic_auth=(self.cleaned_data.get('username'), self.cleaned_data.get('password')))
         return self._client
 
-    @cached_property
-    def connection(self) -> JiraConnection:
-        if self.errors:
-            raise ValueError('Could not get the connection because the data did not validate')
-        return self.cleaned_data.get('jira_connection') or self._connection or self.instance
+    def _get_connection(self) -> JiraConnection:
+        """This method should be implemented by all the child classes in order to provide a JiraConnection instance."""
+        raise NotImplementedError()
 
     def clean(self) -> dict:
         cleaned_data = super().clean()
-
-        api_url = cleaned_data.get('api_url') or getattr(self.connection, 'api_url', None)
-        username = cleaned_data.get('username') or getattr(self.connection, 'username', None)
+        connection = self._get_connection()
         # We override `cleaned_data['password']` because it would otherwise reset the model's password to an empty
         # string if the user didn't enter anything in the form's password field.
-        password = cleaned_data['password'] = cleaned_data.get('password') or getattr(self.connection, 'password', None)
-        if not (api_url and username):
+        cleaned_data['password'] = connection.password
+        if not (connection.api_url and connection.username):
             self.add_error(None,
                            _('Missing credentials. Check whether you entered an API URL, and a username.'))
         try:
-            _client = JIRA(api_url, basic_auth=(username, password))
+            self._client = connection.get_client()
         except JIRAError as e:
             self.add_error(None, get_jira_error_error_text(e))
         except ConnectionError:
-            self.add_error(None, _('Failed to connect to server. Is "{}" the correct API URL?').format(api_url))
+            self.add_error(None, _('Failed to connect to server. Is "{}" the correct API URL?')
+                           .format(connection.api_url))
         except RequestException:
             self.add_error(None,
                            _('There was an ambiguous error with your request. Check if all your data is correct.'))
@@ -76,6 +65,10 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         self.fields['username'].help_text = None
         self.fields['password'].help_text = None
 
+    def _get_connection(self) -> JiraConnection:
+        """Create a JiraConnection instance from the form data."""
+        return JiraConnection(**self.cleaned_data)
+
 
 class ImportStoriesForm(JiraAuthenticationForm):
     poker_session = forms.ModelChoiceField(
@@ -86,6 +79,16 @@ class ImportStoriesForm(JiraAuthenticationForm):
     )
     jql_query = forms.CharField(label=_('JQL Query'), required=True)
 
+    def __init__(self, connection, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._connection = connection
+
+    def _get_connection(self) -> JiraConnection:
+        """Return a JiraConnection instance where the username and password can be overridden by the form."""
+        return JiraConnection(api_url=self._connection.api_url,
+                              username=self.cleaned_data['username'] or self._connection.username,
+                              password=self.cleaned_data['password'] or self._connection.password)
+
 
 class ExportStoriesForm(JiraAuthenticationForm):
     jira_connection = forms.ModelChoiceField(
@@ -94,3 +97,10 @@ class ExportStoriesForm(JiraAuthenticationForm):
         queryset=JiraConnection.objects.all(),
         required=True
     )
+
+    def _get_connection(self) -> JiraConnection:
+        """Return a JiraConnection instance where the username and password can be overridden by the form."""
+        connection = self.cleaned_data['jira_connection']
+        return JiraConnection(api_url=connection.api_url,
+                              username=self.cleaned_data['username'] or connection.username,
+                              password=self.cleaned_data['password'] or connection.password)

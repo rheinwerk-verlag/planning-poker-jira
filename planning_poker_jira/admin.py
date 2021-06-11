@@ -151,7 +151,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
             return self._get_obj_does_not_exist_redirect(request, self.model._meta, object_id)
 
         if request.method == 'POST':
-            form = ImportStoriesForm(request.POST, connection=obj)
+            form = ImportStoriesForm(obj, request.POST)
             if form.is_valid():
                 try:
                     stories = obj.create_stories(form.cleaned_data['jql_query'],

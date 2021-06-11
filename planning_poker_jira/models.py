@@ -26,13 +26,9 @@ class JiraConnection(models.Model):
     def __str__(self) -> str:
         return self.label or self.api_url
 
-    def get_client(self, username: str = None, password: str = None) -> JIRA:
-        """Authenticate at the jira backend and return a client to communicate with it.
-
-        :param str username: The name of the user who should be authenticated. Default None.
-        :param str password: The password used to authenticate the user. Default None.
-        """
-        return JIRA(self.api_url, basic_auth=(username or self.username, password or self.password))
+    def get_client(self) -> JIRA:
+        """Authenticate at the jira backend and return a client to communicate with it."""
+        return JIRA(self.api_url, basic_auth=(self.username, self.password))
 
     def create_stories(self, query_string: str, poker_session: PokerSession, client: JIRA = None) -> List[Story]:
         """Fetch issues from the Jira client with the given query string and add them to the poker session.
