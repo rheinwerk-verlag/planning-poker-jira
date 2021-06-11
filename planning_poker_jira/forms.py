@@ -23,6 +23,7 @@ class JiraAuthenticationForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self._connection = kwargs.pop('connection', None)
+        self._client = None
         super().__init__(*args, **kwargs)
 
     @cached_property
@@ -30,12 +31,14 @@ class JiraAuthenticationForm(forms.Form):
         """A client which can be used to communicate with the jira backend. E.g. to import/export stories."""
         if self.errors:
             raise ValueError('Could not get the client because the data did not validate')
-        if self.connection:
-            client = self.connection.get_client()
+        if self._client:
+            pass
+        elif self.connection:
+            self._client = self.connection.get_client()
         else:
-            client = JIRA(self.cleaned_data.get('api_url'),
-                          basic_auth=(self.cleaned_data.get('username'), self.cleaned_data.get('password')))
-        return client
+            self._client = JIRA(self.cleaned_data.get('api_url'),
+                                basic_auth=(self.cleaned_data.get('username'), self.cleaned_data.get('password')))
+        return self._client
 
     @cached_property
     def connection(self) -> JiraConnection:
@@ -54,17 +57,15 @@ class JiraAuthenticationForm(forms.Form):
         if not (api_url and username):
             self.add_error(None,
                            _('Missing credentials. Check whether you entered an API URL, and a username.'))
-        # We don't have to verify the credentials if the user hasn't provided a password.
-        if password:
-            try:
-                JIRA(api_url, basic_auth=(username, password))
-            except JIRAError as e:
-                self.add_error(None, get_jira_error_error_text(e))
-            except ConnectionError:
-                self.add_error(None, _('Failed to connect to server. Is "{}" the correct API URL?').format(api_url))
-            except RequestException:
-                self.add_error(None,
-                               _('There was an ambiguous error with your request. Check if all your data is correct.'))
+        try:
+            _client = JIRA(api_url, basic_auth=(username, password))
+        except JIRAError as e:
+            self.add_error(None, get_jira_error_error_text(e))
+        except ConnectionError:
+            self.add_error(None, _('Failed to connect to server. Is "{}" the correct API URL?').format(api_url))
+        except RequestException:
+            self.add_error(None,
+                           _('There was an ambiguous error with your request. Check if all your data is correct.'))
         return cleaned_data
 
 
