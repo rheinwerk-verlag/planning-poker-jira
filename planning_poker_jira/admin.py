@@ -84,6 +84,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         **modeladmin.admin_site.each_context(request),
         'opts': queryset.model._meta,
         'title': _('Export Stories'),
+        'submit_text': _('Export'),
         'stories': queryset,
         'form': admin_form,
         'media': modeladmin.media

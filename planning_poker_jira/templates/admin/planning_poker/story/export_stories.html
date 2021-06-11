@@ -42,7 +42,7 @@
     {% endfor %}
     <input type="hidden" name="action" value="export_stories">
     {% block submit_buttons_bottom %}
-      <input type="submit" value="{% trans 'Export' %}" name="export">
+      <input type="submit" value="{{ submit_text }}" name="export">
       <a href="#" class="button cancel-link">{% trans "No, take me back" %}</a>
     {% endblock submit_buttons_bottom %}
     </form>
