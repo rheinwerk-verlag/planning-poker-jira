@@ -34,31 +34,45 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
-            try:
-                for story in queryset:
+            error_message = _('"{story}" could not be exported. {reason}.')
+            num_exported_stories = 0
+            for story in queryset:
+                try:
                     jira_story = form.client.issue(id=story.ticket_number, fields='')
                     jira_story.update(fields={jira_connection.story_points_field: story.story_points})
-            except JIRAError as e:
-                modeladmin.message_user(
-                    request,
-                    get_jira_error_error_text(e, story=story, connection=jira_connection),
-                    messages.ERROR
-                )
-            except ConnectionError:
-                modeladmin.message_user(
-                    request,
-                    _('Failed to connect to server. Is "{}" the correct API URL?').format(jira_connection.api_url),
-                    messages.ERROR
-                )
-            except RequestException:
-                modeladmin.message_user(
-                    request,
-                    _('There was an ambiguous error with your request. Check if all your data is correct.'),
-                    messages.ERROR
-                )
-
-            else:
-                num_stories = len(queryset)
+                except JIRAError as e:
+                    modeladmin.message_user(
+                        request,
+                        error_message.format(
+                            story=story,
+                            reason=get_jira_error_error_text(e, connection=jira_connection)
+                        ),
+                        messages.ERROR
+                    )
+                except ConnectionError:
+                    modeladmin.message_user(
+                        request,
+                        error_message.format(
+                            story=story,
+                            reason=_('Failed to connect to server. Is "{url}" the correct API URL?').format(
+                                url=jira_connection.api_url)
+                        ),
+                        messages.ERROR
+                    )
+                except RequestException:
+                    modeladmin.message_user(
+                        request,
+                        error_message.format(
+                            story=story,
+                            reason=_(
+                                'There was an ambiguous error with your request. Check if all your data is correct.')
+                        ),
+                        messages.ERROR
+                    )
+                else:
+                    num_exported_stories += 1
+            if num_exported_stories:
+                num_stories = num_exported_stories
                 modeladmin.message_user(request, ngettext_lazy(
                     '%d story was successfully exported.',
                     '%d stories were successfully exported.',
