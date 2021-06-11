@@ -27,6 +27,7 @@ class JiraAuthenticationForm(forms.Form):
 
     @cached_property
     def client(self) -> JIRA:
+        """A client which can be used to communicate with the jira backend. E.g. to import/export stories."""
         if self.errors:
             raise ValueError('Could not get the client because the data did not validate')
         if self.connection:
