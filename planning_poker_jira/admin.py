@@ -76,7 +76,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
     )
     context = {
         **modeladmin.admin_site.each_context(request),
-        'opts': queryset.model._meta,
+        'opts': modeladmin.opts,
         'title': _('Export Stories'),
         'submit_text': _('Export'),
         'stories': queryset,
@@ -109,7 +109,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         :return: A string containing a html anchor tag where the href attribute points to the import stories view.
         :rtype: str
         """
-        import_stories_url = reverse(admin_urlname(obj._meta, 'import_stories'), args=[obj.id])
+        import_stories_url = reverse(admin_urlname(self.opts, 'import_stories'), args=[obj.id])
         return format_html('<a href="{}">{}</a>', import_stories_url, _('Import'))
     get_import_stories_url.short_description = _('Import Stories')
 
@@ -126,7 +126,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         obj = self.get_object(request, unquote(object_id))
 
         if obj is None:
-            return self._get_obj_does_not_exist_redirect(request, self.model._meta, object_id)
+            return self._get_obj_does_not_exist_redirect(request, self.opts, object_id)
 
         if request.method == 'POST':
             form = ImportStoriesForm(obj, request.POST)
@@ -148,8 +148,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                         '%d stories were successfully imported.',
                         num_stories,
                     ) % num_stories, messages.SUCCESS)
-                    redirect_url = f'admin:{self.model._meta.app_label}_{self.model._meta.model_name}_changelist'
-                    return HttpResponseRedirect(reverse(redirect_url))
+                    return HttpResponseRedirect(reverse(admin_urlname(self.opts, 'changelist')))
         else:
             form = ImportStoriesForm(connection=obj)
         admin_form = helpers.AdminForm(
@@ -167,7 +166,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         )
         context = {
             **self.admin_site.each_context(request),
-            'opts': self.model._meta,
+            'opts': self.opts,
             'title': _('Import stories from {}').format(obj),
             'form': admin_form,
             'object_id': object_id,

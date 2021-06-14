@@ -45,7 +45,7 @@ def get_jira_error_error_text(jira_error: JIRAError, **context) -> str:
                        'Make sure that you entered the correct data.')
     elif jira_error.status_code == 404:
         if connection := context.get('connection'):
-            error_text = _('The story does probably not exist inside "{connection}"').format(connetion=connection)
+            error_text = _('The story does probably not exist inside "{connection}"').format(connection=connection)
         else:
             error_text = _('The story does probably not exist inside the selected backend.')
     else:
