@@ -13,6 +13,10 @@ from .utils import get_error_text
 
 
 class JiraAuthenticationForm(forms.Form):
+    """Base class for all the forms which handle jira connections.
+    All derived forms check whether a connection to the jira backend when cleaned and provide a `client` property which
+    can be used to communicate with said backend.
+    """
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
@@ -53,6 +57,7 @@ class JiraAuthenticationForm(forms.Form):
 
 
 class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
+    """Form which is used for the `JiraConnectionAdmin` class. This is used for the change and create views."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -65,6 +70,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
 
 class ImportStoriesForm(JiraAuthenticationForm):
+    """Form which is used for importing stories from the jira backend."""
     poker_session = forms.ModelChoiceField(
         label=_('Poker Session'),
         help_text=_('The poker session to which the imported stories should be added'),
@@ -85,6 +91,7 @@ class ImportStoriesForm(JiraAuthenticationForm):
 
 
 class ExportStoriesForm(JiraAuthenticationForm):
+    """Form which is used for exporting stories to the jira backend."""
     jira_connection = forms.ModelChoiceField(
         label=_('Jira Connection'),
         help_text=_('The Jira Backend to which the stories should be exported'),
