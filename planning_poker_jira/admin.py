@@ -17,7 +17,7 @@ from planning_poker.admin import StoryAdmin
 
 from .forms import ExportStoriesForm, ImportStoriesForm, JiraConnectionForm
 from .models import JiraConnection
-from .utils import get_jira_error_error_text
+from .utils import get_error_text
 
 
 def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> Union[HttpResponse, None]:
@@ -40,32 +40,12 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 try:
                     jira_story = form.client.issue(id=story.ticket_number, fields='')
                     jira_story.update(fields={jira_connection.story_points_field: story.story_points})
-                except JIRAError as e:
+                except (JIRAError, ConnectionError, RequestException) as e:
                     modeladmin.message_user(
                         request,
                         error_message.format(
                             story=story,
-                            reason=get_jira_error_error_text(e, connection=jira_connection)
-                        ),
-                        messages.ERROR
-                    )
-                except ConnectionError:
-                    modeladmin.message_user(
-                        request,
-                        error_message.format(
-                            story=story,
-                            reason=_('Failed to connect to server. Is "{url}" the correct API URL?').format(
-                                url=jira_connection.api_url)
-                        ),
-                        messages.ERROR
-                    )
-                except RequestException:
-                    modeladmin.message_user(
-                        request,
-                        error_message.format(
-                            story=story,
-                            reason=_(
-                                'There was an ambiguous error with your request. Check if all your data is correct.')
+                            reason=get_error_text(e, api_url=jira_connection.api_url, connection=jira_connection)
                         ),
                         messages.ERROR
                     )
@@ -157,14 +137,12 @@ class JiraConnectionAdmin(admin.ModelAdmin):
                     stories = obj.create_stories(form.cleaned_data['jql_query'],
                                                  form.cleaned_data['poker_session'],
                                                  form.client)
-                except JIRAError as e:
-                    form.add_error('jql_query', get_jira_error_error_text(e, connection=obj))
-                except ConnectionError:
-                    form.add_error(None,
-                                   _('Failed to connect to server. Is "{}" the correct API URL?').format(obj.api_url))
-                except RequestException:
-                    form.add_error(None, _(
-                        'There was an ambiguous error with your request. Check if all your data is correct.'))
+                except (JIRAError, ConnectionError, RequestException) as e:
+                    if type(e) == JIRAError:
+                        field = 'jql_query'
+                    else:
+                        field = None
+                    form.add_error(field, get_error_text(e, api_url=obj.api_url, connection=obj))
                 else:
                     num_stories = len(stories)
                     self.message_user(request, ngettext_lazy(

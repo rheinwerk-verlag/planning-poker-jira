@@ -9,7 +9,7 @@ from jira import JIRA, JIRAError
 from planning_poker.models import PokerSession
 
 from .models import JiraConnection
-from .utils import get_jira_error_error_text
+from .utils import get_error_text
 
 
 class JiraAuthenticationForm(forms.Form):
@@ -47,14 +47,8 @@ class JiraAuthenticationForm(forms.Form):
                            _('Missing credentials. Check whether you entered an API URL, and a username.'))
         try:
             self._client = connection.get_client()
-        except JIRAError as e:
-            self.add_error(None, get_jira_error_error_text(e))
-        except ConnectionError:
-            self.add_error(None, _('Failed to connect to server. Is "{}" the correct API URL?')
-                           .format(connection.api_url))
-        except RequestException:
-            self.add_error(None,
-                           _('There was an ambiguous error with your request. Check if all your data is correct.'))
+        except (JIRAError, ConnectionError, RequestException) as e:
+            self.add_error(None, get_error_text(e, api_url=connection.api_url, connection=connection))
         return cleaned_data
 
 
