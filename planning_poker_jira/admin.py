@@ -8,7 +8,7 @@ from django.contrib.admin.utils import unquote
 from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.template.response import TemplateResponse
-from django.urls import reverse, URLResolver, URLPattern
+from django.urls import path, reverse, URLResolver, URLPattern
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from jira import JIRAError
@@ -93,8 +93,6 @@ class JiraConnectionAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'get_import_stories_url')
 
     def get_urls(self) -> List[Union[URLResolver, URLPattern]]:
-        from django.urls import path
-
         urls = super().get_urls()
 
         import_stories_path = path('<path:object_id>/import_stories/',
