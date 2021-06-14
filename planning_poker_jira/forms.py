@@ -47,8 +47,7 @@ class JiraAuthenticationForm(forms.Form):
         # string if the user didn't enter anything in the form's password field.
         cleaned_data['password'] = connection.password
         if not (connection.api_url and connection.username):
-            self.add_error(None,
-                           _('Missing credentials. Check whether you entered an API URL, and a username.'))
+            self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
         try:
             self._client = connection.get_client()
         except (JIRAError, ConnectionError, RequestException) as e:
@@ -66,7 +65,9 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
     def _get_connection(self) -> JiraConnection:
         """Create a JiraConnection instance from the form data."""
-        return JiraConnection(**self.cleaned_data)
+        return JiraConnection(api_url=self.cleaned_data['api_url'] or self.instance.api_url,
+                              username=self.cleaned_data['username'] or self.instance.username,
+                              password=self.cleaned_data['password'] or self.instance.password)
 
 
 class ImportStoriesForm(JiraAuthenticationForm):

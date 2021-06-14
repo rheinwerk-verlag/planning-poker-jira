@@ -3,10 +3,6 @@ from requests.exceptions import ConnectionError, RequestException
 from django.utils.translation import gettext_lazy as _
 from jira.exceptions import JIRAError
 
-from planning_poker.models import Story
-
-from .models import JiraConnection
-
 
 def get_error_text(exception: Exception, **context) -> str:
     """Utility method which returns a string explaining the given exception.
@@ -21,7 +17,8 @@ def get_error_text(exception: Exception, **context) -> str:
     elif exception_type == ConnectionError:
         error_text = _('Failed to connect to server.')
         if api_url := context.get('api_url'):
-            error_text += _('Is "{api_url}" the correct API URL?').format(api_url=api_url)
+            error_text = ' '.join((str(error_text),
+                                   str(_('Is "{api_url}" the correct API URL?').format(api_url=api_url))))
     elif exception_type == RequestException:
         error_text = _('There was an ambiguous error with your request. Check if all your data is correct.')
     else:
