@@ -31,13 +31,19 @@ class JiraAuthenticationForm(forms.Form):
 
     @cached_property
     def client(self) -> JIRA:
-        """A client which can be used to communicate with the jira backend. E.g. to import/export stories."""
+        """A client which can be used to communicate with the jira backend. E.g. to import/export stories.
+
+        :param: A `JIRA` instance which can be used to communicate with the jira backend.
+        """
         if self._client is None:
             raise ValueError('Could not get the client because the data did not validate')
         return self._client
 
     def _get_connection(self) -> JiraConnection:
-        """This method should be implemented by all the child classes in order to provide a JiraConnection instance."""
+        """This method should be implemented by all the child classes in order to provide a `JiraConnection` instance.
+
+        :return: A `JiraConnection` which can be used to retrieve a `JIRA` instance.
+        """
         raise NotImplementedError()
 
     def clean(self) -> dict:
@@ -85,7 +91,7 @@ class ImportStoriesForm(JiraAuthenticationForm):
         self._connection = connection
 
     def _get_connection(self) -> JiraConnection:
-        """Return a JiraConnection instance where the username and password can be overridden by the form."""
+        """Return a `JiraConnection` instance where the username and password can be overridden by the form."""
         return JiraConnection(api_url=self._connection.api_url,
                               username=self.cleaned_data['username'] or self._connection.username,
                               password=self.cleaned_data['password'] or self._connection.password)

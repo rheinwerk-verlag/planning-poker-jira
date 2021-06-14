@@ -23,12 +23,11 @@ from .utils import get_error_text
 def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> Union[HttpResponse, None]:
     """Send the story points for each story in the queryset to the selected backend.
 
-    :param ModelAdmin modeladmin: The current ModelAdmin.
-    :param HttpRequest request: The current HTTP request.
-    :param QuerySet queryset: Containing the set of stories selected by the user.
+    :param modeladmin: The current ModelAdmin.
+    :param request: The current HTTP request.
+    :param queryset: Containing the set of stories selected by the user.
     :return: A http response which either redirects back to the changelist view on success or renders a template with
              the `ExportStoriesForm`.
-    :rtype: HttpResponse or None
     """
     if 'export' in request.POST:
         form = ExportStoriesForm(request.POST)
@@ -105,9 +104,8 @@ class JiraConnectionAdmin(admin.ModelAdmin):
     def get_import_stories_url(self, obj: JiraConnection) -> str:
         """Create a small anchor tag with the link to the object's import stories view.
 
-        :param JiraConnection obj: The jira connection which should be used to determine the url.
+        :param obj: The jira connection which should be used to determine the url.
         :return: A string containing a html anchor tag where the href attribute points to the import stories view.
-        :rtype: str
         """
         import_stories_url = reverse(admin_urlname(self.opts, 'import_stories'), args=[obj.id])
         return format_html('<a href="{}">{}</a>', import_stories_url, _('Import'))
@@ -116,12 +114,11 @@ class JiraConnectionAdmin(admin.ModelAdmin):
     def import_stories_view(self, request: HttpRequest, object_id: int, extra_context: Dict = None) -> HttpResponse:
         """Render a view where the user can import stories from a jira connection.
 
-        :param HTTPRequest request: The current HTTPRequest.
-        :param int object_id: The id of the jira connection which should be used to import the stories.
-        :param Dict extra_context: Additional context which should be added to the view.
+        :param request: The current HTTPRequest.
+        :param object_id: The id of the jira connection which should be used to import the stories.
+        :param extra_context: Additional context which should be added to the view.
         :return: A http response which either redirects back to the changelist view on success or renders a template
                  with the `ImportStoriesForm`.
-        :rtype: HttpResponse
         """
         obj = self.get_object(request, unquote(object_id))
 

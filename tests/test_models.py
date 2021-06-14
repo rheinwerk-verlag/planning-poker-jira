@@ -2,7 +2,8 @@ from contextlib import nullcontext as does_not_raise
 from unittest.mock import Mock, patch
 
 import pytest
-from jira import JIRAError
+from jira import JIRA, JIRAError
+from jira.resources import Issue
 
 
 class JiraFields:
@@ -21,15 +22,13 @@ class JiraTestStory:
 
 class TestJiraConnection:
     @patch('planning_poker_jira.models.JIRA')
-    @pytest.mark.parametrize('username', ('New user', None))
-    @pytest.mark.parametrize('password', ('New password', None))
-    def test_get_client(self, mock_jira, username, password, jira_connection):
-        jira_connection.get_client(username=username, password=password)
-        mock_jira.assert_called_with(jira_connection.api_url, basic_auth=(username or jira_connection.username,
-                                                                          password or jira_connection.password))
+    def test_get_client(self, mock_jira, jira_connection):
+        jira_connection.get_client()
+        mock_jira.assert_called_with(jira_connection.api_url, basic_auth=(jira_connection.username,
+                                                                          jira_connection.password))
 
     @patch('planning_poker_jira.models.JIRA')
-    @pytest.mark.parametrize('jira_error, side_effect', [
+    @pytest.mark.parametrize('expected_exception, side_effect', [
         (pytest.raises(JIRAError), JIRAError()),
         (does_not_raise(), [[
             JiraTestStory(fields={'summary': 'write tests'}, rendered_fields={'description': 'foo'}, key='FIAE-1'),
@@ -37,7 +36,7 @@ class TestJiraConnection:
         ]])
     ]
     )
-    def test_get_poker_stories(self, mock_jira, jira_error, side_effect, jira_connection, poker_session):
+    def test_get_poker_stories(self, mock_jira, expected_exception, side_effect, jira_connection, poker_session):
         mock_client = Mock()
         mock_jira.return_value = mock_client
         mock_client.search_issues.side_effect = side_effect
@@ -46,7 +45,7 @@ class TestJiraConnection:
             {'number': 'FIAE-2', 'title': 'more tests', 'description': 'bar'}
         ]
 
-        with jira_error:
+        with expected_exception:
             jira_connection.create_stories('project=FIAE', poker_session)
         assert list(poker_session.stories.values_list('ticket_number', flat=True)) == [story['number'] for story in
                                                                                        expected_result]

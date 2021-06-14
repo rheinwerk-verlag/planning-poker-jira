@@ -33,9 +33,9 @@ class JiraConnection(models.Model):
     def create_stories(self, query_string: str, poker_session: PokerSession, client: JIRA = None) -> List[Story]:
         """Fetch issues from the Jira client with the given query string and add them to the poker session.
 
-        :param str query_string: The string which should be used to query the stories.
-        :param planning_poker.models.PokerSession poker_session: The poker session to which the stories should be added.
-        :param JIRA client: The jira client which should be used to import the stories. Optional.
+        :param query_string: The string which should be used to query the stories.
+        :param poker_session: The poker session to which the stories should be added.
+        :param client: The jira client which should be used to import the stories. Optional.
         :return: A list containing the created stories.
         """
 
