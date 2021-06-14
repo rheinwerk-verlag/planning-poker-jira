@@ -44,7 +44,9 @@ class JiraConnection(models.Model):
             expand='renderedFields',
             fields=['summary', 'description']
         )
-        return Story.objects.bulk_create([Story(ticket_number=story.key, title=story.fields.summary,
-                                          description=story.renderedFields.description, poker_session=poker_session,
-                                          _order=index)
-                                          for index, story in enumerate(results)])
+        stories = [Story(
+            ticket_number=story.key, title=story.fields.summary,
+            description=story.renderedFields.description, poker_session=poker_session,
+            _order=index
+        ) for index, story in enumerate(results)]
+        return Story.objects.bulk_create(stories)
