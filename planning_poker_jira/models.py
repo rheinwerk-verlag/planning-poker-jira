@@ -44,9 +44,10 @@ class JiraConnection(models.Model):
             expand='renderedFields',
             fields=['summary', 'description']
         )
+        order_start = getattr(poker_session.stories.last(), '_order', -1) + 1 if poker_session else 0
         stories = [Story(
             ticket_number=story.key, title=story.fields.summary,
             description=story.renderedFields.description, poker_session=poker_session,
             _order=index
-        ) for index, story in enumerate(results)]
+        ) for index, story in enumerate(results, start=order_start)]
         return Story.objects.bulk_create(stories)
