@@ -1,13 +1,14 @@
-from requests.exceptions import ConnectionError, RequestException
 from unittest.mock import Mock, patch, call
 
+import pytest
 from django.contrib import messages
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.urls import reverse
 from jira import JIRAError
-import pytest
+from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.models import Story
+
 from planning_poker_jira.admin import export_stories
 from planning_poker_jira.forms import ExportStoriesForm, ImportStoriesForm
 

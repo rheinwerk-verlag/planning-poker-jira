@@ -1,9 +1,9 @@
 from contextlib import nullcontext as does_not_raise
-import pytest
-from requests.exceptions import ConnectionError, RequestException
 from unittest.mock import Mock, patch
 
+import pytest
 from jira import JIRAError
+from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker_jira.forms import ExportStoriesForm, ImportStoriesForm, JiraAuthenticationForm, JiraConnectionForm
 from planning_poker_jira.models import JiraConnection

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*
 import logging
+from typing import List
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from encrypted_fields import fields
 from jira import JIRA
 
 from planning_poker.models import PokerSession, Story
-from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,8 @@ class JiraConnection(models.Model):
 
     def get_client(self) -> JIRA:
         """Authenticate at the jira backend and return a client to communicate with it."""
-        return JIRA(self.api_url, basic_auth=(self.username, self.password))
+        return JIRA(self.api_url, basic_auth=(self.username, self.password),
+                    timeout=getattr(settings, 'JIRA_TIMEOUT', (3.05, 7)))
 
     def create_stories(self, query_string: str, poker_session: PokerSession, client: JIRA = None) -> List[Story]:
         """Fetch issues from the Jira client with the given query string and add them to the poker session.

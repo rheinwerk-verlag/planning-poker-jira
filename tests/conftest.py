@@ -1,13 +1,14 @@
 from datetime import datetime
-import pytest
 from unittest.mock import patch
 
+import pytest
 from django.contrib.admin.sites import site
 from django.forms.models import modelform_factory
 
 from planning_poker.models import PokerSession, Story
+
 from planning_poker_jira.admin import JiraConnectionAdmin
-from planning_poker_jira.forms import ExportStoriesForm, JiraAuthenticationForm, JiraConnectionForm
+from planning_poker_jira.forms import JiraAuthenticationForm, JiraConnectionForm
 from planning_poker_jira.models import JiraConnection
 
 

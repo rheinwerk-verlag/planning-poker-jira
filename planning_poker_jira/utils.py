@@ -1,7 +1,6 @@
-from requests.exceptions import ConnectionError, RequestException
-
 from django.utils.translation import gettext_lazy as _
 from jira.exceptions import JIRAError
+from requests.exceptions import ConnectionError, RequestException
 
 
 def get_error_text(exception: Exception, **context) -> str:

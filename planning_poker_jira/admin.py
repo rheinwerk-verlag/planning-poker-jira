@@ -1,4 +1,3 @@
-from requests.exceptions import ConnectionError, RequestException
 from typing import Dict, List, Union
 
 from django.contrib import admin, messages
@@ -12,6 +11,7 @@ from django.urls import path, reverse, URLResolver, URLPattern
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from jira import JIRAError
+from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.admin import StoryAdmin
 
@@ -109,6 +109,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         """
         import_stories_url = reverse(admin_urlname(self.opts, 'import_stories'), args=[obj.id])
         return format_html('<a href="{}">{}</a>', import_stories_url, _('Import'))
+
     get_import_stories_url.short_description = _('Import Stories')
 
     def import_stories_view(self, request: HttpRequest, object_id: int, extra_context: Dict = None) -> HttpResponse:
