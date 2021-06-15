@@ -71,14 +71,15 @@ def test_import_stories_view_get(admin_client, jira_connection, jira_connection_
     (JIRAError(status_code=1337), {'jql_query': ['Received status code 1337.']}, None),
     (ConnectionError, {'__all__': ['Failed to connect to server. Is "http://test_url" the correct API URL?']}, None),
     (RequestException, {
-            '__all__': ['There was an ambiguous error with your request. Check if all your data is correct.']
-        }, None)
+        '__all__': ['There was an ambiguous error with your request. Check if all your data is correct.']
+    }, None)
 ))
 @patch('planning_poker_jira.admin.JiraConnectionAdmin.message_user')
 @patch('planning_poker_jira.models.JiraConnection.get_client')
 @patch('planning_poker_jira.models.JiraConnection.create_stories')
-def test_import_stories_view_post(mock_create_stories, mock_get_client, mock_message_user, admin_client, jira_connection,
-                                  jira_connection_admin, side_effect, expected_errors, expected_message):
+def test_import_stories_view_post(mock_create_stories, mock_get_client, mock_message_user, admin_client,
+                                  jira_connection, jira_connection_admin, side_effect, expected_errors,
+                                  expected_message):
 
     mock_create_stories.side_effect = side_effect
     response = admin_client.post(reverse(admin_urlname(jira_connection_admin.opts, 'import_stories'),
