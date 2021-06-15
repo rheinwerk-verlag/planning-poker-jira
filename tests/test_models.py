@@ -23,8 +23,9 @@ class TestJiraConnection:
     @patch('planning_poker_jira.models.JIRA')
     def test_get_client(self, mock_jira, jira_connection):
         jira_connection.get_client()
-        mock_jira.assert_called_with(jira_connection.api_url, basic_auth=(jira_connection.username,
-                                                                          jira_connection.password))
+        mock_jira.assert_called_with(jira_connection.api_url,
+                                     basic_auth=(jira_connection.username, jira_connection.password),
+                                     timeout=(3.05, 7))
 
     @patch('planning_poker_jira.models.JIRA')
     @pytest.mark.parametrize('expected_exception, side_effect, expected_result', [

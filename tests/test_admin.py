@@ -53,7 +53,7 @@ def test_confirmed_export_stories(mock_get_client, rf, admin_user, jira_connecti
     request = rf.post('/', dict(**export_stories_form_data, export=True))
     request.user = admin_user
     with patch.object(jira_connection_admin, 'message_user', mock_message_user):
-        response = export_stories(jira_connection_admin, request, stories)
+        export_stories(jira_connection_admin, request, stories)
     mock_message_user.assert_has_calls((call(request, *expected_call) for expected_call in expected_message_user_calls))
 
 
