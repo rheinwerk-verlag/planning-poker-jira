@@ -2,10 +2,12 @@ from datetime import datetime
 import pytest
 from unittest.mock import patch
 
+from django.contrib.admin.sites import site
 from django.forms.models import modelform_factory
 
-from planning_poker.models import PokerSession
-from planning_poker_jira.forms import ExportStoriesForm, ImportStoriesForm, JiraAuthenticationForm, JiraConnectionForm
+from planning_poker.models import PokerSession, Story
+from planning_poker_jira.admin import JiraConnectionAdmin
+from planning_poker_jira.forms import ExportStoriesForm, JiraAuthenticationForm, JiraConnectionForm
 from planning_poker_jira.models import JiraConnection
 
 
@@ -18,6 +20,25 @@ def jira_connection(db):
 @pytest.fixture
 def poker_session(db):
     return PokerSession.objects.create(poker_date=datetime.now(), name='test session')
+
+
+@pytest.fixture
+def stories(db):
+    stories = [
+        {
+            'ticket_number': 'FIAE-1',
+            'title': 'Write tests',
+            'description': 'Tests need to be written.',
+            '_order': 0
+        },
+        {
+            'ticket_number': 'FIAE-2',
+            'title': 'Write more tests',
+            'description': 'More tests need to be written.',
+            '_order': 1
+        }
+    ]
+    return Story.objects.bulk_create([Story(**story) for story in stories])
 
 
 @pytest.fixture
@@ -57,3 +78,13 @@ def jira_authentication_form(form_data):
 @pytest.fixture
 def jira_connection_form_class():
     return modelform_factory(JiraConnection, form=JiraConnectionForm, fields='__all__', exclude=())
+
+
+@pytest.fixture
+def jira_connection_admin():
+    return JiraConnectionAdmin(JiraConnection, site)
+
+
+@pytest.fixture
+def export_stories_form_data(form_data, jira_connection):
+    return dict(**form_data, jira_connection=jira_connection.pk)

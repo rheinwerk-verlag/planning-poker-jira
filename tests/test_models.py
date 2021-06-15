@@ -2,7 +2,7 @@ from contextlib import nullcontext as does_not_raise
 from unittest.mock import Mock, patch
 
 import pytest
-from jira import JIRA, JIRAError
+from jira import JIRAError
 
 
 class JiraFields:

@@ -33,7 +33,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
-            error_message = _('"{story}" could not be exported. {reason}.')
+            error_message = _('"{story}" could not be exported. {reason}')
             num_exported_stories = 0
             for story in queryset:
                 try:
