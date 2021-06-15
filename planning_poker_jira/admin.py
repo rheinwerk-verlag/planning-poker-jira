@@ -165,7 +165,7 @@ class JiraConnectionAdmin(admin.ModelAdmin):
         context = {
             **self.admin_site.each_context(request),
             'opts': self.opts,
-            'title': _('Import stories from {connection}').format(connection=obj),
+            'title': _('Import stories from "{connection}"').format(connection=obj),
             'form': admin_form,
             'object_id': object_id,
         }

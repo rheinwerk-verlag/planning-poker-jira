@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-10 12:58+0200\n"
-"PO-Revision-Date: 2021-06-10 13:00+0200\n"
+"POT-Creation-Date: 2021-06-15 16:59+0200\n"
+"PO-Revision-Date: 2021-06-15 17:00+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,57 +18,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0\n"
 
-#: .\admin.py:50 .\admin.py:149 .\forms.py:63
-msgid "Failed to connect to server. Is \"{}\" the correct API URL?"
-msgstr ""
-"Es konnte keine Verbindung zum Server hergestellt werden. Ist \"{}\" die "
-"korrekte API URL?"
+#: .\admin.py:36
+#, python-brace-format
+msgid "\"{story}\" could not be exported. {reason}"
+msgstr "\"{story}\" konnte nicht exportiert warden, weil {reason}"
 
-#: .\admin.py:56 .\admin.py:152 .\forms.py:66
-msgid ""
-"There was an ambiguous error with your request. Check if all your data is "
-"correct."
-msgstr ""
-"Es gab einen uneindeutigen Fehler mit Ihrer Anfrage. Überprüfen Sie, ob alle "
-"Ihre Daten korrekt sind."
-
-#: .\admin.py:63
+#: .\admin.py:56
 #, python-format
 msgid "%d story was successfully exported."
 msgid_plural "%d stories were successfully exported."
 msgstr[0] "%d Story wurde erfolgreich exportiert."
 msgstr[1] "%d Stories wurden erfolgreich exportiert."
 
-#: .\admin.py:76 .\admin.py:170
+#: .\admin.py:69 .\admin.py:158
 msgid "Override Options"
 msgstr "Optionen überschreiben"
 
-#: .\admin.py:86 .\templates\admin\planning_poker\story\export_stories.html:19
+#: .\admin.py:79 .\templates\admin\planning_poker\story\export_stories.html:19
 msgid "Export Stories"
 msgstr "Stories exportieren"
 
-#: .\admin.py:120
+#: .\admin.py:80
+msgid "Export"
+msgstr "Exportieren"
+
+#: .\admin.py:111
 #: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:40
 msgid "Import"
 msgstr "Importieren"
 
-#: .\admin.py:121
+#: .\admin.py:113
 #: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:21
 msgid "Import Stories"
 msgstr "Stories importieren"
 
-#: .\admin.py:156
+#: .\admin.py:145
 #, python-format
 msgid "%d story was successfully imported."
 msgid_plural "%d stories were successfully imported."
 msgstr[0] "%d Story wurde erfolgreich importiert."
 msgstr[1] "%d wurden erfolgreich importiert."
 
-#: .\admin.py:180
-msgid "Import stories from {}"
-msgstr "Stories aus {} importieren"
+#: .\admin.py:168
+#, python-brace-format
+msgid "Import stories from \"{connection}\""
+msgstr "Stories aus \"{connection}\" importieren"
 
-#: .\admin.py:188
+#: .\admin.py:176
 msgid "Export Stories to Jira"
 msgstr "Stories zu Jira exportieren"
 
@@ -76,70 +72,70 @@ msgstr "Stories zu Jira exportieren"
 msgid "Planning Poker: Jira Extension"
 msgstr "Planungspoker: Jira-Erweiterung"
 
-#: .\forms.py:16 .\forms.py:71
+#: .\forms.py:18
 msgid "Username"
 msgstr "Benutzername"
 
-#: .\forms.py:17
+#: .\forms.py:19
 msgid "You can use this to override the username saved in the database"
 msgstr ""
 "Benutzen Sie dieses Feld um den Benutzernamen aus der Datenbank zu "
 "überschreiben"
 
-#: .\forms.py:19 .\forms.py:73 .\models.py:19
+#: .\forms.py:21 .\models.py:20
 msgid "Password"
 msgstr "Passwort"
 
-#: .\forms.py:20
+#: .\forms.py:22
 msgid "You can use this to override the password in the database"
 msgstr ""
 "Benutzen Sie dieses Feld um das Passwort aus der Datenbank zu überschreiben"
 
-#: .\forms.py:55
+#: .\forms.py:54
 msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
 "Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL, und einen "
 "Benutzernamen."
 
-#: .\forms.py:80
+#: .\forms.py:80 .\models.py:24
+msgid "Jira Connection"
+msgstr "Jira-Verbindung"
+
+#: .\forms.py:81
+msgid "The Jira Backend to which the stories should be exported"
+msgstr "Der Jira-Server zu dem die Stories exportiert werden sollen"
+
+#: .\forms.py:97
 msgid "Poker Session"
 msgstr "Poker-Runde"
 
-#: .\forms.py:81
+#: .\forms.py:98
 msgid "The poker session to which the imported stories should be added"
 msgstr ""
 "Die Poker-Runde zu der die importieren Stories hinzugefügt werden sollen"
 
-#: .\forms.py:85
+#: .\forms.py:102
 msgid "JQL Query"
 msgstr "JQL Query"
 
-#: .\forms.py:90 .\models.py:23
-msgid "Jira Connection"
-msgstr "Jira-Verbindung"
-
-#: .\forms.py:91
-msgid "The Jira Backend to which the stories should be exported"
-msgstr "Der Jira-Server zu dem die Stories exportiert werden sollen"
-
-#: .\models.py:16
+#: .\models.py:17
 msgid "Label"
 msgstr "Bezeichnung"
 
-#: .\models.py:17
+#: .\models.py:18
 msgid "API URL"
 msgstr "API URL"
 
-#: .\models.py:18
+#: .\models.py:19
 msgid "API Username"
 msgstr "API Benutzername"
 
-#: .\models.py:20
+#: .\models.py:21
 msgid "Story Points Field"
 msgstr "Storypunktefeld"
 
-#: .\models.py:24
+#: .\models.py:25
 msgid "Jira Connections"
 msgstr "Jiraverbindungen"
 
@@ -158,15 +154,32 @@ msgstr[1] ""
 "Sind Sie sicher, dass Sie die ausgewählten %(num_stories)s Stories "
 "exportieren wollen?"
 
-#: .\templates\admin\planning_poker\story\export_stories.html:45
-msgid "Export"
-msgstr "Exportieren"
-
 #: .\templates\admin\planning_poker\story\export_stories.html:46
 msgid "No, take me back"
 msgstr "Abbrechen"
 
-#: .\utils.py:23
+#: .\utils.py:17
+msgid "Failed to connect to server."
+msgstr "Es konnte keine Verbindung zum Server hergestellt werden."
+
+#: .\utils.py:20
+#, python-brace-format
+msgid "Is \"{api_url}\" the correct API URL?"
+msgstr "Ist \"{api_url}\" die korrekte API URL?"
+
+#: .\utils.py:22
+msgid ""
+"There was an ambiguous error with your request. Check if all your data is "
+"correct."
+msgstr ""
+"Es gab einen uneindeutigen Fehler mit Ihrer Anfrage. Überprüfen Sie, ob alle "
+"Ihre Daten korrekt sind."
+
+#: .\utils.py:24
+msgid "Encountered an unknown exception."
+msgstr "Es ist ein unbekannter Fehler aufgetreten."
+
+#: .\utils.py:40
 msgid ""
 "Could not authenticate the API user with the given credentials. Make sure "
 "that you entered the correct data."
@@ -174,10 +187,16 @@ msgstr ""
 "Ein API Nutzer mit den gegebenen Anmeldedaten konnte nicht Authentifiziert "
 "werden. Überprüfen Sie, ob Sie die korrekten Daten eingegeben haben."
 
-#: .\utils.py:27
-msgid "The story \"{}\" does probably not exist inside \"{}\""
-msgstr "Die Story \"{}\" existiert vermutlich nicht in \"{}\""
+#: .\utils.py:44
+#, python-brace-format
+msgid "The story does probably not exist inside \"{connection}\"."
+msgstr "Die Story existiert vermutlich nicht in \"{connection}\"."
 
-#: .\utils.py:30
-msgid "Received status code {}"
-msgstr "Statuscode {} erhalten"
+#: .\utils.py:46
+msgid "The story does probably not exist inside the selected backend."
+msgstr "Die Story existiert vermutlich nicht im ausgewählten Backend."
+
+#: .\utils.py:48
+#, python-brace-format
+msgid "Received status code {status_code}."
+msgstr "Statuscode {status_code} erhalten."
