@@ -3,7 +3,6 @@ from unittest.mock import Mock, patch
 
 import pytest
 from jira import JIRA, JIRAError
-from jira.resources import Issue
 
 
 class JiraFields:

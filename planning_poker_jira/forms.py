@@ -76,6 +76,23 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
                               password=self.cleaned_data['password'] or self.instance.password)
 
 
+class ExportStoriesForm(JiraAuthenticationForm):
+    """Form which is used for exporting stories to the jira backend."""
+    jira_connection = forms.ModelChoiceField(
+        label=_('Jira Connection'),
+        help_text=_('The Jira Backend to which the stories should be exported'),
+        queryset=JiraConnection.objects.all(),
+        required=True
+    )
+
+    def _get_connection(self) -> JiraConnection:
+        """Return a JiraConnection instance where the username and password can be overridden by the form."""
+        connection = self.cleaned_data['jira_connection']
+        return JiraConnection(api_url=connection.api_url,
+                              username=self.cleaned_data['username'] or connection.username,
+                              password=self.cleaned_data['password'] or connection.password)
+
+
 class ImportStoriesForm(JiraAuthenticationForm):
     """Form which is used for importing stories from the jira backend."""
     poker_session = forms.ModelChoiceField(
@@ -95,20 +112,3 @@ class ImportStoriesForm(JiraAuthenticationForm):
         return JiraConnection(api_url=self._connection.api_url,
                               username=self.cleaned_data['username'] or self._connection.username,
                               password=self.cleaned_data['password'] or self._connection.password)
-
-
-class ExportStoriesForm(JiraAuthenticationForm):
-    """Form which is used for exporting stories to the jira backend."""
-    jira_connection = forms.ModelChoiceField(
-        label=_('Jira Connection'),
-        help_text=_('The Jira Backend to which the stories should be exported'),
-        queryset=JiraConnection.objects.all(),
-        required=True
-    )
-
-    def _get_connection(self) -> JiraConnection:
-        """Return a JiraConnection instance where the username and password can be overridden by the form."""
-        connection = self.cleaned_data['jira_connection']
-        return JiraConnection(api_url=connection.api_url,
-                              username=self.cleaned_data['username'] or connection.username,
-                              password=self.cleaned_data['password'] or connection.password)
