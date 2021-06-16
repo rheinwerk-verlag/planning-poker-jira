@@ -10,15 +10,14 @@ def get_error_text(exception: Exception, **context) -> str:
     :param context: The context which was present when the exception was raised.
     :return: A string explaining the given jira error.
     """
-    exception_type = type(exception)
-    if exception_type == JIRAError:
+    if isinstance(exception, JIRAError):
         error_text = get_jira_error_error_text(exception, **context)
-    elif exception_type == ConnectionError:
+    elif isinstance(exception, ConnectionError):
         error_text = _('Failed to connect to server.')
         if api_url := context.get('api_url'):
             error_text = ' '.join((str(error_text),
                                    str(_('Is "{api_url}" the correct API URL?').format(api_url=api_url))))
-    elif exception_type == RequestException:
+    elif isinstance(exception, RequestException):
         error_text = _('There was an ambiguous error with your request. Check if all your data is correct.')
     else:
         error_text = _('Encountered an unknown exception.')
