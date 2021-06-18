@@ -14,8 +14,8 @@ from .utils import get_error_text
 
 class JiraAuthenticationForm(forms.Form):
     """Base class for all the forms which handle jira connections.
-    All derived forms check whether a connection to the jira backend when cleaned and provide a `client` property which
-    can be used to communicate with said backend.
+    All derived forms check whether a connection to the jira backend can be established when cleaned and provide a
+    `client` property which can be used to communicate with said backend.
     """
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
@@ -47,6 +47,11 @@ class JiraAuthenticationForm(forms.Form):
 
     def _get_connection(self) -> JiraConnection:
         """This method should be implemented by all the child classes in order to provide a `JiraConnection` instance.
+        We call this method during the `clean()` method so that we can establish a connection to the jira backend which
+        gets saved into the `_client` attribute.
+
+        The returned instance is not a saved instance from the database. It is instantiated with a combination of form
+        data and data from a different `JiraConnection` (which generally comes from the database).
 
         :return: A `JiraConnection` which can be used to retrieve a `JIRA` instance.
         """
