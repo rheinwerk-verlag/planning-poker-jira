@@ -2,24 +2,23 @@ from contextlib import nullcontext as does_not_raise
 from unittest.mock import Mock, patch
 
 import pytest
-from jira import JIRAError
-
-
-class JiraFields:
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            self.__setattr__(key, value)
-
-
-class JiraTestStory:
-    def __init__(self, fields, rendered_fields, **kwargs):
-        for key, value in kwargs.items():
-            self.__setattr__(key, value)
-        self.fields = JiraFields(**fields)
-        self.renderedFields = JiraFields(**rendered_fields)
+from jira import JIRAError, Issue
 
 
 class TestJiraConnection:
+    class TestIssue(Issue):
+        def __init__(self, fields, rendered_fields, **kwargs):
+            class IssueFields:
+                def __init__(self, **kwargs):
+                    for key, value in kwargs.items():
+                        self.__setattr__(key, value)
+
+            super().__init__({}, None)
+            for key, value in kwargs.items():
+                self.__setattr__(key, value)
+            self.fields = IssueFields(**fields)
+            self.renderedFields = IssueFields(**rendered_fields)
+
     @patch('planning_poker_jira.models.JIRA')
     def test_get_client(self, mock_jira, jira_connection):
         jira_connection.get_client()
@@ -36,10 +35,10 @@ class TestJiraConnection:
                 does_not_raise(),
                 [
                     [
-                        JiraTestStory(
+                        TestIssue(
                             fields={'summary': 'write tests'}, rendered_fields={'description': 'foo'}, key='FIAE-1'
                         ),
-                        JiraTestStory(
+                        TestIssue(
                             fields={'summary': 'more tests'}, rendered_fields={'description': 'bar'}, key='FIAE-2'
                         ),
                     ]
