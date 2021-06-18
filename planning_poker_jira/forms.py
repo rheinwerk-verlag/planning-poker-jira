@@ -1,3 +1,5 @@
+from copy import copy
+
 from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -64,14 +66,19 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # We have to cache the instance ourselves in order to get a working connection.
+        # Django will override the instance with the given form data inside the `BaseModelForm`'s
+        # `_post_clean()` method. This would lead to a connection with no username or password if they are left blank
+        # inside the form.
+        self.cached_instance = copy(self.instance)
         self.fields['username'].help_text = None
         self.fields['password'].help_text = None
 
     def _get_connection(self) -> JiraConnection:
         """Create a JiraConnection instance from the form data."""
-        return JiraConnection(api_url=self.cleaned_data.get('api_url') or self.instance.api_url,
-                              username=self.cleaned_data.get('username') or self.instance.username,
-                              password=self.cleaned_data.get('password') or self.instance.password)
+        return JiraConnection(api_url=self.cleaned_data.get('api_url') or self.cached_instance.api_url,
+                              username=self.cleaned_data.get('username') or self.cached_instance.username,
+                              password=self.cleaned_data.get('password') or self.cached_instance.password)
 
 
 class ExportStoriesForm(JiraAuthenticationForm):

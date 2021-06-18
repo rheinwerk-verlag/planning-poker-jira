@@ -55,7 +55,12 @@ class TestJiraAuthenticationForm:
                 cleaned_data = jira_authentication_form.clean()
 
         num_generated_errors = len(jira_authentication_form.errors.get('__all__', []))
-        assert num_generated_errors == num_expected_missing_credentials_errors + num_expected_side_effects_errors
+        if num_expected_missing_credentials_errors:
+            num_expected_errors = num_expected_missing_credentials_errors
+            mock_get_client.assert_not_called()
+        else:
+            num_expected_errors = num_expected_missing_credentials_errors + num_expected_side_effects_errors
+        assert num_generated_errors == num_expected_errors
         assert cleaned_data['password'] == jira_connection.password
 
 
@@ -69,29 +74,17 @@ class TestJiraConnectionForm:
         assert form.fields['username'].help_text is None
         assert form.fields['password'].help_text is None
 
-    @pytest.mark.parametrize('form_data_api_url, expected_api_url', (
-        ({'api_url': None}, {'api_url': 'http://test_url'}),
-        ({'api_url': 'http://different_url'}, {'api_url': 'http://different_url'}),
-    ))
-    @pytest.mark.parametrize('form_data_username, expected_username', (
-        ({'username': None}, {'username': 'testuser'}),
-        ({'username': 'different_testuser'}, {'username': 'different_testuser'}),
-    ))
-    @pytest.mark.parametrize('form_data_password, expected_password', (
-        ({'password': None}, {'password': 'supersecret'}),
-        ({'password': 'evenmoresupersecret'}, {'password': 'evenmoresupersecret'}),
-    ))
     @patch('planning_poker_jira.models.JiraConnection.get_client')
     def test_get_connection(self, mock_get_client, jira_connection_form_class, jira_connection, form_data_api_url,
                             expected_api_url, form_data_username, expected_username, form_data_password,
                             expected_password):
         form_data = dict(**form_data_api_url, **form_data_username, **form_data_password)
         expected_data = dict(**expected_api_url, **expected_username, **expected_password)
-        form = jira_connection_form_class(data=form_data, instance=jira_connection)
+        form = jira_connection_form_class(form_data, instance=jira_connection)
         form.is_valid()
-        # connection = form._get_connection()
-        # for attribute, value in expected_data.items():
-        #     assert getattr(connection, attribute) == value
+        connection = form._get_connection()
+        for attribute, value in expected_data.items():
+            assert getattr(connection, attribute) == value
 
 
 class TestExportStoriesForm:

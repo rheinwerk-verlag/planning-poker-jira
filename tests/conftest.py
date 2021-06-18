@@ -70,6 +70,16 @@ def expected_password(form_data_password, jira_connection):
     return {'password': form_data_password.get('password') or jira_connection.password}
 
 
+@pytest.fixture(params=['http://different.url', ''])
+def form_data_api_url(request):
+    return {'api_url': request.param}
+
+
+@pytest.fixture
+def expected_api_url(form_data_api_url, jira_connection):
+    return {'api_url': form_data_api_url.get('api_url') or jira_connection.api_url}
+
+
 @pytest.fixture
 @patch('planning_poker_jira.models.JIRA')
 def jira_authentication_form(form_data):
