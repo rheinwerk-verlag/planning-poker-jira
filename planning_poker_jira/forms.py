@@ -54,10 +54,11 @@ class JiraAuthenticationForm(forms.Form):
         cleaned_data['password'] = connection.password
         if not (connection.api_url and connection.username):
             self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
-        try:
-            self._client = connection.get_client()
-        except (JIRAError, ConnectionError, RequestException) as e:
-            self.add_error(None, get_error_text(e, api_url=connection.api_url, connection=connection))
+        else:
+            try:
+                self._client = connection.get_client()
+            except (JIRAError, ConnectionError, RequestException) as e:
+                self.add_error(None, get_error_text(e, api_url=connection.api_url, connection=connection))
         return cleaned_data
 
 
