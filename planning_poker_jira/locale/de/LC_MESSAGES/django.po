@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-21 14:35+0200\n"
+"POT-Creation-Date: 2021-06-21 16:00+0200\n"
 "PO-Revision-Date: 2021-06-21 14:35+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
@@ -118,7 +118,7 @@ msgstr "Passwort löschen"
 msgid "Check this if you want to delete your saved password"
 msgstr "Wählen Sie das aus, wenn Sie Ihr gespeichertes Passwort löschen wollen"
 
-#: .\forms.py:117
+#: .\forms.py:116
 msgid "You can not change the password and delete it at the same time"
 msgstr "Sie können kein Passwort gleichzeitig ändern und löschen"
 
