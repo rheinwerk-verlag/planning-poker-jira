@@ -29,7 +29,8 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
     :return: A http response which either redirects back to the changelist view on success or renders a template with
              the `ExportStoriesForm`.
     """
-    if 'export' in request.POST:
+    submit_button_name = 'export'
+    if submit_button_name in request.POST:
         form = ExportStoriesForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
@@ -77,7 +78,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         **modeladmin.admin_site.each_context(request),
         'opts': modeladmin.opts,
         'title': _('Export Stories'),
-        'submit_text': _('Export'),
+        'submit_button_name': submit_button_name,
         'stories': queryset,
         'form': admin_form,
         'media': modeladmin.media
