@@ -21,7 +21,7 @@ msgstr ""
 #: .\admin.py:36
 #, python-brace-format
 msgid "\"{story}\" could not be exported. {reason}"
-msgstr "\"{story}\" konnte nicht exportiert warden. {reason}"
+msgstr "\"{story}\" konnte nicht exportiert werden. {reason}"
 
 #: .\admin.py:56
 #, python-format
@@ -96,7 +96,7 @@ msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
 "Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL, und einen "
-"Benutzernamen."
+"Benutzernamen angegeben haben."
 
 #: .\forms.py:93
 msgid "Test Connection"
@@ -208,7 +208,7 @@ msgid ""
 "Could not authenticate the API user with the given credentials. Make sure "
 "that you entered the correct data."
 msgstr ""
-"Ein API Nutzer mit den gegebenen Anmeldedaten konnte nicht Authentifiziert "
+"Ein API Nutzer mit den gegebenen Anmeldedaten konnte nicht authentifiziert "
 "werden. Überprüfen Sie, ob Sie die korrekten Daten eingegeben haben."
 
 #: .\utils.py:43
