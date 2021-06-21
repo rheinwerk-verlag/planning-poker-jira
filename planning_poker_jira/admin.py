@@ -88,7 +88,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
 @admin.register(JiraConnection)
 class JiraConnectionAdmin(admin.ModelAdmin):
     form = JiraConnectionForm
-    fields = ('label', 'api_url', 'username', 'password', 'story_points_field')
+    fields = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_conn')
     list_display = ('__str__', 'get_import_stories_url')
 
     def get_urls(self) -> List[Union[URLResolver, URLPattern]]:

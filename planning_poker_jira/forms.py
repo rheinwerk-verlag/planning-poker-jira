@@ -43,7 +43,12 @@ class JiraAuthenticationForm(forms.Form):
         :param: A `JIRA` instance which can be used to communicate with the jira backend.
         """
         if self._client is None:
-            raise ValueError('Could not get the client because the data did not validate')
+            error_message = 'Could not get the client because {reason}'
+            if self.test_connection():
+                error_message = error_message.format(reason='the data did not validate')
+            else:
+                error_message = error_message.format(reason='`test_connection()` returned `False`')
+            raise ValueError(error_message)
         return self._client
 
     def _get_connection(self) -> JiraConnection:
@@ -66,6 +71,8 @@ class JiraAuthenticationForm(forms.Form):
         Since most use cases require the connection to be tested this implementation will always return `True`.
         Child classes however can override this method to make the test optional (see the class`JiraConnectionForm`
         for an example) if needed.
+
+        :return: Whether the connection should be tested.
         """
         return True
 
@@ -88,6 +95,10 @@ class JiraAuthenticationForm(forms.Form):
 
 class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
     """Form which is used for the `JiraConnectionAdmin` class. This is used for the change and create views."""
+    test_conn = forms.BooleanField(label=_('Test Connection'),
+                                   help_text=_('Check this if you want to test your entered data and try to '
+                                               'authenticate against the API'),
+                                   required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -95,15 +106,30 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         # Django will override the instance with the given form data inside the `BaseModelForm`'s
         # `_post_clean()` method. This would lead to a connection with no username or password if they are left blank
         # inside the form.
-        self.cached_instance = copy(self.instance)
         self.fields['username'].help_text = None
         self.fields['password'].help_text = None
 
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get('delete_password'):
+            cleaned_data['password'] = ''
+        return cleaned_data
+
     def _get_connection(self) -> JiraConnection:
         """Create a JiraConnection instance from the form data."""
-        return JiraConnection(api_url=self.cleaned_data.get('api_url') or self.cached_instance.api_url,
-                              username=self.cleaned_data.get('username') or self.cached_instance.username,
-                              password=self.cleaned_data.get('password') or self.cached_instance.password)
+        return JiraConnection(api_url=self.cleaned_data.get('api_url') or self.instance.api_url,
+                              username=self.cleaned_data.get('username') or self.instance.username,
+                              password=self.cleaned_data.get('password') or self.instance.password)
+
+    def test_connection(self) -> bool:
+        """Return whether the `test_conn` checkbox has been checked or not.
+        Since it is optional for the user to save their password inside the database, it is not always possible to test
+        the connection. Especially because an empty password field means that the currently saved password shouldn't be
+        changed.
+
+        :return: Whether the `test_conn` checkbox has been checked.
+        """
+        return self.cleaned_data['test_conn']
 
 
 class ExportStoriesForm(JiraAuthenticationForm):
