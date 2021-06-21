@@ -30,7 +30,7 @@ class JiraAuthenticationForm(forms.Form):
     @cached_property
     def client(self) -> JIRA:
         """A client which can be used to communicate with the jira backend. E.g. to import/export stories.
-        This property becomes available whenever this class' `clean()` method is called and `test_connection()`
+        This property becomes available whenever this class' `clean()` method is called and `test_connection`
         evaluates to `True`. The data needed to authenticate against the backend will be taken from the `JiraConnection`
         instance acquired from `_get_connection()`. (This property could still be unavailable after all of this when
         there was a problem with the connection/request to the backend.)
