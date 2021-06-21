@@ -79,13 +79,10 @@ class JiraAuthenticationForm(forms.Form):
     def clean(self) -> dict:
         cleaned_data = super().clean()
         connection = self._get_connection()
-        # We override `cleaned_data['password']` because it would otherwise reset the model's password to an empty
-        # string if the user didn't enter anything in the form's password field.
-        cleaned_data['password'] = connection.password
-        if not (connection.api_url and connection.username):
-            self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
-        else:
-            if self.test_connection():
+        if self.test_connection():
+            if not (connection.api_url and connection.username):
+                self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
+            else:
                 try:
                     self._client = connection.get_client()
                 except (JIRAError, ConnectionError, RequestException) as e:
@@ -110,8 +107,15 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        # This form requires some extra handling while cleaning. Since the password field will not be prepopulated with
+        # data from the database, the password would be reset to an empty string whenever the user wants to change any
+        # attribute for an existing `JiraConnection` instance. The form interprets an empty password field as no changes
+        # to the password to circumvent that. In order for the user to be still be able to delete a saved password, we
+        # added the `delete_password` field which indicates whether the password should be deleted or not.
         if cleaned_data.get('delete_password'):
             cleaned_data['password'] = ''
+        else:
+            cleaned_data['password'] = self._get_connection().password
         return cleaned_data
 
     def _get_connection(self) -> JiraConnection:
