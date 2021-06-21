@@ -12,8 +12,7 @@ from .utils import get_error_text
 
 class JiraAuthenticationForm(forms.Form):
     """Base class for all the forms which handle jira connections.
-    All derived forms check whether a connection to the jira backend can be established when cleaned and provide a
-    `client` property which can be used to communicate with said backend.
+    All derived forms provide a way to communicate with the jira backend through the `client` property.
     """
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
@@ -55,7 +54,7 @@ class JiraAuthenticationForm(forms.Form):
         gets saved into the `_client` attribute.
 
         The returned instance is not a saved instance from the database. It is instantiated with a combination of form
-        data and data from a different `JiraConnection` (which generally comes from the database).
+        data and data from a different `JiraConnection` (which usually comes from the database).
 
         :return: A `JiraConnection` which can be used to retrieve a `JIRA` instance.
         """
@@ -64,7 +63,7 @@ class JiraAuthenticationForm(forms.Form):
     @property
     def test_connection(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.
-        This method is called inside the `clean()` method in order to determine whether the connection and should be
+        This method is called inside the `clean()` method in order to determine whether the connection should be
         tested and therefore _whether the `client` property will be populated or not_.
 
         Since most use cases require the connection to be tested this implementation will always return `True`.
@@ -108,9 +107,10 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         cleaned_data = super().clean()
         # This form requires some extra handling while cleaning. Since the password field will not be prepopulated with
         # data from the database, the password would be reset to an empty string whenever the user wants to change any
-        # attribute for an existing `JiraConnection` instance. The form interprets an empty password field as no changes
-        # to the password to circumvent that. In order for the user to be still be able to delete a saved password, we
-        # added the `delete_password` field which indicates whether the password should be deleted or not.
+        # attribute for an existing `JiraConnection` instance without reentering the password. The form interprets
+        # an empty password field as no changes to the password to circumvent that. In order for the user to be still be
+        # able to delete a saved password, we added the `delete_password` field which indicates whether the password
+        # should be deleted or not.
         if cleaned_data.get('delete_password'):
             cleaned_data['password'] = ''
         else:
