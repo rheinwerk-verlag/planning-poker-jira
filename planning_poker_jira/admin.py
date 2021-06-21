@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Dict, Iterable, List, Union
 
 from django.contrib import admin, messages
 from django.contrib.admin import helpers, ModelAdmin
@@ -88,7 +88,6 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
 @admin.register(JiraConnection)
 class JiraConnectionAdmin(admin.ModelAdmin):
     form = JiraConnectionForm
-    fields = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_conn')
     list_display = ('__str__', 'get_import_stories_url')
 
     def get_urls(self) -> List[Union[URLResolver, URLPattern]]:
@@ -100,6 +99,14 @@ class JiraConnectionAdmin(admin.ModelAdmin):
 
         urls.insert(0, import_stories_path)
         return urls
+
+    def get_fields(self, request: HttpRequest, obj: JiraConnection = None) -> Iterable[Union[str, Iterable[str]]]:
+        if obj:
+            fields = ('label', 'api_url', 'username', ('password', 'delete_password'), 'story_points_field',
+                      'test_conn')
+        else:
+            fields = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_conn')
+        return fields
 
     def get_import_stories_url(self, obj: JiraConnection) -> str:
         """Create a small anchor tag with the link to the object's import stories view.

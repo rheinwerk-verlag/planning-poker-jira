@@ -99,13 +99,12 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
                                    help_text=_('Check this if you want to test your entered data and try to '
                                                'authenticate against the API'),
                                    required=False)
+    delete_password = forms.BooleanField(label=_('Delete Password'),
+                                         help_text=_('Check this if you want to delete your saved password'),
+                                         required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # We have to cache the instance ourselves in order to get a working connection.
-        # Django will override the instance with the given form data inside the `BaseModelForm`'s
-        # `_post_clean()` method. This would lead to a connection with no username or password if they are left blank
-        # inside the form.
         self.fields['username'].help_text = None
         self.fields['password'].help_text = None
 
