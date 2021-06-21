@@ -91,18 +91,27 @@ class TestJiraConnectionForm:
             assert getattr(connection, attribute) == value
 
     @pytest.mark.parametrize('delete_password_checked', (True, False))
-    def test_clean(self, delete_password_checked, form_data, expected_data, jira_connection_form_class,
+    @pytest.mark.parametrize('password_entered', (True, False))
+    def test_clean(self, delete_password_checked, password_entered, form_data, jira_connection_form_class,
                    jira_connection):
+        if not password_entered:
+            del form_data['password']
+        else:
+            form_data['password'] = 'custom password'
         form_data['delete_password'] = delete_password_checked
-        form_data['test_conn'] = False
         form = jira_connection_form_class(form_data, instance=jira_connection)
+
         form.is_valid()
-        expected_password = '' if delete_password_checked else expected_data['password']
-        assert form.cleaned_data['password'] == expected_password
+
+        if password_entered and delete_password_checked:
+            assert 'password' in form.errors
+        else:
+            expected_password = '' if delete_password_checked else form_data.get('password') or jira_connection.password
+            assert form.cleaned_data['password'] == expected_password
 
     @patch('planning_poker_jira.models.JiraConnection.get_client')
     @pytest.mark.parametrize('test_conn_checked', (True, False))
-    def test_test_clean(self, mock_get_client, form_data, jira_connection_form_class, test_conn_checked):
+    def test_test_connection(self, mock_get_client, form_data, jira_connection_form_class, test_conn_checked):
         form_data['test_conn'] = test_conn_checked
         form = jira_connection_form_class(form_data)
         form.is_valid()

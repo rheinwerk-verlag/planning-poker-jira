@@ -104,35 +104,41 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         self.fields['password'].help_text = None
 
     def clean(self):
-        cleaned_data = super().clean()
+        cleaned_data = self.cleaned_data
         # This form requires some extra handling while cleaning. Since the password field will not be prepopulated with
         # data from the database, the password would be reset to an empty string whenever the user wants to change any
         # attribute for an existing `JiraConnection` instance without reentering the password. The form interprets
         # an empty password field as no changes to the password to circumvent that. In order for the user to be still be
         # able to delete a saved password, we added the `delete_password` field which indicates whether the password
         # should be deleted or not.
-        if cleaned_data.get('delete_password'):
+        delete_password = cleaned_data.get('delete_password')
+        if delete_password and cleaned_data['password']:
+            self.add_error('password', _('You can not change the password and delete it at the same time'))
+        elif delete_password:
             cleaned_data['password'] = ''
         else:
-            cleaned_data['password'] = self._get_connection().password
-        return cleaned_data
+            cleaned_data['password'] = cleaned_data['password'] or self.instance.password
+
+        return super().clean()
 
     def _get_connection(self) -> JiraConnection:
         """Create a JiraConnection instance from the form data."""
         return JiraConnection(api_url=self.cleaned_data.get('api_url') or self.instance.api_url,
                               username=self.cleaned_data.get('username') or self.instance.username,
-                              password=self.cleaned_data.get('password') or self.instance.password)
+                              password=self.cleaned_data.get('password'))
 
     @property
     def test_connection(self) -> bool:
-        """Return whether the `test_conn` checkbox has been checked or not.
+        """Determine whether the connection to the jira backend should be tested.
+        This depends on the `test_connection` checkbox and on potential form errors which occur when the
+        `delete_password` checkbox has been checked while a new password has also been provided.
         Since it is optional for the user to save their password inside the database, it is not always possible to test
         the connection. Especially because an empty password field means that the currently saved password shouldn't be
         changed.
 
-        :return: Whether the `test_conn` checkbox has been checked.
+        :return: Whether the connection should be tested.
         """
-        return self.cleaned_data['test_conn']
+        return self.cleaned_data['test_conn'] and not self.has_error('password')
 
 
 class ExportStoriesForm(JiraAuthenticationForm):
