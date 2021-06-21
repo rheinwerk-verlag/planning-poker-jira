@@ -32,9 +32,10 @@ class JiraAuthenticationForm(forms.Form):
     @cached_property
     def client(self) -> JIRA:
         """A client which can be used to communicate with the jira backend. E.g. to import/export stories.
-        This property becomes available whenever this class' `clean()` method is called and a `JiraConnection` instance
-        with an api url and a username could be acquired from `_get_connection()`. (This property could still be
-        unavailable after all of this when there was a problem with the connection/request to the backend.)
+        This property becomes available whenever this class' `clean()` method is called and `test_connection()`
+        evaluates to `True`. The data needed to authenticate against the backend will be taken from the `JiraConnection`
+        instance acquired from `_get_connection()`. (This property could still be unavailable after all of this when
+        there was a problem with the connection/request to the backend.)
 
         Use this whenever you want to communicate with the jira backend in order to prevent multiple authentication
         requests during the handling of the same form.
@@ -57,6 +58,17 @@ class JiraAuthenticationForm(forms.Form):
         """
         raise NotImplementedError()
 
+    def test_connection(self) -> bool:
+        """Determine whether the connection to the jira backend should be tested.
+        This method is called inside the `clean()` method in order to determine whether the connection and should be
+        tested and therefore _whether the `client` property will be populated or not_.
+
+        Since most use cases require the connection to be tested this implementation will always return `True`.
+        Child classes however can override this method to make the test optional (see the class`JiraConnectionForm`
+        for an example) if needed.
+        """
+        return True
+
     def clean(self) -> dict:
         cleaned_data = super().clean()
         connection = self._get_connection()
@@ -66,10 +78,11 @@ class JiraAuthenticationForm(forms.Form):
         if not (connection.api_url and connection.username):
             self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
         else:
-            try:
-                self._client = connection.get_client()
-            except (JIRAError, ConnectionError, RequestException) as e:
-                self.add_error(None, get_error_text(e, api_url=connection.api_url, connection=connection))
+            if self.test_connection():
+                try:
+                    self._client = connection.get_client()
+                except (JIRAError, ConnectionError, RequestException) as e:
+                    self.add_error(None, get_error_text(e, api_url=connection.api_url, connection=connection))
         return cleaned_data
 
 
