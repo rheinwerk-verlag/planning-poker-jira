@@ -1,5 +1,3 @@
-from copy import copy
-
 from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -44,10 +42,10 @@ class JiraAuthenticationForm(forms.Form):
         """
         if self._client is None:
             error_message = 'Could not get the client because {reason}'
-            if self.test_connection():
+            if self.test_connection:
                 error_message = error_message.format(reason='the data did not validate')
             else:
-                error_message = error_message.format(reason='`test_connection()` returned `False`')
+                error_message = error_message.format(reason='`test_connection` returned `False`')
             raise ValueError(error_message)
         return self._client
 
@@ -63,6 +61,7 @@ class JiraAuthenticationForm(forms.Form):
         """
         raise NotImplementedError()
 
+    @property
     def test_connection(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.
         This method is called inside the `clean()` method in order to determine whether the connection and should be
@@ -79,7 +78,7 @@ class JiraAuthenticationForm(forms.Form):
     def clean(self) -> dict:
         cleaned_data = super().clean()
         connection = self._get_connection()
-        if self.test_connection():
+        if self.test_connection:
             if not (connection.api_url and connection.username):
                 self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
             else:
@@ -124,6 +123,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
                               username=self.cleaned_data.get('username') or self.instance.username,
                               password=self.cleaned_data.get('password') or self.instance.password)
 
+    @property
     def test_connection(self) -> bool:
         """Return whether the `test_conn` checkbox has been checked or not.
         Since it is optional for the user to save their password inside the database, it is not always possible to test
