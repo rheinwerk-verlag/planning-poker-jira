@@ -61,7 +61,6 @@ class TestJiraAuthenticationForm:
         else:
             num_expected_errors = num_expected_missing_credentials_errors + num_expected_side_effects_errors
         assert num_generated_errors == num_expected_errors
-        assert cleaned_data['password'] == jira_connection.password
 
 
 class TestJiraConnectionForm:
@@ -75,24 +74,33 @@ class TestJiraConnectionForm:
         assert form.fields['password'].help_text is None
 
     @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_get_connection(self, mock_get_client, jira_connection_form_class, jira_connection, form_data_api_url,
-                            expected_api_url, form_data_username, expected_username, form_data_password,
-                            expected_password):
-        form_data = dict(**form_data_api_url, **form_data_username, **form_data_password)
-        expected_data = dict(**expected_api_url, **expected_username, **expected_password)
+    def test_get_connection(self, mock_get_client, jira_connection_form_class, jira_connection, form_data, expected_data):
         form = jira_connection_form_class(form_data, instance=jira_connection)
-        form.is_valid()
+        # We want to test the `_get_connection()` method during the cleaning process, so we need to mock `_post_clean`
+        # which would change attributes for `form.instance` which would in turn change the outcome of
+        # `_get_connection()`.
+        with patch.object(form, '_post_clean'):
+            form.is_valid()
         connection = form._get_connection()
         for attribute, value in expected_data.items():
             assert getattr(connection, attribute) == value
 
+    @pytest.mark.parametrize('delete_password_checked', (True, False))
+    def test_clean(self, delete_password_checked, form_data, expected_data, jira_connection_form_class,
+                   jira_connection):
+        form_data['delete_password'] = delete_password_checked
+        form_data['test_conn'] = False
+        form = jira_connection_form_class(form_data, instance=jira_connection)
+        form.is_valid()
+        expected_password = '' if delete_password_checked else expected_data['password']
+        assert form.cleaned_data['password'] == expected_password
+
 
 class TestExportStoriesForm:
     @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_get_connection(self, mock_get_client, jira_connection, form_data_username, expected_username,
-                            form_data_password, expected_password):
-        form_data = dict(**form_data_username, **form_data_password, jira_connection=jira_connection)
-        expected_data = dict(**expected_username, **expected_password, api_url=jira_connection.api_url)
+    def test_get_connection(self, mock_get_client, jira_connection, form_data, expected_data):
+        form_data = dict(**form_data, jira_connection=jira_connection)
+        expected_data['api_url'] = jira_connection.api_url
         form = ExportStoriesForm(form_data)
         form.is_valid()
         connection = form._get_connection()
@@ -107,11 +115,9 @@ class TestImportStoriesForm:
         assert form._connection == jira_connection
 
     @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_get_connection(self, mock_get_client, jira_connection, form_data_username, expected_username,
-                            form_data_password, expected_password):
-        form_data = dict(**form_data_username, **form_data_password)
-        expected_data = dict(**expected_username, **expected_password, api_url=jira_connection.api_url)
+    def test_get_connection(self, mock_get_client, jira_connection, form_data, expected_data):
         form = ImportStoriesForm(jira_connection, form_data)
+        expected_data['api_url'] = jira_connection.api_url
         form.is_valid()
         connection = form._get_connection()
         for attribute, value in expected_data.items():

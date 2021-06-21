@@ -42,14 +42,6 @@ def stories(db):
     return Story.objects.bulk_create([Story(**story) for story in stories])
 
 
-@pytest.fixture
-def form_data():
-    return {
-        'username': 'testuser',
-        'password': 'supersecret'
-    }
-
-
 @pytest.fixture(params=['different_testuser', ''])
 def form_data_username(request):
     return {'username': request.param}
@@ -78,6 +70,16 @@ def form_data_api_url(request):
 @pytest.fixture
 def expected_api_url(form_data_api_url, jira_connection):
     return {'api_url': form_data_api_url.get('api_url') or jira_connection.api_url}
+
+
+@pytest.fixture
+def form_data(form_data_api_url, form_data_username, form_data_password):
+    return dict(**form_data_api_url, **form_data_username, **form_data_password)
+
+
+@pytest.fixture
+def expected_data(expected_api_url, expected_username, expected_password):
+    return dict(**expected_api_url, **expected_username, **expected_password)
 
 
 @pytest.fixture
