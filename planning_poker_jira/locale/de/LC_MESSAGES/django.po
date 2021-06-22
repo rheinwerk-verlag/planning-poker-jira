@@ -57,7 +57,7 @@ msgstr "Stories importieren"
 msgid "%d story was successfully imported."
 msgid_plural "%d stories were successfully imported."
 msgstr[0] "%d Story wurde erfolgreich importiert."
-msgstr[1] "%d wurden erfolgreich importiert."
+msgstr[1] "%d Stories wurden erfolgreich importiert."
 
 #: .\admin.py:175
 #, python-brace-format
