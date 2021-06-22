@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from django import forms
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
@@ -74,7 +76,7 @@ class JiraAuthenticationForm(forms.Form):
         """
         return True
 
-    def clean(self) -> dict:
+    def clean(self) -> Dict[str, Any]:
         cleaned_data = super().clean()
         connection = self._get_connection()
         if self.test_connection:
