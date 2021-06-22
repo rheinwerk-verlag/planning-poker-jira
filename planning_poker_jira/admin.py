@@ -1,7 +1,7 @@
 from typing import Dict, Iterable, List, Union
 
-from django.contrib import admin, messages
-from django.contrib.admin import helpers, ModelAdmin
+from django.contrib import messages
+from django.contrib.admin import helpers, ModelAdmin, register
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.contrib.admin.utils import unquote
 from django.db.models import QuerySet
@@ -86,8 +86,8 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
     return TemplateResponse(request, 'admin/planning_poker/story/export_stories.html', context)
 
 
-@admin.register(JiraConnection)
-class JiraConnectionAdmin(admin.ModelAdmin):
+@register(JiraConnection)
+class JiraConnectionAdmin(ModelAdmin):
     form = JiraConnectionForm
     list_display = ('__str__', 'get_import_stories_url')
 
