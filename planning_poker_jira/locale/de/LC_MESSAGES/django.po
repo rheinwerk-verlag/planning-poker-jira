@@ -120,7 +120,7 @@ msgstr "Wählen Sie das aus, wenn Sie Ihr gespeichertes Passwort löschen wollen
 
 #: .\forms.py:116
 msgid "You can not change the password and delete it at the same time"
-msgstr "Sie können kein Passwort gleichzeitig ändern und löschen"
+msgstr "Sie können das Passwort nicht gleichzeitig ändern und löschen"
 
 #: .\forms.py:147 .\models.py:24
 msgid "Jira Connection"
