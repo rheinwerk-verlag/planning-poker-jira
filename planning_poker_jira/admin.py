@@ -52,12 +52,11 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 else:
                     num_exported_stories += 1
             if num_exported_stories:
-                num_stories = num_exported_stories
                 modeladmin.message_user(request, ngettext_lazy(
                     '%d story was successfully exported.',
                     '%d stories were successfully exported.',
-                    num_stories,
-                ) % num_stories, messages.SUCCESS)
+                    num_exported_stories,
+                ) % num_exported_stories, messages.SUCCESS)
             return None
     else:
         form = ExportStoriesForm()
