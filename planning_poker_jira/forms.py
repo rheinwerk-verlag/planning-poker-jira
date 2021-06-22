@@ -63,7 +63,7 @@ class JiraAuthenticationForm(forms.Form):
     @property
     def test_connection(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.
-        This method is called inside the `clean()` method in order to determine whether the connection should be
+        This property gets evaluated inside the `clean()` method in order to determine whether the connection should be
         tested and therefore _whether the `client` property will be populated or not_.
 
         Since most use cases require the connection to be tested this implementation will always return `True`.

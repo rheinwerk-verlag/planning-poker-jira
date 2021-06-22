@@ -109,7 +109,7 @@ class JiraConnectionAdmin(ModelAdmin):
         return fields
 
     def get_import_stories_url(self, obj: JiraConnection) -> str:
-        """Create a small anchor tag with the link to the object's import stories view.
+        """Create an anchor tag with the link to the object's import stories view.
 
         :param obj: The jira connection which should be used to determine the url.
         :return: A string containing a html anchor tag where the href attribute points to the import stories view.
