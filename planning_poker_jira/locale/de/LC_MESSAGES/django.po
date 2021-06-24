@@ -161,7 +161,7 @@ msgstr "Storypunktefeld"
 
 #: .\models.py:25
 msgid "Jira Connections"
-msgstr "Jiraverbindungen"
+msgstr "Jira-Verbindungen"
 
 #: .\templates\admin\planning_poker\story\export_stories.html:16
 #: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:18
