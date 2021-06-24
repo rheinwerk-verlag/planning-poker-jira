@@ -50,11 +50,9 @@ class JiraAuthenticationForm(forms.Form):
 
     def _get_connection(self) -> JiraConnection:
         """This method should be implemented by all the child classes in order to provide a `JiraConnection` instance.
-        We call this method during the `clean()` method so that we can establish a connection to the jira backend which
-        gets saved into the `_client` attribute.
+        The provided `JiraConnection` is used during the form's validation process.
 
-        The returned instance is not a saved instance from the database. It is instantiated with a combination of form
-        data and data from a different `JiraConnection` (which usually comes from the database).
+        The returned instance does not have to be a saved instance from the database.
 
         :return: A `JiraConnection` which can be used to retrieve a `JIRA` instance.
         """
