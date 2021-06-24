@@ -40,7 +40,7 @@
     {% for story in stories %}
       <input type="hidden" name="_selected_action" value="{{ story.pk }}">
     {% endfor %}
-    <input type="hidden" name="action" value="export_stories">
+    <input type="hidden" name="action" value="{{ export_stories_value }}">
     {% block submit_buttons_bottom %}
       <input type="submit" value="{% trans 'Export' %}" name="{{ submit_button_name }}">
       <a href="#" class="button cancel-link">{% trans "No, take me back" %}</a>
