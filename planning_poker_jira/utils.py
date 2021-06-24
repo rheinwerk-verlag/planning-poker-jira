@@ -14,7 +14,8 @@ def get_error_text(exception: Exception, **context) -> str:
         error_text = get_jira_error_error_text(exception, **context)
     elif isinstance(exception, ConnectionError):
         error_text = _('Failed to connect to server.')
-        if api_url := context.get('api_url'):
+        api_url = context.get('api_url')
+        if api_url:
             error_text = ' '.join((str(error_text),
                                    str(_('Is "{api_url}" the correct API URL?').format(api_url=api_url))))
     elif isinstance(exception, RequestException):
@@ -39,7 +40,8 @@ def get_jira_error_error_text(jira_error: JIRAError, **context) -> str:
         error_text = _('Could not authenticate the API user with the given credentials. '
                        'Make sure that you entered the correct data.')
     elif jira_error.status_code == 404:
-        if connection := context.get('connection'):
+        connection = context.get('connection')
+        if connection:
             error_text = _('The story does probably not exist inside "{connection}".').format(connection=connection)
         else:
             error_text = _('The story does probably not exist inside the selected backend.')
