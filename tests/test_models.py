@@ -28,7 +28,7 @@ class TestJiraConnection:
 
     @patch('planning_poker_jira.models.JIRA')
     @pytest.mark.parametrize(
-        'expected_exception, side_effect, expected_result',
+        'expectation, side_effect, expected_result',
         [
             (pytest.raises(JIRAError), JIRAError(), []),
             (
@@ -51,13 +51,13 @@ class TestJiraConnection:
         ],
     )
     def test_create_stories(
-        self, mock_jira, expected_exception, side_effect, expected_result, jira_connection, poker_session
+        self, mock_jira, expectation, side_effect, expected_result, jira_connection, poker_session
     ):
         mock_client = Mock()
         mock_jira.return_value = mock_client
         mock_client.search_issues.side_effect = side_effect
 
-        with expected_exception:
+        with expectation:
             jira_connection.create_stories('project=FIAE', poker_session)
         assert list(poker_session.stories.values('ticket_number', 'title', 'description')) == expected_result
         mock_client.search_issues.assert_called_with(
