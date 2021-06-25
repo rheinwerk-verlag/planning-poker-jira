@@ -142,7 +142,7 @@ class JiraConnectionAdmin(ModelAdmin):
                                                  form.cleaned_data['poker_session'],
                                                  form.client)
                 except (JIRAError, ConnectionError, RequestException) as e:
-                    if type(e) == JIRAError:
+                    if isinstance(e, JiraConnection):
                         field = 'jql_query'
                     else:
                         field = None
