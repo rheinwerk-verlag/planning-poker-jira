@@ -18,5 +18,5 @@ from planning_poker_jira.utils import get_error_text
     (RequestException(), {}, 'There was an ambiguous error with your request. Check if all your data is correct.'),
     (Exception(), {}, 'Encountered an unknown exception.'),
 ])
-def test_get_jira_error_error_text(error, context, expected_result):
+def test_get_error_text(error, context, expected_result):
     assert get_error_text(error, **context) == expected_result
