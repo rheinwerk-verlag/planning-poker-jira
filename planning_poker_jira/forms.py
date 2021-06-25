@@ -40,12 +40,8 @@ class JiraAuthenticationForm(forms.Form):
         :param: A `JIRA` instance which can be used to communicate with the jira backend.
         """
         if self._client is None:
-            error_message = 'Could not get the client because {reason}'
-            if self._requires_connection_test():
-                error_message = error_message.format(reason='the data did not validate')
-            else:
-                error_message = error_message.format(reason='`test_connection` returned `False`')
-            raise ValueError(error_message)
+            raise ValueError('Could not get the client because either the data did not validate or because this form '
+                             'was not configured to test the connection')
         return self._client
 
     def _get_connection(self) -> JiraConnection:
