@@ -99,5 +99,5 @@ def jira_connection_admin():
 
 
 @pytest.fixture
-def export_stories_form_data(form_data, jira_connection):
+def export_story_points_form_data(form_data, jira_connection):
     return dict(**form_data, jira_connection=jira_connection.pk)

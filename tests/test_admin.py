@@ -9,16 +9,16 @@ from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.models import Story
 
-from planning_poker_jira.admin import export_stories
-from planning_poker_jira.forms import ExportStoriesForm, ImportStoriesForm
+from planning_poker_jira.admin import export_story_points
+from planning_poker_jira.forms import ExportStoryPointsForm, ImportStoriesForm
 
 
 class TestExportStoriesAction:
-    def test_initial_export_stories(self, jira_connection_admin, stories, rf, admin_user):
+    def test_initial_export_story_points(self, jira_connection_admin, stories, rf, admin_user):
         request = rf.post('/')
         request.user = admin_user
-        response = export_stories(jira_connection_admin, request, stories)
-        assert isinstance(response.context_data['form'].form, ExportStoriesForm)
+        response = export_story_points(jira_connection_admin, request, stories)
+        assert isinstance(response.context_data['form'].form, ExportStoryPointsForm)
         assert response.context_data['stories'] == stories
 
     @pytest.mark.parametrize('side_effect, expected_message_user_calls', (
@@ -43,17 +43,17 @@ class TestExportStoriesAction:
         )),
     ))
     @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_confirmed_export_stories(self, mock_get_client, rf, admin_user, jira_connection_admin, stories,
-                                      export_stories_form_data, side_effect, expected_message_user_calls):
+    def test_confirmed_export_story_points(self, mock_get_client, rf, admin_user, jira_connection_admin, stories,
+                                           export_story_points_form_data, side_effect, expected_message_user_calls):
         mock_client = Mock()
         mock_client.issue = Mock(side_effect=side_effect)
         mock_get_client.return_value = mock_client
         mock_message_user = Mock()
 
-        request = rf.post('/', dict(**export_stories_form_data, export=True))
+        request = rf.post('/', dict(**export_story_points_form_data, export=True))
         request.user = admin_user
         with patch.object(jira_connection_admin, 'message_user', mock_message_user):
-            export_stories(jira_connection_admin, request, stories)
+            export_story_points(jira_connection_admin, request, stories)
         mock_message_user.assert_has_calls(
             (call(request, *expected_call) for expected_call in expected_message_user_calls)
         )

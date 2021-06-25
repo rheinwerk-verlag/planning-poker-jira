@@ -5,7 +5,8 @@ import pytest
 from jira import JIRAError
 from requests.exceptions import ConnectionError, RequestException
 
-from planning_poker_jira.forms import ExportStoriesForm, ImportStoriesForm, JiraAuthenticationForm, JiraConnectionForm
+from planning_poker_jira.forms import (ExportStoryPointsForm, ImportStoriesForm, JiraAuthenticationForm,
+                                       JiraConnectionForm)
 from planning_poker_jira.models import JiraConnection
 
 
@@ -116,12 +117,12 @@ class TestJiraConnectionForm:
         assert form._requires_connection_test() == test_connection_checked
 
 
-class TestExportStoriesForm:
+class TestExportStoryPointsForm:
     @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
     def test_get_connection(self, jira_connection, form_data, expected_data):
         form_data = dict(**form_data, jira_connection=jira_connection)
         expected_data['api_url'] = jira_connection.api_url
-        form = ExportStoriesForm(form_data)
+        form = ExportStoryPointsForm(form_data)
         form.is_valid()
         connection = form._get_connection()
         for attribute, value in expected_data.items():

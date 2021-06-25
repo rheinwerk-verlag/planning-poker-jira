@@ -132,11 +132,12 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         return self.cleaned_data['test_connection']
 
 
-class ExportStoriesForm(JiraAuthenticationForm):
+class ExportStoryPointsForm(JiraAuthenticationForm):
     """Form which is used for exporting stories to the jira backend."""
     jira_connection = forms.ModelChoiceField(
         label=_('Jira Connection'),
-        help_text=_('The Jira Backend to which the stories should be exported'),
+        help_text=_('The Jira Backend to which the story points should be exported. Any stories which are not present '
+                    'in the backend can not be exported'),
         queryset=JiraConnection.objects.all(),
         required=True
     )

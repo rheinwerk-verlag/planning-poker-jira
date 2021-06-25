@@ -15,23 +15,23 @@ from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.admin import StoryAdmin
 
-from .forms import ExportStoriesForm, ImportStoriesForm, JiraConnectionForm
+from .forms import ExportStoryPointsForm, ImportStoriesForm, JiraConnectionForm
 from .models import JiraConnection
 from .utils import get_error_text
 
 
-def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> Union[HttpResponse, None]:
+def export_story_points(modeladmin: ModelAdmin, request: HttpRequest, queryset: QuerySet) -> Union[HttpResponse, None]:
     """Send the story points for each story in the queryset to the selected backend.
 
     :param modeladmin: The current ModelAdmin.
     :param request: The current HTTP request.
     :param queryset: Containing the set of stories selected by the user.
     :return: A http response which either redirects back to the changelist view on success or renders a template with
-             the `ExportStoriesForm`.
+             the `ExportStoryPointsForm`.
     """
     submit_button_name = 'export'
     if submit_button_name in request.POST:
-        form = ExportStoriesForm(request.POST)
+        form = ExportStoryPointsForm(request.POST)
         if form.is_valid():
             jira_connection = form.cleaned_data['jira_connection']
             error_message = _('"{story}" could not be exported. {reason}')
@@ -59,7 +59,7 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
                 ) % num_exported_stories, messages.SUCCESS)
             return None
     else:
-        form = ExportStoriesForm()
+        form = ExportStoryPointsForm()
     admin_form = helpers.AdminForm(
         form,
         (
@@ -78,12 +78,12 @@ def export_stories(modeladmin: ModelAdmin, request: HttpRequest, queryset: Query
         'opts': modeladmin.opts,
         'title': _('Export Stories'),
         'submit_button_name': submit_button_name,
-        'export_stories_value': modeladmin.get_action(export_stories)[1],
+        'export_story_points_value': modeladmin.get_action(export_story_points)[1],
         'stories': queryset,
         'form': admin_form,
         'media': modeladmin.media
     }
-    return TemplateResponse(request, 'admin/planning_poker/story/export_stories.html', context)
+    return TemplateResponse(request, 'admin/planning_poker/story/export_story_points.html', context)
 
 
 @register(JiraConnection)
@@ -181,4 +181,4 @@ class JiraConnectionAdmin(ModelAdmin):
         return TemplateResponse(request, 'admin/planning_poker_jira/jira_connection/import_stories.html', context)
 
 
-StoryAdmin.add_action(export_stories, _('Export Stories to Jira'))
+StoryAdmin.add_action(export_story_points, _('Export Story Points to Jira'))
