@@ -119,21 +119,16 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         return super().clean()
 
     def _get_connection(self) -> JiraConnection:
-        """Create a JiraConnection instance from the form data."""
         return JiraConnection(api_url=self.cleaned_data.get('api_url'),
                               username=self.cleaned_data.get('username'),
                               password=self.cleaned_data.get('password'))
 
     def _requires_connection_test(self) -> bool:
-        """Determine whether the connection to the jira backend should be tested.
-        This depends on the `test_connection` checkbox and on potential form errors which occur when the
-        `delete_password` checkbox has been checked while a new password has also been provided.
-        Since it is optional for the user to save their password inside the database, it is not always possible to test
-        the connection. Especially because an empty password field means that the currently saved password shouldn't be
-        changed.
-
-        :return: Whether the connection should be tested.
-        """
+        # Determine whether the connection to the jira backend should be tested. This depends on the `test_connection`
+        # checkbox and on potential form errors which occur when the `delete_password` checkbox has been checked while
+        # a new password has also been provided. Since it is optional for the user to save their password inside the
+        # database, it is not always possible to test the connection. Especially because an empty password field means
+        # that the currently saved password shouldn't be changed.
         return self.cleaned_data['test_connection'] and not self.has_error('password')
 
 
@@ -147,7 +142,6 @@ class ExportStoriesForm(JiraAuthenticationForm):
     )
 
     def _get_connection(self) -> JiraConnection:
-        """Return a JiraConnection instance where the username and password can be overridden by the form."""
         connection = self.cleaned_data['jira_connection']
         return JiraConnection(api_url=connection.api_url,
                               username=self.cleaned_data['username'] or connection.username,
@@ -169,7 +163,6 @@ class ImportStoriesForm(JiraAuthenticationForm):
         self._connection = connection
 
     def _get_connection(self) -> JiraConnection:
-        """Return a `JiraConnection` instance where the username and password can be overridden by the form."""
         return JiraConnection(api_url=self._connection.api_url,
                               username=self.cleaned_data['username'] or self._connection.username,
                               password=self.cleaned_data['password'] or self._connection.password)
