@@ -110,12 +110,13 @@ class TestJiraConnectionForm:
             assert form.cleaned_data['password'] == expected_password
 
     @patch('planning_poker_jira.models.JiraConnection.get_client')
-    @pytest.mark.parametrize('test_conn_checked', (True, False))
-    def test_requires_connection_test(self, mock_get_client, form_data, jira_connection_form_class, test_conn_checked):
-        form_data['test_conn'] = test_conn_checked
+    @pytest.mark.parametrize('test_connection_checked', (True, False))
+    def test_requires_connection_test(self, mock_get_client, form_data, jira_connection_form_class,
+                                      test_connection_checked):
+        form_data['test_connection'] = test_connection_checked
         form = jira_connection_form_class(form_data)
         form.is_valid()
-        assert form._requires_connection_test() == test_conn_checked
+        assert form._requires_connection_test() == test_connection_checked
 
 
 class TestExportStoriesForm:

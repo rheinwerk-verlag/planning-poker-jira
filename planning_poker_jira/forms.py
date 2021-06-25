@@ -87,10 +87,10 @@ class JiraAuthenticationForm(forms.Form):
 
 class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
     """Form which is used for the `JiraConnectionAdmin` class. This is used for the change and create views."""
-    test_conn = forms.BooleanField(label=_('Test Connection'),
-                                   help_text=_('Check this if you want to test your entered data and try to '
-                                               'authenticate against the API'),
-                                   required=False)
+    test_connection = forms.BooleanField(label=_('Test Connection'),
+                                         help_text=_('Check this if you want to test your entered data and try to '
+                                                     'authenticate against the API'),
+                                         required=False)
     delete_password = forms.BooleanField(label=_('Delete Password'),
                                          help_text=_('Check this if you want to delete your saved password'),
                                          required=False)
@@ -134,7 +134,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
         :return: Whether the connection should be tested.
         """
-        return self.cleaned_data['test_conn'] and not self.has_error('password')
+        return self.cleaned_data['test_connection'] and not self.has_error('password')
 
 
 class ExportStoriesForm(JiraAuthenticationForm):
