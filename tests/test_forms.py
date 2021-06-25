@@ -75,18 +75,18 @@ class TestJiraConnectionForm:
         form = JiraConnectionForm()
         assert form._client is None
         assert form.fields['username'].help_text is None
-        assert form.fields['password'].help_text is None
 
     @patch('planning_poker_jira.models.JiraConnection.get_client')
     def test_get_connection(self, mock_get_client, jira_connection_form_class, jira_connection, form_data,
                             expected_data):
         form = jira_connection_form_class(form_data, instance=jira_connection)
-        # We want to test the `_get_connection()` method during the cleaning process, so we need to mock `_post_clean`
-        # which would change attributes for `form.instance` which would in turn change the outcome of
-        # `_get_connection()`.
-        with patch.object(form, '_post_clean'):
-            form.is_valid()
+        form.is_valid()
         connection = form._get_connection()
+
+        if not form_data['username']:
+            expected_data['username'] = ''
+        if not form_data['api_url']:
+            expected_data['api_url'] = None
         for attribute, value in expected_data.items():
             assert getattr(connection, attribute) == value
 

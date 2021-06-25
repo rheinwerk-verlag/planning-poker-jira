@@ -120,8 +120,8 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
     def _get_connection(self) -> JiraConnection:
         """Create a JiraConnection instance from the form data."""
-        return JiraConnection(api_url=self.cleaned_data.get('api_url') or self.instance.api_url,
-                              username=self.cleaned_data.get('username') or self.instance.username,
+        return JiraConnection(api_url=self.cleaned_data.get('api_url'),
+                              username=self.cleaned_data.get('username'),
                               password=self.cleaned_data.get('password'))
 
     def _requires_connection_test(self) -> bool:
