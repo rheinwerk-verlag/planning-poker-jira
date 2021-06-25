@@ -90,7 +90,7 @@ def jira_authentication_form(form_data):
 
 @pytest.fixture
 def jira_connection_form_class():
-    return modelform_factory(JiraConnection, form=JiraConnectionForm, fields='__all__', exclude=())
+    return modelform_factory(JiraConnection, form=JiraConnectionForm, fields='__all__')
 
 
 @pytest.fixture
