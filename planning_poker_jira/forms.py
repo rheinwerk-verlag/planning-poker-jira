@@ -98,7 +98,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].help_text = None
-        self.fields['password'].help_text = None
+        self.fields['password'].help_text = _('Use this to override the password or let it blank to make no changes')
 
     def clean(self):
         cleaned_data = self.cleaned_data
