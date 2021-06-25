@@ -95,7 +95,7 @@ msgstr ""
 msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
-"Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL, und einen "
+"Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL und einen "
 "Benutzernamen angegeben haben."
 
 #: .\forms.py:93
@@ -107,7 +107,7 @@ msgid ""
 "Check this if you want to test your entered data and try to authenticate "
 "against the API"
 msgstr ""
-"Wählen Sie das aus, wenn Sie versuchen wollen sich mit den eingegebenen "
+"Nutzen Sie diese Option, wenn Sie versuchen wollen sich mit den eingegebenen "
 "Daten bei der API zu authentifizieren"
 
 #: .\forms.py:97
@@ -116,7 +116,7 @@ msgstr "Passwort löschen"
 
 #: .\forms.py:98
 msgid "Check this if you want to delete your saved password"
-msgstr "Wählen Sie das aus, wenn Sie Ihr gespeichertes Passwort löschen wollen"
+msgstr "Nutzen Sie diese Option, wenn Sie Ihr gespeichertes Passwort löschen wollen"
 
 #: .\forms.py:116
 msgid "You can not change the password and delete it at the same time"
