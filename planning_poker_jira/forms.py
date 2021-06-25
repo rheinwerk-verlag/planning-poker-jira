@@ -41,7 +41,7 @@ class JiraAuthenticationForm(forms.Form):
         """
         if self._client is None:
             error_message = 'Could not get the client because {reason}'
-            if self.test_connection:
+            if self._requires_connection_test():
                 error_message = error_message.format(reason='the data did not validate')
             else:
                 error_message = error_message.format(reason='`test_connection` returned `False`')
@@ -58,11 +58,10 @@ class JiraAuthenticationForm(forms.Form):
         """
         raise NotImplementedError()
 
-    @property
-    def test_connection(self) -> bool:
+    def _requires_connection_test(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.
-        This property gets evaluated inside the `clean()` method in order to determine whether the connection should be
-        tested and therefore _whether the `client` property will be populated or not_.
+        This method gets called during the form's validation process in order to determine whether the connection should
+        be tested and therefore _whether the `client` property will be populated or not_.
 
         Since most use cases require the connection to be tested this implementation will always return `True`.
         Child classes however can override this method to make the test optional (see the class`JiraConnectionForm`
@@ -75,7 +74,7 @@ class JiraAuthenticationForm(forms.Form):
     def clean(self) -> Dict[str, Any]:
         cleaned_data = super().clean()
         connection = self._get_connection()
-        if self.test_connection:
+        if self._requires_connection_test():
             if not (connection.api_url and connection.username):
                 self.add_error(None, _('Missing credentials. Check whether you entered an API URL, and a username.'))
             else:
@@ -125,8 +124,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
                               username=self.cleaned_data.get('username') or self.instance.username,
                               password=self.cleaned_data.get('password'))
 
-    @property
-    def test_connection(self) -> bool:
+    def _requires_connection_test(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.
         This depends on the `test_connection` checkbox and on potential form errors which occur when the
         `delete_password` checkbox has been checked while a new password has also been provided.

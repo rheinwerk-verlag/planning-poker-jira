@@ -63,8 +63,8 @@ class TestJiraAuthenticationForm:
             num_expected_errors = num_expected_missing_credentials_errors + num_expected_side_effects_errors
         assert num_generated_errors == num_expected_errors
 
-    def test_test_connection(self):
-        assert JiraAuthenticationForm().test_connection
+    def test_requires_connection_test(self):
+        assert JiraAuthenticationForm()._requires_connection_test()
 
 
 class TestJiraConnectionForm:
@@ -111,11 +111,11 @@ class TestJiraConnectionForm:
 
     @patch('planning_poker_jira.models.JiraConnection.get_client')
     @pytest.mark.parametrize('test_conn_checked', (True, False))
-    def test_test_connection(self, mock_get_client, form_data, jira_connection_form_class, test_conn_checked):
+    def test_requires_connection_test(self, mock_get_client, form_data, jira_connection_form_class, test_conn_checked):
         form_data['test_conn'] = test_conn_checked
         form = jira_connection_form_class(form_data)
         form.is_valid()
-        assert form.test_connection == test_conn_checked
+        assert form._requires_connection_test() == test_conn_checked
 
 
 class TestExportStoriesForm:
