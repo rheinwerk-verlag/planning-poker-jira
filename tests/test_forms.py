@@ -76,8 +76,8 @@ class TestJiraConnectionForm:
         assert form._client is None
         assert form.fields['username'].help_text is None
 
-    @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_get_connection(self, mock_get_client, jira_connection_form_class, jira_connection, form_data,
+    @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
+    def test_get_connection(self, jira_connection_form_class, jira_connection, form_data,
                             expected_data):
         form = jira_connection_form_class(form_data, instance=jira_connection)
         form.is_valid()
@@ -109,9 +109,9 @@ class TestJiraConnectionForm:
             expected_password = '' if delete_password_checked else form_data.get('password') or jira_connection.password
             assert form.cleaned_data['password'] == expected_password
 
-    @patch('planning_poker_jira.models.JiraConnection.get_client')
+    @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
     @pytest.mark.parametrize('test_connection_checked', (True, False))
-    def test_requires_connection_test(self, mock_get_client, form_data, jira_connection_form_class,
+    def test_requires_connection_test(self, form_data, jira_connection_form_class,
                                       test_connection_checked):
         form_data['test_connection'] = test_connection_checked
         form = jira_connection_form_class(form_data)
@@ -120,8 +120,8 @@ class TestJiraConnectionForm:
 
 
 class TestExportStoriesForm:
-    @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_get_connection(self, mock_get_client, jira_connection, form_data, expected_data):
+    @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
+    def test_get_connection(self, jira_connection, form_data, expected_data):
         form_data = dict(**form_data, jira_connection=jira_connection)
         expected_data['api_url'] = jira_connection.api_url
         form = ExportStoriesForm(form_data)
@@ -137,8 +137,8 @@ class TestImportStoriesForm:
         form = ImportStoriesForm(jira_connection, {})
         assert form._connection == jira_connection
 
-    @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_get_connection(self, mock_get_client, jira_connection, form_data, expected_data):
+    @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
+    def test_get_connection(self, jira_connection, form_data, expected_data):
         form = ImportStoriesForm(jira_connection, form_data)
         expected_data['api_url'] = jira_connection.api_url
         form.is_valid()

@@ -75,9 +75,9 @@ def test_import_stories_view_get(admin_client, jira_connection, jira_connection_
     }, None)
 ))
 @patch('planning_poker_jira.admin.JiraConnectionAdmin.message_user')
-@patch('planning_poker_jira.models.JiraConnection.get_client')
+@patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
 @patch('planning_poker_jira.models.JiraConnection.create_stories')
-def test_import_stories_view_post(mock_create_stories, mock_get_client, mock_message_user, admin_client,
+def test_import_stories_view_post(mock_create_stories, mock_message_user, admin_client,
                                   jira_connection, jira_connection_admin, side_effect, expected_errors,
                                   expected_message):
 
