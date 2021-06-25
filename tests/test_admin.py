@@ -73,23 +73,25 @@ class TestJiraConnectionAdmin:
         ([[Story(ticket_number='FIAE-1', title='Write tests', description='Write some tests.')]], None,
          ('1 story was successfully imported.', messages.SUCCESS)),
         (JIRAError(status_code=1337), {'jql_query': ['Received status code 1337.']}, None),
-        (ConnectionError, {'__all__': ['Failed to connect to server. Is "http://test_url" the correct API URL?']},
+        (ConnectionError(), {'__all__': ['Failed to connect to server. Is "http://test_url" the correct API URL?']},
          None),
-        (RequestException, {
+        (RequestException(), {
             '__all__': ['There was an ambiguous error with your request. Check if all your data is correct.']
         }, None)
     ))
     @patch('planning_poker_jira.admin.JiraConnectionAdmin.message_user')
-    @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
+    @patch('planning_poker_jira.models.JiraConnection.get_client')
     @patch('planning_poker_jira.models.JiraConnection.create_stories')
-    def test_import_stories_view_post(self, mock_create_stories, mock_message_user, admin_client,
+    def test_import_stories_view_post(self, mock_create_stories, mock_get_client, mock_message_user, admin_client,
                                       jira_connection, jira_connection_admin, side_effect, expected_errors,
                                       expected_message):
 
         mock_create_stories.side_effect = side_effect
+        jql_query = 'key in "FIAE-1"'
         response = admin_client.post(reverse(admin_urlname(jira_connection_admin.opts, 'import_stories'),
-                                             args=[jira_connection.id]), {'jql_query': 'key in "FIAE-1"',
+                                             args=[jira_connection.id]), {'jql_query': jql_query,
                                                                           'poker_session': ''})
+        mock_create_stories.assert_called_with(jql_query, None, mock_get_client())
         if expected_errors:
             assert response.context_data['form'].form.errors == expected_errors
         if expected_message:
