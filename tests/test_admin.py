@@ -29,13 +29,13 @@ class TestExportStoriesAction:
             ('"FIAE-2: Write more tests" could not be exported. '
              'The story does probably not exist inside "http://test_url".', messages.ERROR),
         )),
-        (ConnectionError, (
+        (ConnectionError(), (
             ('"FIAE-1: Write tests" could not be exported. '
              'Failed to connect to server. Is "http://test_url" the correct API URL?', messages.ERROR),
             ('"FIAE-2: Write more tests" could not be exported. '
              'Failed to connect to server. Is "http://test_url" the correct API URL?', messages.ERROR),
         )),
-        (RequestException, (
+        (RequestException(), (
             ('"FIAE-1: Write tests" could not be exported. '
              'There was an ambiguous error with your request. Check if all your data is correct.', messages.ERROR),
             ('"FIAE-2: Write more tests" could not be exported. '
@@ -57,6 +57,8 @@ class TestExportStoriesAction:
         mock_message_user.assert_has_calls(
             (call(request, *expected_call) for expected_call in expected_message_user_calls)
         )
+        if not isinstance(side_effect, Exception):
+            side_effect().update.assert_has_calls(call(fields={'testfield': story.story_points}) for story in stories)
 
 
 class TestJiraConnectionAdmin:
