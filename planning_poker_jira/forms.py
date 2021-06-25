@@ -158,7 +158,14 @@ class ImportStoriesForm(JiraAuthenticationForm):
     )
     jql_query = forms.CharField(label=_('JQL Query'), required=True)
 
-    def __init__(self, connection, *args, **kwargs):
+    def __init__(self, connection: JiraConnection, *args, **kwargs):
+        """The `ImportStoriesForm` requires a `JiraConnection` passed from the outside in order to use it to acquire
+        fallback data for the `_get_connection()` method.
+
+        :param connection: The connection which will be used to acquire fallback data.
+        :param args: Additional arguments which will be passed to the parent's constructor.
+        :param kwargs: Additional keyword arguments which will be passed to the parent's constructor.
+        """
         super().__init__(*args, **kwargs)
         self._connection = connection
 
