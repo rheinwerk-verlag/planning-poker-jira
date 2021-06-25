@@ -18,7 +18,7 @@ class TestExportStoriesAction:
         request = rf.post('/')
         request.user = admin_user
         response = export_stories(jira_connection_admin, request, stories)
-        assert type(response.context_data['form'].form) == ExportStoriesForm
+        assert isinstance(response.context_data['form'].form, ExportStoriesForm)
         assert response.context_data['stories'] == stories
 
     @pytest.mark.parametrize('side_effect, expected_message_user_calls', (
@@ -63,15 +63,16 @@ class TestJiraConnectionAdmin:
     def test_import_stories_view_get(self, admin_client, jira_connection, jira_connection_admin):
         response = admin_client.get(reverse(admin_urlname(jira_connection_admin.opts, 'import_stories'),
                                             args=[jira_connection.id]))
-        assert type(response.context_data['form'].form) == ImportStoriesForm
+        assert isinstance(response.context_data['form'].form, ImportStoriesForm)
 
     @pytest.mark.parametrize('side_effect, expected_errors, expected_message', (
-        # The side effect has to be a list inside a list because `side_effect` will return the next element whenever it is
-        # an iterable.
+        # The side effect has to be a list inside a list because `side_effect` will return the next element whenever it
+        # is an iterable.
         ([[Story(ticket_number='FIAE-1', title='Write tests', description='Write some tests.')]], None,
          ('1 story was successfully imported.', messages.SUCCESS)),
         (JIRAError(status_code=1337), {'jql_query': ['Received status code 1337.']}, None),
-        (ConnectionError, {'__all__': ['Failed to connect to server. Is "http://test_url" the correct API URL?']}, None),
+        (ConnectionError, {'__all__': ['Failed to connect to server. Is "http://test_url" the correct API URL?']},
+         None),
         (RequestException, {
             '__all__': ['There was an ambiguous error with your request. Check if all your data is correct.']
         }, None)
