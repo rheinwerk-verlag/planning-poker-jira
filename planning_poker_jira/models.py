@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*
 import logging
-from typing import List
+from typing import List, Optional
 
 from django.conf import settings
 from django.db import models
@@ -32,7 +32,8 @@ class JiraConnection(models.Model):
         return JIRA(self.api_url, basic_auth=(self.username, self.password),
                     timeout=getattr(settings, 'JIRA_TIMEOUT', (3.05, 7)))
 
-    def create_stories(self, query_string: str, poker_session: PokerSession, client: JIRA = None) -> List[Story]:
+    def create_stories(self, query_string: str, poker_session: Optional[PokerSession] = None,
+                       client: Optional[JIRA] = None) -> List[Story]:
         """Fetch issues from the Jira client with the given query string and add them to the poker session.
 
         :param query_string: The string which should be used to query the stories.
