@@ -111,6 +111,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         delete_password = cleaned_data.get('delete_password')
         if delete_password and cleaned_data['password']:
             self.add_error('password', _('You can not change the password and delete it at the same time'))
+            return cleaned_data
         elif delete_password:
             cleaned_data['password'] = ''
         else:
@@ -125,11 +126,10 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
     def _requires_connection_test(self) -> bool:
         # Determine whether the connection to the jira backend should be tested. This depends on the `test_connection`
-        # checkbox and on potential form errors which occur when the `delete_password` checkbox has been checked while
-        # a new password has also been provided. Since it is optional for the user to save their password inside the
+        # checkbox. Since it is optional for the user to save their password inside the
         # database, it is not always possible to test the connection. Especially because an empty password field means
         # that the currently saved password shouldn't be changed.
-        return self.cleaned_data['test_connection'] and not self.has_error('password')
+        return self.cleaned_data['test_connection']
 
 
 class ExportStoriesForm(JiraAuthenticationForm):

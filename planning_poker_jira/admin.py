@@ -104,9 +104,9 @@ class JiraConnectionAdmin(ModelAdmin):
     def get_fields(self, request: HttpRequest, obj: JiraConnection = None) -> Iterable[Union[str, Iterable[str]]]:
         if obj:
             fields = ('label', 'api_url', 'username', ('password', 'delete_password'), 'story_points_field',
-                      'test_conn')
+                      'test_connection')
         else:
-            fields = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_conn')
+            fields = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_connection')
         return fields
 
     def get_import_stories_url(self, obj: JiraConnection) -> str:
