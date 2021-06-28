@@ -57,11 +57,6 @@ def jira_authentication_form(form_data):
     return JiraAuthenticationForm(form_data)
 
 
-@pytest.fixture
-def jira_connection_form_class():
-    return modelform_factory(JiraConnection, form=JiraConnectionForm, fields='__all__')
-
-
 class TestJiraAuthenticationForm:
     def test_init(self):
         form = JiraAuthenticationForm()
@@ -122,17 +117,13 @@ class TestJiraAuthenticationForm:
 
 class TestJiraConnectionForm:
     def test_init(self):
-        class Meta:
-            model = JiraConnection
-        JiraConnectionForm._meta = Meta
         form = JiraConnectionForm()
         assert form._client is None
         assert form.fields['username'].help_text is None
 
     @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
-    def test_get_connection(self, jira_connection_form_class, jira_connection, form_data,
-                            expected_data):
-        form = jira_connection_form_class(form_data, instance=jira_connection)
+    def test_get_connection(self, jira_connection, form_data, expected_data):
+        form = JiraConnectionForm(form_data, instance=jira_connection)
         form.is_valid()
         connection = form._get_connection()
 
@@ -145,11 +136,10 @@ class TestJiraConnectionForm:
 
     @pytest.mark.parametrize('delete_password_checked', (True, False))
     @pytest.mark.parametrize('entered_password', ('', 'custom password'))
-    def test_clean(self, delete_password_checked, entered_password, form_data, jira_connection_form_class,
-                   jira_connection):
+    def test_clean(self, delete_password_checked, entered_password, form_data, jira_connection):
         form_data['password'] = entered_password
         form_data['delete_password'] = delete_password_checked
-        form = jira_connection_form_class(form_data, instance=jira_connection)
+        form = JiraConnectionForm(form_data, instance=jira_connection)
 
         form.is_valid()
 
@@ -161,10 +151,9 @@ class TestJiraConnectionForm:
 
     @patch('planning_poker_jira.models.JiraConnection.get_client', Mock())
     @pytest.mark.parametrize('test_connection_checked', (True, False))
-    def test_requires_connection_test(self, form_data, jira_connection_form_class,
-                                      test_connection_checked):
+    def test_requires_connection_test(self, form_data, test_connection_checked):
         form_data['test_connection'] = test_connection_checked
-        form = jira_connection_form_class(form_data)
+        form = JiraConnectionForm(form_data)
         form.is_valid()
         assert form._requires_connection_test() == test_connection_checked
 

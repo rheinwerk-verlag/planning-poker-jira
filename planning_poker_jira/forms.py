@@ -91,6 +91,10 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
                                          help_text=_('Check this if you want to delete your saved password'),
                                          required=False)
 
+    class Meta:
+        model = JiraConnection
+        fields = '__all__'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].help_text = None
