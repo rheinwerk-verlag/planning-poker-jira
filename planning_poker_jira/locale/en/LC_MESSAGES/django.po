@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-28 10:18+0200\n"
+"POT-Creation-Date: 2021-06-28 14:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,8 +121,8 @@ msgstr ""
 
 #: .\forms.py:139
 msgid ""
-"The Jira Backend to which the story points should be exported. Any stories "
-"which are not present in the backend can not be exported"
+"The Jira Backend to which the story points should be exported. The points "
+"for any stories which are not present in the backend can not be exported"
 msgstr ""
 
 #: .\forms.py:155
