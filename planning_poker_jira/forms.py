@@ -28,7 +28,7 @@ class JiraAuthenticationForm(forms.Form):
         self._client = None
         super().__init__(*args, **kwargs)
 
-    @cached_property
+    @property
     def client(self) -> JIRA:
         """A client which can be used to communicate with the jira backend. E.g. to import/export stories.
         This property only becomes available when the form was configured to test the connection and after the form was
