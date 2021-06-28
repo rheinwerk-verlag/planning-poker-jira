@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 15:54+0200\n"
-"PO-Revision-Date: 2021-06-25 15:53+0200\n"
+"POT-Creation-Date: 2021-06-28 10:18+0200\n"
+"PO-Revision-Date: 2021-06-28 10:21+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -35,9 +35,8 @@ msgid "Override Options"
 msgstr "Optionen überschreiben"
 
 #: .\admin.py:79
-#: .\templates\admin\planning_poker\story\export_story_points.html:19
-msgid "Export Stories"
-msgstr "Stories exportieren"
+msgid "Export Story Points"
+msgstr "Storypunkte exportieren"
 
 #: .\admin.py:119
 #: .\templates\admin\planning_poker_jira\jira_connection\import_stories.html:40
@@ -88,18 +87,18 @@ msgid "You can use this to override the password in the database"
 msgstr ""
 "Benutzen Sie dieses Feld um das Passwort aus der Datenbank zu überschreiben"
 
-#: .\forms.py:79
+#: .\forms.py:75
 msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
 "Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL und einen "
 "Benutzernamen angegeben haben."
 
-#: .\forms.py:90
+#: .\forms.py:86
 msgid "Test Connection"
 msgstr "Verbindung überprüfen"
 
-#: .\forms.py:91
+#: .\forms.py:87
 msgid ""
 "Check this if you want to test your entered data and try to authenticate "
 "against the API"
@@ -107,11 +106,11 @@ msgstr ""
 "Nutzen Sie diese Option, wenn Sie versuchen wollen sich mit den eingegebenen "
 "Daten bei der API zu authentifizieren"
 
-#: .\forms.py:94
+#: .\forms.py:90
 msgid "Delete Password"
 msgstr "Passwort löschen"
 
-#: .\forms.py:95
+#: .\forms.py:91
 msgid "Check this if you want to delete your saved password"
 msgstr ""
 "Nutzen Sie diese Option, wenn Sie Ihr gespeichertes Passwort löschen wollen"
@@ -131,16 +130,13 @@ msgid "Jira Connection"
 msgstr "Jira-Verbindung"
 
 #: .\forms.py:139
-#, fuzzy
-#| msgid ""
-#| "The Jira Backend to which the story points should be exported. Any "
-#| "stories which are not present in the backend can not be exported."
 msgid ""
 "The Jira Backend to which the story points should be exported. Any stories "
 "which are not present in the backend can not be exported"
 msgstr ""
-"Der Jira-Server zu dem die Stories exportiert werden sollen. Alle Stories, "
-"die nicht im Server vorhanden sind können nicht exportiert werden"
+"Der Jira-Server zu dem die Storypunkte exportiert werden sollen. Die Punkte "
+"aller Stories, die nicht im Server vorhanden sind können nicht exportiert "
+"werden"
 
 #: .\forms.py:155
 msgid "Poker Session"
@@ -182,13 +178,16 @@ msgstr "Home"
 
 #: .\templates\admin\planning_poker\story\export_story_points.html:25
 #, python-format
-msgid "Are you sure you want to export the selected story?"
+msgid "Are you sure you want to export the points for the selected story?"
 msgid_plural ""
-"Are you sure you want to export the %(num_stories)s selected stories?"
-msgstr[0] "Sind Sie sicher, dass Sie die ausgewählte Story exportieren wollen?"
+"Are you sure you want to export the points for the %(num_stories)s selected "
+"stories?"
+msgstr[0] ""
+"Sind Sie sicher, dass Sie die Punkte für die ausgewählte Story exportieren "
+"wollen?"
 msgstr[1] ""
-"Sind Sie sicher, dass Sie die ausgewählten %(num_stories)s Stories "
-"exportieren wollen?"
+"Sind Sie sicher, dass Sie die Punkte für die ausgewählten %(num_stories)s "
+"Stories exportieren wollen?"
 
 #: .\templates\admin\planning_poker\story\export_story_points.html:45
 msgid "Export"
@@ -240,3 +239,6 @@ msgstr "Die Story existiert vermutlich nicht im ausgewählten Backend."
 #, python-brace-format
 msgid "Received status code {status_code}."
 msgstr "Statuscode {status_code} erhalten."
+
+#~ msgid "Export Stories"
+#~ msgstr "Stories exportieren"

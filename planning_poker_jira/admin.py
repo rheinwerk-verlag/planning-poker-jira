@@ -76,7 +76,7 @@ def export_story_points(modeladmin: ModelAdmin, request: HttpRequest, queryset: 
     context = {
         **modeladmin.admin_site.each_context(request),
         'opts': modeladmin.opts,
-        'title': _('Export Stories'),
+        'title': _('Export Story Points'),
         'submit_button_name': submit_button_name,
         'action_name': modeladmin.get_action(export_story_points)[1],
         'stories': queryset,

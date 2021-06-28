@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 15:54+0200\n"
+"POT-Creation-Date: 2021-06-28 10:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,8 +35,7 @@ msgid "Override Options"
 msgstr ""
 
 #: .\admin.py:79
-#: .\templates\admin\planning_poker\story\export_story_points.html:19
-msgid "Export Stories"
+msgid "Export Story Points"
 msgstr ""
 
 #: .\admin.py:119
@@ -85,26 +84,26 @@ msgstr ""
 msgid "You can use this to override the password in the database"
 msgstr ""
 
-#: .\forms.py:79
+#: .\forms.py:75
 msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
 
-#: .\forms.py:90
+#: .\forms.py:86
 msgid "Test Connection"
 msgstr ""
 
-#: .\forms.py:91
+#: .\forms.py:87
 msgid ""
 "Check this if you want to test your entered data and try to authenticate "
 "against the API"
 msgstr ""
 
-#: .\forms.py:94
+#: .\forms.py:90
 msgid "Delete Password"
 msgstr ""
 
-#: .\forms.py:95
+#: .\forms.py:91
 msgid "Check this if you want to delete your saved password"
 msgstr ""
 
@@ -165,9 +164,10 @@ msgstr ""
 
 #: .\templates\admin\planning_poker\story\export_story_points.html:25
 #, python-format
-msgid "Are you sure you want to export the selected story?"
+msgid "Are you sure you want to export the points for the selected story?"
 msgid_plural ""
-"Are you sure you want to export the %(num_stories)s selected stories?"
+"Are you sure you want to export the points for the %(num_stories)s selected "
+"stories?"
 msgstr[0] ""
 msgstr[1] ""
 
