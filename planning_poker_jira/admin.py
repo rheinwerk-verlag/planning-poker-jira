@@ -78,7 +78,7 @@ def export_story_points(modeladmin: ModelAdmin, request: HttpRequest, queryset: 
         'opts': modeladmin.opts,
         'title': _('Export Stories'),
         'submit_button_name': submit_button_name,
-        'export_story_points_value': modeladmin.get_action(export_story_points)[1],
+        'action_name': modeladmin.get_action(export_story_points)[1],
         'stories': queryset,
         'form': admin_form,
         'media': modeladmin.media
