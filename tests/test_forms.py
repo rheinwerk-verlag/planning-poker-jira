@@ -1,14 +1,12 @@
 from contextlib import nullcontext as does_not_raise
 from unittest.mock import Mock, patch
 
-from django.forms.models import modelform_factory
 from jira import JIRAError
 import pytest
 from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker_jira.forms import (ExportStoryPointsForm, ImportStoriesForm, JiraAuthenticationForm,
                                        JiraConnectionForm)
-from planning_poker_jira.models import JiraConnection
 
 
 @pytest.fixture(params=['different_testuser', ''])
