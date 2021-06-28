@@ -30,7 +30,8 @@ class JiraConnection(models.Model):
     def get_client(self) -> JIRA:
         """Authenticate at the jira backend and return a client to communicate with it."""
         return JIRA(self.api_url, basic_auth=(self.username, self.password),
-                    timeout=getattr(settings, 'JIRA_TIMEOUT', (3.05, 7)))
+                    timeout=getattr(settings, 'JIRA_TIMEOUT', (3.05, 7)),
+                    max_retries=getattr(settings, 'JIRA_NUM_RETRIES', 0))
 
     def create_stories(self, query_string: str, poker_session: Optional[PokerSession] = None,
                        client: Optional[JIRA] = None) -> List[Story]:
