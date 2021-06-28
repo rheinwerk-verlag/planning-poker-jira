@@ -1,14 +1,9 @@
 from datetime import datetime
-from unittest.mock import patch
 
 import pytest
-from django.contrib.admin.sites import site
-from django.forms.models import modelform_factory
 
 from planning_poker.models import PokerSession, Story
 
-from planning_poker_jira.admin import JiraConnectionAdmin
-from planning_poker_jira.forms import JiraAuthenticationForm, JiraConnectionForm
 from planning_poker_jira.models import JiraConnection
 
 
@@ -40,64 +35,3 @@ def stories(db):
         }
     ]
     return Story.objects.bulk_create([Story(**story) for story in stories])
-
-
-@pytest.fixture(params=['different_testuser', ''])
-def form_data_username(request):
-    return {'username': request.param}
-
-
-@pytest.fixture
-def expected_username(form_data_username, jira_connection):
-    return {'username': form_data_username.get('username') or jira_connection.username}
-
-
-@pytest.fixture(params=['evenmoresupersecret', ''])
-def form_data_password(request):
-    return {'password': request.param}
-
-
-@pytest.fixture
-def expected_password(form_data_password, jira_connection):
-    return {'password': form_data_password.get('password') or jira_connection.password}
-
-
-@pytest.fixture(params=['http://different.url', ''])
-def form_data_api_url(request):
-    return {'api_url': request.param}
-
-
-@pytest.fixture
-def expected_api_url(form_data_api_url, jira_connection):
-    return {'api_url': form_data_api_url.get('api_url') or jira_connection.api_url}
-
-
-@pytest.fixture
-def form_data(form_data_api_url, form_data_username, form_data_password):
-    return dict(**form_data_api_url, **form_data_username, **form_data_password)
-
-
-@pytest.fixture
-def expected_data(expected_api_url, expected_username, expected_password):
-    return dict(**expected_api_url, **expected_username, **expected_password)
-
-
-@pytest.fixture
-@patch('planning_poker_jira.models.JIRA')
-def jira_authentication_form(form_data):
-    return JiraAuthenticationForm(form_data)
-
-
-@pytest.fixture
-def jira_connection_form_class():
-    return modelform_factory(JiraConnection, form=JiraConnectionForm, fields='__all__')
-
-
-@pytest.fixture
-def jira_connection_admin():
-    return JiraConnectionAdmin(JiraConnection, site)
-
-
-@pytest.fixture
-def export_story_points_form_data(form_data, jira_connection):
-    return dict(**form_data, jira_connection=jira_connection.pk)

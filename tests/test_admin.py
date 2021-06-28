@@ -1,7 +1,8 @@
-from unittest.mock import Mock, patch, call
+from unittest.mock import call, Mock, patch
 
 import pytest
 from django.contrib import messages
+from django.contrib.admin.sites import site
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.urls import reverse
 from jira import JIRAError
@@ -9,8 +10,14 @@ from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.models import Story
 
-from planning_poker_jira.admin import export_story_points
+from planning_poker_jira.admin import export_story_points, JiraConnectionAdmin
 from planning_poker_jira.forms import ExportStoryPointsForm, ImportStoriesForm
+from planning_poker_jira.models import JiraConnection
+
+
+@pytest.fixture
+def jira_connection_admin():
+    return JiraConnectionAdmin(JiraConnection, site)
 
 
 class TestExportStoriesAction:
@@ -43,14 +50,14 @@ class TestExportStoriesAction:
         )),
     ))
     @patch('planning_poker_jira.models.JiraConnection.get_client')
-    def test_confirmed_export_story_points(self, mock_get_client, rf, admin_user, jira_connection_admin, stories,
-                                           export_story_points_form_data, side_effect, expected_message_user_calls):
+    def test_confirmed_export_story_points(self, mock_get_client, rf, admin_user, jira_connection,
+                                           jira_connection_admin, stories, side_effect, expected_message_user_calls):
         mock_client = Mock()
         mock_client.issue = Mock(side_effect=side_effect)
         mock_get_client.return_value = mock_client
         mock_message_user = Mock()
 
-        request = rf.post('/', dict(**export_story_points_form_data, export=True))
+        request = rf.post('/', dict(**{'jira_connection': jira_connection.pk}, export=True))
         request.user = admin_user
         with patch.object(jira_connection_admin, 'message_user', mock_message_user):
             export_story_points(jira_connection_admin, request, stories)

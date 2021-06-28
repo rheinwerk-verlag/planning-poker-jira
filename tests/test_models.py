@@ -23,7 +23,8 @@ class TestJiraConnection:
     def test_get_client(self, mock_jira, jira_connection):
         jira_connection.get_client()
         mock_jira.assert_called_with(
-            jira_connection.api_url, basic_auth=(jira_connection.username, jira_connection.password), timeout=(3.05, 7)
+            jira_connection.api_url, basic_auth=(jira_connection.username, jira_connection.password), timeout=(3.05, 7),
+            max_retries=0
         )
 
     @patch('planning_poker_jira.models.JIRA')
