@@ -1,5 +1,8 @@
 *.log
 
+# Development database
+planning_poker_jira.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
