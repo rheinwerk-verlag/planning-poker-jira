@@ -105,7 +105,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         # data from the database, the password would be reset to an empty string whenever the user wants to change any
         # attribute for an existing `JiraConnection` instance without reentering the password. The form interprets
         # an empty password field as no changes to the password to circumvent that. In order for the user to be still be
-        # able to delete a saved password, we added the `delete_password` field which indicates whether the password
+        # able to delete a saved password, the `delete_password` field was added which indicates whether the password
         # should be deleted or not.
         delete_password = cleaned_data.get('delete_password')
         if delete_password and cleaned_data['password']:
