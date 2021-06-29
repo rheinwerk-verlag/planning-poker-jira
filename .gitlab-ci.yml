@@ -17,7 +17,6 @@ pages:
   stage: deploy
   script:
     - pip install -r requirements/dev.txt
-    - pip install "Django>=1.6,<1.7"
     - cd docs
     - make html
     - cd ..
@@ -26,8 +25,7 @@ pages:
     paths:
       - public
   tags:
-    - python27
-    - debian-jessie
+    - python38
   only:
     - development
 
