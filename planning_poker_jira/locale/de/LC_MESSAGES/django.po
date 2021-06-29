@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-28 14:13+0200\n"
-"PO-Revision-Date: 2021-06-28 14:13+0200\n"
+"POT-Creation-Date: 2021-06-29 08:09+0200\n"
+"PO-Revision-Date: 2021-06-29 08:10+0200\n"
 "Last-Translator: Thomas Scheller <thomas.scheller@rheinwerk-verlag.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -68,37 +68,37 @@ msgstr "Storypunkte zu Jira exportieren"
 msgid "Planning Poker: Jira Extension"
 msgstr "Planungspoker: Jira-Erweiterung"
 
-#: .\forms.py:19
+#: .\forms.py:18
 msgid "Username"
 msgstr "Benutzername"
 
-#: .\forms.py:20
+#: .\forms.py:19
 msgid "You can use this to override the username saved in the database"
 msgstr ""
 "Benutzen Sie dieses Feld um den Benutzernamen aus der Datenbank zu "
 "überschreiben"
 
-#: .\forms.py:22 .\models.py:20
+#: .\forms.py:21 .\models.py:20
 msgid "Password"
 msgstr "Passwort"
 
-#: .\forms.py:23
+#: .\forms.py:22
 msgid "You can use this to override the password in the database"
 msgstr ""
 "Benutzen Sie dieses Feld um das Passwort aus der Datenbank zu überschreiben"
 
-#: .\forms.py:75
+#: .\forms.py:74
 msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
 "Fehlende Anmeldedaten. Überprüfen Sie, ob Sie eine API URL und einen "
 "Benutzernamen angegeben haben."
 
-#: .\forms.py:86
+#: .\forms.py:85
 msgid "Test Connection"
 msgstr "Verbindung überprüfen"
 
-#: .\forms.py:87
+#: .\forms.py:86
 msgid ""
 "Check this if you want to test your entered data and try to authenticate "
 "against the API"
@@ -106,30 +106,30 @@ msgstr ""
 "Nutzen Sie diese Option, wenn Sie versuchen wollen sich mit den eingegebenen "
 "Daten bei der API zu authentifizieren"
 
-#: .\forms.py:90
+#: .\forms.py:89
 msgid "Delete Password"
 msgstr "Passwort löschen"
 
-#: .\forms.py:91
+#: .\forms.py:90
 msgid "Check this if you want to delete your saved password"
 msgstr ""
 "Nutzen Sie diese Option, wenn Sie Ihr gespeichertes Passwort löschen wollen"
 
-#: .\forms.py:101
-msgid "Use this to override the password or let it blank to make no changes"
+#: .\forms.py:100
+msgid "Use this to override the password or leave it blank to make no changes"
 msgstr ""
 "Benutzen Sie dieses Feld um das Passwort aus der Datenbank zu überschreiben "
 "oder lassen Sie es leer um keine Änderungen daran vorzunehmen"
 
-#: .\forms.py:113
+#: .\forms.py:112
 msgid "You can not change the password and delete it at the same time"
 msgstr "Sie können das Passwort nicht gleichzeitig ändern und löschen"
 
-#: .\forms.py:138 .\models.py:24
+#: .\forms.py:137 .\models.py:24
 msgid "Jira Connection"
 msgstr "Jira-Verbindung"
 
-#: .\forms.py:139
+#: .\forms.py:138
 msgid ""
 "The Jira Backend to which the story points should be exported. The points "
 "for any stories which are not present in the backend can not be exported"
@@ -138,16 +138,16 @@ msgstr ""
 "aller Stories, die nicht im Server vorhanden sind können nicht exportiert "
 "werden"
 
-#: .\forms.py:155
+#: .\forms.py:154
 msgid "Poker Session"
 msgstr "Poker-Runde"
 
-#: .\forms.py:156
+#: .\forms.py:155
 msgid "The poker session to which the imported stories should be added"
 msgstr ""
 "Die Poker-Runde zu der die importieren Stories hinzugefügt werden sollen"
 
-#: .\forms.py:160
+#: .\forms.py:159
 msgid "JQL Query"
 msgstr "JQL Query"
 

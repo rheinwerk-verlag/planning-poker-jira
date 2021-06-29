@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-28 14:13+0200\n"
+"POT-Creation-Date: 2021-06-29 08:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,72 +68,72 @@ msgstr ""
 msgid "Planning Poker: Jira Extension"
 msgstr ""
 
-#: .\forms.py:19
+#: .\forms.py:18
 msgid "Username"
 msgstr ""
 
-#: .\forms.py:20
+#: .\forms.py:19
 msgid "You can use this to override the username saved in the database"
 msgstr ""
 
-#: .\forms.py:22 .\models.py:20
+#: .\forms.py:21 .\models.py:20
 msgid "Password"
 msgstr ""
 
-#: .\forms.py:23
+#: .\forms.py:22
 msgid "You can use this to override the password in the database"
 msgstr ""
 
-#: .\forms.py:75
+#: .\forms.py:74
 msgid ""
 "Missing credentials. Check whether you entered an API URL, and a username."
 msgstr ""
 
-#: .\forms.py:86
+#: .\forms.py:85
 msgid "Test Connection"
 msgstr ""
 
-#: .\forms.py:87
+#: .\forms.py:86
 msgid ""
 "Check this if you want to test your entered data and try to authenticate "
 "against the API"
 msgstr ""
 
-#: .\forms.py:90
+#: .\forms.py:89
 msgid "Delete Password"
 msgstr ""
 
-#: .\forms.py:91
+#: .\forms.py:90
 msgid "Check this if you want to delete your saved password"
 msgstr ""
 
-#: .\forms.py:101
-msgid "Use this to override the password or let it blank to make no changes"
+#: .\forms.py:100
+msgid "Use this to override the password or leave it blank to make no changes"
 msgstr ""
 
-#: .\forms.py:113
+#: .\forms.py:112
 msgid "You can not change the password and delete it at the same time"
 msgstr ""
 
-#: .\forms.py:138 .\models.py:24
+#: .\forms.py:137 .\models.py:24
 msgid "Jira Connection"
 msgstr ""
 
-#: .\forms.py:139
+#: .\forms.py:138
 msgid ""
 "The Jira Backend to which the story points should be exported. The points "
 "for any stories which are not present in the backend can not be exported"
 msgstr ""
 
-#: .\forms.py:155
+#: .\forms.py:154
 msgid "Poker Session"
 msgstr ""
 
-#: .\forms.py:156
+#: .\forms.py:155
 msgid "The poker session to which the imported stories should be added"
 msgstr ""
 
-#: .\forms.py:160
+#: .\forms.py:159
 msgid "JQL Query"
 msgstr ""
 
