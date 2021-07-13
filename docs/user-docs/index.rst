@@ -8,3 +8,4 @@ User Documentation
    :caption: Contents:
 
    configuration
+   how-to
