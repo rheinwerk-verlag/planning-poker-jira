@@ -22,7 +22,7 @@ Quickstart
 ----------
 
 You'll need an existing system with the Planning Poker app installed. See its
-`documentation <https://link.to.docs.com>`_ if you haven't already.
+`documentation <http://rheinwerk.pages.intern.rheinwerk.de/planning-poker/>`_ if you haven't already.
 
 #. Install the Planning Poker Jira app. ::
 

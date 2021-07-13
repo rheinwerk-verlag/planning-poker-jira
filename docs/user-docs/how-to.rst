@@ -22,8 +22,8 @@ fields:
 .. note::
 
    The username and password can be left blank if you don't wan to to save them in the database (the password would be
-   saved in an encrypted field). But doing so will cause you re-enter your credentials every time you want to import /
-   export stories.
+   saved in an encrypted field). But doing so will cause you to re-enter your credentials every time you want to
+   import / export stories.
 
 Importing Stories
 ~~~~~~~~~~~~~~~~~
@@ -47,9 +47,9 @@ to a page where you are presented with a form which allows you to import stories
 Exporting Story Points
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Exporting story points is as simple as import stories. Go to the Story admin page and select all the stories from which
-you want to export the story points. Then choose the "Export Story Points to Jira" action and click the "Go" button.
-You'll then be prompted with a form which allows you to export the story points.
+Exporting story points is as simple as importing stories. Go to the Story admin page and select all the stories from
+which you want to export the story points. Then choose the "Export Story Points to Jira" action and click the "Go"
+button. You'll then be prompted with a form which allows you to export the story points.
 
 +-----------------+----------------------------------------------------------------------------------------------------------+
 | Field Name      | Description                                                                                              |

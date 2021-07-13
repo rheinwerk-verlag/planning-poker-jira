@@ -9,7 +9,7 @@ Required Settings
 
 - :code:`FIELD_ENCRYPTION_KEYS`: :code:`encrypted_fields` requires this setting to be present in order to encrypt your
   password. See `their docs <https://pypi.org/project/django-searchable-encrypted-fields/>`_ for more information on how
-  to setup a channel layer.
+  to setup the encryption keys.
 
 Optional Settings
 -----------------
