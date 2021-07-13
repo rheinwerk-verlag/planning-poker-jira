@@ -28,13 +28,14 @@ You'll need an existing system with the Planning Poker app installed. See its
 
     $ pip install planning-poker-jira
 
-#. Add the app to the list of your installed apps.
+#. Add the app and its dependencies to the list of your installed apps.
 
    .. code-block:: python
 
         INSTALLED_APPS = [
             ...
             'planning_poker',
+            'encrypted_fields',
             'planning_poker_jira'
         ]
 
@@ -46,7 +47,7 @@ You'll need an existing system with the Planning Poker app installed. See its
 
    .. code-block:: python
 
-        FIELD_ENCRYPTION_KEYS[SECRET_KEY.encode().hex():[:64]]
+        FIELD_ENCRYPTION_KEYS = [SECRET_KEY.encode().hex()[:64]]
 
    See :ref:`configuration` for more ways to customize the application to fit your needs.
 
