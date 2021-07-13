@@ -6,13 +6,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   readme
-   install
-   deploy
-   tests
-   api
-   license
-   changelog
+   user-docs/index
+
+.. include:: ../README.rst
 
 Indices and tables
 ==================
