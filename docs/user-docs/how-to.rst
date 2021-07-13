@@ -26,7 +26,7 @@ fields:
    import / export stories.
 
 Importing Stories
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Once you have created a Jira Connection, you can start importing stories from there. Navigate to the Jira Connection
 admin page. There you'll see all your saved connections with an import stories link next to them. You'll be redirected
@@ -45,7 +45,7 @@ to a page where you are presented with a form which allows you to import stories
 +---------------+----------------------------------------------------------------------------------------------------------+
 
 Exporting Story Points
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Exporting story points is as simple as importing stories. Go to the Story admin page and select all the stories from
 which you want to export the story points. Then choose the "Export Story Points to Jira" action and click the "Go"
