@@ -18,5 +18,5 @@ Optional Settings
   the Jira client and backend.
 
   .. note::
-     You can expect long response times if you set this to anything greater than zero when the session can't be created
-     (this includes using an incorrect password).
+     You can expect long response times if you set this to anything greater than zero when a connection to the backend
+     can't be established (this includes using an incorrect password).
