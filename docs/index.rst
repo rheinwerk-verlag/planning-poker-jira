@@ -7,6 +7,7 @@ Welcome to Planning Poker Jira's documentation!
 
    readme
    user_docs/index
+   changelog
 
 Indices and tables
 ==================
