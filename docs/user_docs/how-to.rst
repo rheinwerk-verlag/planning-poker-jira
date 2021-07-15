@@ -1,5 +1,5 @@
-How to Use the Extension
-========================
+Usage
+=====
 
 The Planning Poker Jira extension provides a new model called Jira Connection. You can use this model to save all the
 necessary data to import stories and their description from a Jira backend. A Jira Connection consists of multiple
@@ -10,7 +10,7 @@ fields:
 +====================+==============================================================================================================================================================+
 | Label              | A human readable label for the connection. You can choose this to be whatever you want to help you differentiate different Jira Connections from one another |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| API URL            | The API URL of the Jira backend you want to import from / export to                                                                                          |
+| API URL            | The API URL of the Jira backend you want to import from/export to                                                                                            |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Username           | The username used for the authentication at the API                                                                                                          |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -21,9 +21,9 @@ fields:
 
 .. note::
 
-   The username and password can be left blank if you don't wan to to save them in the database (the password would be
+   The username and password can be left blank if you don't want to save them in the database (the password would be
    saved in an encrypted field). But doing so will cause you to re-enter your credentials every time you want to
-   import / export stories.
+   import/export stories.
 
 Importing Stories
 -----------------

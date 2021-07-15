@@ -1,14 +1,12 @@
 Welcome to Planning Poker Jira's documentation!
 ===============================================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
+   :caption: Contents
 
-   user-docs/index
-
-.. include:: ../README.rst
+   readme
+   user_docs/index
 
 Indices and tables
 ==================

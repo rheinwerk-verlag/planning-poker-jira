@@ -12,7 +12,7 @@ Features
 
 - ⬇️ **Import stories** from your backlog and use them to poker.
 
-- ⬆️ **Export story points** back to the Jira backend hassle free.
+- ⬆️ **Export story points** back to the Jira backend hassle-free.
 
 - 📋 Easily manage **multiple Jira backends**.
 
@@ -49,7 +49,7 @@ You'll need an existing system with the Planning Poker app installed. See its
 
         FIELD_ENCRYPTION_KEYS = [SECRET_KEY.encode().hex()[:64]]
 
-   See :ref:`configuration` for more ways to customize the application to fit your needs.
+   See :ref:`user_docs/configuration:Configuration` for more ways to customize the application to fit your needs.
 
 #. Run the migrations. ::
 
