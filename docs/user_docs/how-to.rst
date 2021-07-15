@@ -104,3 +104,7 @@ button. You'll then be prompted with a form which allows you to export the story
    +-----------------+----------------------------------------------------------------------------------------------------------+
    | Password        | Use this if you didn't save a password in the Jira Connection or override the password from the database |
    +-----------------+----------------------------------------------------------------------------------------------------------+
+
+The field to which the story points are exported is the ``Story Points Field`` specified by the Jira Connection. The
+stories in the Jira backend will be matched with the story's ticket number in order to export the story points. The
+points for any story which couldn't be matched can't be exported.
