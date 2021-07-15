@@ -68,7 +68,7 @@ to a page where you are presented with a form which allows you to import stories
    | Password      | Use this if you didn't save a password in the Jira Connection or override the password from the database |
    +---------------+----------------------------------------------------------------------------------------------------------+
 
-The Jira issue will be mapped onto a Planning Poker story as follows
+The Jira issue will be mapped onto a Planning Poker story as follows:
 
 +----------------------+-------------+
 | Planning Poker Story | Jira Issue  |
