@@ -48,17 +48,25 @@ Once you have created a Jira Connection, you can start importing stories from th
 admin page. There you'll see all your saved connections with an import stories link next to them. You'll be redirected
 to a page where you are presented with a form which allows you to import stories if you click on said link.
 
-+---------------+----------------------------------------------------------------------------------------------------------+
-| Field Name    | Description                                                                                              |
-+===============+==========================================================================================================+
-| Poker Session | Optional: The poker session to which you want to import the stories                                      |
-+---------------+----------------------------------------------------------------------------------------------------------+
-| JQL Query     | The query which should be used to retrieve the stories from the Jira backend                             |
-+---------------+----------------------------------------------------------------------------------------------------------+
-| Username      | Use this if you didn't save a username in the Jira Connection or override the username from the database |
-+---------------+----------------------------------------------------------------------------------------------------------+
-| Password      | Use this if you didn't save a password in the Jira Connection or override the password from the database |
-+---------------+----------------------------------------------------------------------------------------------------------+
+.. figure:: /static/import_stories_link.png
+   :alt: The import link is located on the right side of the Jira Connection admin page.
+
+.. figure:: /static/import_stories_form.png
+   :alt: The form for importing stories.
+
+   ..
+
+   +---------------+----------------------------------------------------------------------------------------------------------+
+   | Field Name    | Description                                                                                              |
+   +===============+==========================================================================================================+
+   | Poker Session | Optional: The poker session to which you want to import the stories                                      |
+   +---------------+----------------------------------------------------------------------------------------------------------+
+   | JQL Query     | The query which should be used to retrieve the stories from the Jira backend                             |
+   +---------------+----------------------------------------------------------------------------------------------------------+
+   | Username      | Use this if you didn't save a username in the Jira Connection or override the username from the database |
+   +---------------+----------------------------------------------------------------------------------------------------------+
+   | Password      | Use this if you didn't save a password in the Jira Connection or override the password from the database |
+   +---------------+----------------------------------------------------------------------------------------------------------+
 
 Exporting Story Points
 ----------------------
@@ -67,12 +75,20 @@ Exporting story points is as simple as importing stories. Go to the Story admin 
 which you want to export the story points. Then choose the "Export Story Points to Jira" action and click the "Go"
 button. You'll then be prompted with a form which allows you to export the story points.
 
-+-----------------+----------------------------------------------------------------------------------------------------------+
-| Field Name      | Description                                                                                              |
-+=================+==========================================================================================================+
-| Jira Connection | This determines the Jira backend you want to export the story points to                                  |
-+-----------------+----------------------------------------------------------------------------------------------------------+
-| Username        | Use this if you didn't save a username in the Jira Connection or override the username from the database |
-+-----------------+----------------------------------------------------------------------------------------------------------+
-| Password        | Use this if you didn't save a password in the Jira Connection or override the password from the database |
-+-----------------+----------------------------------------------------------------------------------------------------------+
+.. figure:: /static/export_story_points_action.png
+   :alt: The export story points action is located in the actions dropdown of the story admin page.
+
+.. figure:: /static/export_story_points_form.png
+   :alt: The form for exporting story points.
+
+   ..
+
+   +-----------------+----------------------------------------------------------------------------------------------------------+
+   | Field Name      | Description                                                                                              |
+   +=================+==========================================================================================================+
+   | Jira Connection | This determines the Jira backend you want to export the story points to                                  |
+   +-----------------+----------------------------------------------------------------------------------------------------------+
+   | Username        | Use this if you didn't save a username in the Jira Connection or override the username from the database |
+   +-----------------+----------------------------------------------------------------------------------------------------------+
+   | Password        | Use this if you didn't save a password in the Jira Connection or override the password from the database |
+   +-----------------+----------------------------------------------------------------------------------------------------------+
