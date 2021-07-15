@@ -1,6 +1,19 @@
 Usage
 =====
 
+Authentication
+--------------
+
+The extension utilises Jira's very simple
+`basic authentication <https://developer.atlassian.com/server/jira/platform/basic-authentication/>`_ to make requests to
+the server. You'll need an account that has permissions to see issues of the project you want to import the stories from
+and additional permissions to edit an issue if you want to export the story points back to the server. See
+`Atlassian's docs on project permission <https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/>`_
+for more information.
+
+Jira Connection
+---------------
+
 The Planning Poker Jira extension provides a new model called Jira Connection. You can use this model to save all the
 necessary data to import stories and their description from a Jira backend. A Jira Connection consists of multiple
 fields:
@@ -24,6 +37,9 @@ fields:
    The username and password can be left blank if you don't want to save them in the database (the password would be
    saved in an encrypted field). But doing so will cause you to re-enter your credentials every time you want to
    import/export stories.
+
+When creating/changing a Jira Connection you can tick a checkbox called 'Test Connection' which will try to verify the
+credentials you entered.
 
 Importing Stories
 -----------------
