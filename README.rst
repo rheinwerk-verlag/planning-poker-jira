@@ -41,7 +41,7 @@ You'll need an existing system with the Planning Poker app installed. See its
 
 #. Add encryption keys to your settings.
    This is used to encrypt your passwords before they are stored in the database. If you don't already have this
-   defined, it's probably easiest to take your :code:`SECRET_KEY` and convert it to hex since that should be kept secret
+   defined, it's probably easiest to take your ``SECRET_KEY`` and convert it to hex since that should be kept secret
    anyways. See `encrypted fields docs <https://pypi.org/project/django-searchable-encrypted-fields/>`_ for more
    information on this setting.
 
