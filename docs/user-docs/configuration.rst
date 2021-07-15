@@ -14,10 +14,10 @@ Required Settings
 Optional Settings
 -----------------
 
-- :code:`JIRA_TIMEOUT` - default :code:`(3.05, 7)`: The timeout between read/connect calls to the jira backend.
+- :code:`JIRA_TIMEOUT` - default :code:`(3.05, 7)`: The timeout between read/connect calls to the Jira backend.
 
 - :code:`JIRA_NUM_RETRIES` - default :code:`0`: The amount of retries for the instantiation of the HTTP session between
-  the jira client and backend.
+  the Jira client and backend.
 
   .. note::
      You can expect long response times if you set this to anything greater than zero when the session can't be created

@@ -2,7 +2,7 @@ How to Use the Extension
 ========================
 
 The Planning Poker Jira extension provides a new model called Jira Connection. You can use this model to save all the
-necessary data to import stories and their description from a jira backend. A Jira Connection consists of multiple
+necessary data to import stories and their description from a Jira backend. A Jira Connection consists of multiple
 fields:
 
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -10,13 +10,13 @@ fields:
 +====================+==============================================================================================================================================================+
 | Label              | A human readable label for the connection. You can choose this to be whatever you want to help you differentiate different Jira Connections from one another |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| API URL            | The API URL of the jira backend you want to import from / export to                                                                                          |
+| API URL            | The API URL of the Jira backend you want to import from / export to                                                                                          |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Username           | The username used for the authentication at the API                                                                                                          |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Password           | The password used for the authentication at the API                                                                                                          |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Story Points Field | The name of the field the jira backend uses to store the story points                                                                                        |
+| Story Points Field | The name of the field the Jira backend uses to store the story points                                                                                        |
 +--------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. note::
@@ -37,7 +37,7 @@ to a page where you are presented with a form which allows you to import stories
 +===============+==========================================================================================================+
 | Poker Session | Optional: The poker session to which you want to import the stories                                      |
 +---------------+----------------------------------------------------------------------------------------------------------+
-| JQL Query     | The query which should be used to retrieve the stories from the jira backend                             |
+| JQL Query     | The query which should be used to retrieve the stories from the Jira backend                             |
 +---------------+----------------------------------------------------------------------------------------------------------+
 | Username      | Use this if you didn't save a username in the Jira Connection or override the username from the database |
 +---------------+----------------------------------------------------------------------------------------------------------+
@@ -54,7 +54,7 @@ button. You'll then be prompted with a form which allows you to export the story
 +-----------------+----------------------------------------------------------------------------------------------------------+
 | Field Name      | Description                                                                                              |
 +=================+==========================================================================================================+
-| Jira Connection | This determines the jira backend you want to export the story points to                                  |
+| Jira Connection | This determines the Jira backend you want to export the story points to                                  |
 +-----------------+----------------------------------------------------------------------------------------------------------+
 | Username        | Use this if you didn't save a username in the Jira Connection or override the username from the database |
 +-----------------+----------------------------------------------------------------------------------------------------------+

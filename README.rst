@@ -1,8 +1,8 @@
-Planning Poker Jira
-================================
+Planning Poker: Jira Extension
+==============================
 
-This application extends the Planning Poker app with the ability to import stories and their description from jira and
-export the estimated amount of story points back to the jira instance.
+This application extends the Planning Poker app with the ability to import stories and their description from Jira and
+export the estimated amount of story points back to the Jira instance.
 
 This extension also serves as an example on how to add custom behaviour to / extend the functionality of the Planning
 Poker app.
@@ -12,9 +12,9 @@ Features
 
 - ⬇️ **Import stories** from your backlog and use them to poker.
 
-- ⬆️ **Export story points** back to the jira backend hassle free.
+- ⬆️ **Export story points** back to the Jira backend hassle free.
 
-- 📋 Easily manage **multiple jira backends**.
+- 📋 Easily manage **multiple Jira backends**.
 
 - 🔒 **Securely safe your password** in an encrypted database field.
 
