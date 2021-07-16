@@ -50,6 +50,11 @@ exec(open(os.path.join(project_root, 'planning_poker_jira', 'version.py')).read(
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.autosectionlabel', 'sphinx.ext.intersphinx', 'sphinx.ext.viewcode']
 
+intersphinx_mapping = {
+    'django': ('https://docs.djangoproject.com/en/3.0/',
+               'https://docs.djangoproject.com/en/3.0/_objects/'),
+}
+
 autosectionlabel_prefix_document = True
 
 # Add any paths that contain templates here, relative to this directory.
