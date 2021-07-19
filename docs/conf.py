@@ -57,6 +57,8 @@ intersphinx_mapping = {
 
 autosectionlabel_prefix_document = True
 
+autodoc_member_order = 'bysource'
+
 add_module_names = False
 
 # Add any paths that contain templates here, relative to this directory.
