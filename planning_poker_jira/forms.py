@@ -56,7 +56,7 @@ class JiraAuthenticationForm(forms.Form):
     def _requires_connection_test(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.
         This method gets called during the form's validation process in order to determine whether the connection should
-        be tested and therefore _whether the `client` property will be populated or not_.
+        be tested and therefore *whether the `client` property will be populated or not*.
 
         Since most use cases require the connection to be tested this implementation will always return `True`.
         Child classes however can override this method to make the test optional (see the class`JiraConnectionForm`
