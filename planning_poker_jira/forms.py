@@ -128,6 +128,8 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
         This depends on the `test_connection` checkbox. Since it is optional for the user to save their password inside
         the database, it is not always possible to test the connection. Especially because an empty password field means
         that the currently saved password shouldn't be changed.
+
+        :return: Whether the connection should be tested.
         """
         return self.cleaned_data['test_connection']
 
