@@ -1,5 +1,5 @@
-Welcome to Planning Poker Jira's documentation!
-===============================================
+Welcome to Planning Poker: Jira Extension's documentation!
+==========================================================
 
 .. toctree::
    :maxdepth: 2

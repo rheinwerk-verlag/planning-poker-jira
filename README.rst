@@ -4,7 +4,7 @@ Planning Poker: Jira Extension
 This application extends the Planning Poker app with the ability to import stories and their description from Jira and
 export the estimated amount of story points back to the Jira instance.
 
-This extension also serves as an example on how to add custom behaviour to / extend the functionality of the Planning
+This extension also serves as an example on how to add custom behaviour to/extend the functionality of the Planning
 Poker app.
 
 Features

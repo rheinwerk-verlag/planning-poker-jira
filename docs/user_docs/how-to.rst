@@ -8,7 +8,7 @@ The extension utilises Jira's very simple
 `basic authentication <https://developer.atlassian.com/server/jira/platform/basic-authentication/>`_ to make requests to
 the server. You'll need an account that has permissions to see issues of the project you want to import the stories from
 and additional permissions to edit an issue if you want to export the story points back to the server. See
-`Atlassian's docs on project permission <https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/>`_
+`Atlassian's docs on project permissions <https://support.atlassian.com/jira-cloud-administration/docs/manage-project-permissions/>`_
 for more information.
 
 Jira Connection
