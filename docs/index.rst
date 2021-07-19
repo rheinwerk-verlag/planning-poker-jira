@@ -1,17 +1,12 @@
-Welcome to Planning Poker Jira's documentation!
-===========================================================================
-
-Contents:
+Welcome to Planning Poker: Jira Extension's documentation!
+==========================================================
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contents
 
    readme
-   install
-   deploy
-   tests
-   api
-   license
+   user_docs/index
    changelog
 
 Indices and tables
