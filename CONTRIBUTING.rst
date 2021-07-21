@@ -1,5 +1,5 @@
-Contributing to Planning Poker Jira
-===================================
+Contributing to Planning Poker: Jira Extension
+==============================================
 
 First of all: thanks for your interest in this project and taking the time to contribute.
 
@@ -13,8 +13,8 @@ If you have found a bug, please check the project's
 Making changes
 --------------
 
-Create a fork of this repository and follow the steps in the :ref:`readme:Quickstart` guide included in the readme file
-in order to get a running system.
+Create a fork of this repository and follow the steps in the :ref:`dev_docs/setup:Development Setup` guide included in
+the readme file in order to get a running system.
 
 Coding style
 ^^^^^^^^^^^^
