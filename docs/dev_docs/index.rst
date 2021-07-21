@@ -7,3 +7,4 @@ Developer Documentation
 
    models
    forms
+   setup
