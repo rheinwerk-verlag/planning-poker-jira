@@ -8,3 +8,4 @@ Developer Documentation
    models
    forms
    setup
+   deployment
