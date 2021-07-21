@@ -15,9 +15,11 @@ class JiraAuthenticationForm(forms.Form):
     """Base class for all the forms which handle jira connections.
     All derived forms provide a way to communicate with the jira backend through the `client` property.
     """
+    #: The username used for the authentication at the API.
     username = forms.CharField(label=_('Username'),
                                help_text=_('You can use this to override the username saved in the database'),
                                required=False)
+    #: The password used for the authentication at the API.
     password = forms.CharField(label=_('Password'),
                                help_text=_('You can use this to override the password in the database'),
                                required=False,
@@ -82,10 +84,12 @@ class JiraAuthenticationForm(forms.Form):
 
 class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
     """Form which is used for the `JiraConnectionAdmin` class. This is used for the change and create views."""
+    #: Determines whether the connection should be tested.
     test_connection = forms.BooleanField(label=_('Test Connection'),
                                          help_text=_('Check this if you want to test your entered data and try to '
                                                      'authenticate against the API'),
                                          required=False)
+    #: Determines whether the saved password should be deleted.
     delete_password = forms.BooleanField(label=_('Delete Password'),
                                          help_text=_('Check this if you want to delete your saved password'),
                                          required=False)
@@ -136,6 +140,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
 class ExportStoryPointsForm(JiraAuthenticationForm):
     """Form which is used for exporting stories to the jira backend."""
+    #: This determines the Jira backend you want to export the story points to.
     jira_connection = forms.ModelChoiceField(
         label=_('Jira Connection'),
         help_text=_('The Jira Backend to which the story points should be exported. The points for any stories which '
@@ -153,12 +158,14 @@ class ExportStoryPointsForm(JiraAuthenticationForm):
 
 class ImportStoriesForm(JiraAuthenticationForm):
     """Form which is used for importing stories from the jira backend."""
+    #: Optional: The poker session to which you want to import the stories.
     poker_session = forms.ModelChoiceField(
         label=_('Poker Session'),
         help_text=_('The poker session to which the imported stories should be added'),
         queryset=PokerSession.objects.all(),
         required=False
     )
+    #: The query which should be used to retrieve the stories from the Jira backend.
     jql_query = forms.CharField(label=_('JQL Query'), required=True)
 
     def __init__(self, connection: JiraConnection, *args, **kwargs):
