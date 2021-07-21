@@ -8,8 +8,6 @@ import subprocess
 from os.path import dirname, join
 
 from setuptools import find_packages, setup
-from setuptools.command.sdist import sdist
-from wheel.bdist_wheel import bdist_wheel
 
 
 def read(*args):
