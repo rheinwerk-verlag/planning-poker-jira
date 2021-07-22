@@ -137,7 +137,7 @@ class JiraConnectionForm(JiraAuthenticationForm, forms.ModelForm):
 
 class ExportStoryPointsForm(JiraAuthenticationForm):
     """Form which is used for exporting stories to the jira backend."""
-    #: This determines the Jira backend you want to export the story points to.
+    #: The Jira backend you want to export the story points to.
     jira_connection = forms.ModelChoiceField(
         label=_('Jira Connection'),
         help_text=_('The Jira Backend to which the story points should be exported. The points for any stories which '
