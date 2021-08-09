@@ -6,35 +6,18 @@
 #
 #--index-url https://devpi.cmn.prd.rheinwerk.de/rheinwerk/dev/+simple
 
-asgiref==3.4.1
-    # via
-    #   channels
-    #   daphne
-    #   django
 astroid==1.6.6
     # via pylint
 attrs==21.2.0
-    # via
-    #   automat
-    #   pytest
-    #   service-identity
-    #   twisted
+    # via pytest
 autobahn==21.2.1
-    # via
-    #   -r tox.in
-    #   daphne
-automat==20.2.0
-    # via twisted
+    # via -r tox.in
 certifi==2021.5.30
     # via requests
 cffi==1.14.6
     # via cryptography
-channels==2.4.0
-    # via planning-poker
-charset-normalizer==2.0.3
+charset-normalizer==2.0.4
     # via requests
-constantly==15.1.0
-    # via twisted
 coverage==5.5
     # via
     #   -r tox.in
@@ -43,40 +26,21 @@ cryptography==3.4.7
     # via
     #   autobahn
     #   oauthlib
-    #   pyopenssl
-    #   service-identity
-daphne==2.5.0
-    # via channels
 defusedxml==0.7.1
     # via jira
-django-channels-presence==1.0.0
-    # via planning-poker
-django-searchable-encrypted-fields==0.1.9
-    # via -r tox.in
-django==3.0.3
-    # via
-    #   -r tox.in
-    #   channels
-    #   django-searchable-encrypted-fields
-    #   planning-poker
 execnet==1.9.0
     # via pytest-cache
 flake8==3.9.2
     # via -r tox.in
 hyperlink==21.0.0
-    # via
-    #   autobahn
-    #   twisted
+    # via autobahn
 idna==3.2
     # via
     #   hyperlink
     #   requests
-    #   twisted
-incremental==21.3.0
-    # via twisted
 iniconfig==1.1.1
     # via pytest
-isort==5.9.2
+isort==5.9.3
     # via pylint
 jira==2.0.0
     # via -r tox.in
@@ -96,24 +60,14 @@ pbr==5.6.0
     # via jira
 pep8==1.7.1
     # via pytest-pep8
-planning-poker==0.3.0
-    # via -r tox.in
 pluggy==0.13.1
     # via pytest
 py==1.10.0
     # via pytest
-pyasn1-modules==0.2.8
-    # via service-identity
-pyasn1==0.4.8
-    # via
-    #   pyasn1-modules
-    #   service-identity
 pycodestyle==2.7.0
     # via flake8
 pycparser==2.20
     # via cffi
-pycryptodome==3.10.1
-    # via django-searchable-encrypted-fields
 pydocstyle==2.1.1
     # via -r tox.in
 pyflakes==2.3.1
@@ -122,8 +76,6 @@ pyjwt==2.1.0
     # via oauthlib
 pylint==1.8.2
     # via -r tox.in
-pyopenssl==20.0.1
-    # via twisted
 pyparsing==2.4.7
     # via packaging
 pytest-cache==1.0
@@ -144,8 +96,6 @@ pytest==6.2.4
     #   pytest-django
     #   pytest-pep8
     #   pytest-pythonpath
-pytz==2021.1
-    # via django
 requests-oauthlib==1.3.0
     # via jira
 requests-toolbelt==0.9.1
@@ -155,35 +105,24 @@ requests==2.26.0
     #   jira
     #   requests-oauthlib
     #   requests-toolbelt
-service-identity==21.1.0
-    # via twisted
 six==1.16.0
     # via
     #   astroid
-    #   automat
     #   jira
     #   pydocstyle
     #   pylint
-    #   pyopenssl
-    #   service-identity
 snowballstemmer==2.1.0
     # via pydocstyle
-sqlparse==0.4.1
-    # via django
 toml==0.10.2
     # via
     #   pytest
     #   pytest-cov
-twisted[tls]==21.2.0
-    # via daphne
 txaio==21.2.1
     # via autobahn
 urllib3==1.26.6
     # via requests
 wrapt==1.12.1
     # via astroid
-zope.interface==5.4.0
-    # via twisted
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

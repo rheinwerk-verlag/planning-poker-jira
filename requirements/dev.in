@@ -1,7 +1,10 @@
 -r tox.in
 
+django
+django-searchable-encrypted-fields
 isort==4.3.20
 pip-tools
+planning-poker
 Sphinx
 sphinx-js
 sphinx-rtd-theme

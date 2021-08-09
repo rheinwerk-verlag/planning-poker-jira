@@ -35,7 +35,7 @@ cffi==1.14.6
     # via cryptography
 channels==2.4.0
     # via planning-poker
-charset-normalizer==2.0.3
+charset-normalizer==2.0.4
     # via requests
 click==8.0.1
     # via pip-tools
@@ -58,10 +58,10 @@ defusedxml==0.7.1
 django-channels-presence==1.0.0
     # via planning-poker
 django-searchable-encrypted-fields==0.1.9
-    # via -r tox.in
-django==3.0.3
+    # via -r dev.in
+django==3.2.6
     # via
-    #   -r tox.in
+    #   -r dev.in
     #   channels
     #   django-searchable-encrypted-fields
     #   planning-poker
@@ -124,8 +124,8 @@ pep8==1.7.1
     # via pytest-pep8
 pip-tools==6.2.0
     # via -r dev.in
-planning-poker==0.3.0
-    # via -r tox.in
+planning-poker==0.3.1
+    # via -r dev.in
 pluggy==0.13.1
     # via pytest
 py==1.10.0
@@ -208,7 +208,7 @@ sphinx-js==3.1.2
     # via -r dev.in
 sphinx-rtd-theme==0.5.2
     # via -r dev.in
-sphinx==4.1.1
+sphinx==4.1.2
     # via
     #   -r dev.in
     #   sphinx-js
@@ -231,12 +231,14 @@ toml==0.10.2
     # via
     #   pytest
     #   pytest-cov
-tomli==1.0.4
+tomli==1.2.1
     # via pep517
-twisted[tls]==21.2.0
+twisted[tls]==21.7.0
     # via daphne
 txaio==21.2.1
     # via autobahn
+typing-extensions==3.10.0.0
+    # via twisted
 urllib3==1.26.6
     # via requests
 wheel==0.36.2
