@@ -20,7 +20,7 @@ class JiraConnection(models.Model):
     api_url = models.CharField(verbose_name=_('API URL'), max_length=200)
     #: The username used for the authentication at the API.
     username = models.CharField(verbose_name=_('API Username'), max_length=200, blank=True)
-    #: The password used for the authentication at the API
+    #: The password used for the authentication at the API.
     password = fields.EncryptedCharField(verbose_name=_('Password'), max_length=200, blank=True)
     #: The name of the field the Jira backend uses to store the story points.
     story_points_field = models.CharField(verbose_name=_('Story Points Field'), max_length=200)
