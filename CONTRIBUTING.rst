@@ -1,5 +1,5 @@
-Contributing to Planning Poker
-==============================
+Contributing to Planning Poker: Jira Extension
+==============================================
 
 First of all: Thanks for your interest in this project and taking the time to contribute.
 
@@ -53,10 +53,13 @@ Before creating a pull request make sure to check whether:
   modified
 * You updated the translations if you added or changed translated strings ::
 
-    $ cd planning_poker
+    $ cd planning_poker_jira
     $ python ../manage.py makemessages
 
   or mentioned in the pull request that there are missing translations
 
 * Any user-facing changes are documented in the changelog
 * You added yourself to the list of authors
+
+New features should be merged into the ``development`` branch, whereas smaller bugs can be directly merged into the
+``main`` branch.

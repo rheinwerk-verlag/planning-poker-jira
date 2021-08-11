@@ -8,4 +8,5 @@ Developer Documentation
    setup
    forms
    models
+   testing
    deployment
