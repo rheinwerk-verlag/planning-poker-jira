@@ -61,7 +61,7 @@ Topic :: Internet
 
 install_requires = [
     'django-searchable-encrypted-fields',
-    'jira>=2.0.0,<3.0.0',
+    'jira>=2.0.0',
     'planning-poker',
 ]
 
