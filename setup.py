@@ -41,28 +41,28 @@ class ToxTestCommand(distutils.cmd.Command):
 exec(read('planning_poker_jira', 'version.py'))
 
 classifiers = """\
-# The next line is important: it prevents accidental upload to PyPI!
-Private :: Do Not Upload
-Development Status :: 2 - Pre-Alpha
+Development Status :: 5 - Production/Stable
+Environment :: Web Environment
+Framework :: Django
+Framework :: Django :: 3.0
+Framework :: Django :: 3.1
+Framework :: Django :: 3.2
+Intended Audience :: Developers
+Intended Audience :: End Users/Desktop
+License :: Other/Proprietary License
+Operating System :: OS Independent
 Programming Language :: Python
 Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
-Framework :: Django
-Framework :: Django :: 3.0
-Intended Audience :: Developers
-License :: Other/Proprietary License
-#Operating System :: Microsoft :: Windows
-Operating System :: POSIX
-#Operating System :: MacOS :: MacOS X
 Topic :: Internet
 """
 
 install_requires = [
     'django-searchable-encrypted-fields',
     'jira>=2.0.0,<3.0.0',
-    'planning-poker>=0.1.0'
+    'planning-poker',
 ]
 
 tests_require = [
