@@ -26,8 +26,6 @@ cryptography==3.4.7
     #   oauthlib
 defusedxml==0.7.1
     # via jira
-execnet==1.9.0
-    # via pytest-cache
 hyperlink==21.0.0
     # via autobahn
 idna==3.2
@@ -46,8 +44,6 @@ packaging==21.0
     # via pytest
 pbr==5.6.0
     # via jira
-pep8==1.7.1
-    # via pytest-pep8
 pluggy==0.13.1
     # via pytest
 py==1.10.0
@@ -61,18 +57,12 @@ pyparsing==2.4.7
 pytest==6.2.4
     # via
     #   -r tox.in
-    #   pytest-cache
     #   pytest-cov
     #   pytest-django
-    #   pytest-pep8
     #   pytest-pythonpath
-pytest-cache==1.0
-    # via pytest-pep8
 pytest-cov==2.12.1
     # via -r tox.in
 pytest-django==4.4.0
-    # via -r tox.in
-pytest-pep8==1.0.6
     # via -r tox.in
 pytest-pythonpath==0.7.3
     # via -r tox.in

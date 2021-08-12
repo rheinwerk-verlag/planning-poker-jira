@@ -3,6 +3,5 @@ coverage
 jira==2.0.0
 pytest
 pytest-django
-pytest-pep8
 pytest-cov
 pytest-pythonpath
