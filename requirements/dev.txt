@@ -21,8 +21,10 @@ attrs==21.2.0
     #   pytest
     #   service-identity
     #   twisted
-autobahn==21.3.1
-    # via daphne
+autobahn==21.2.1
+    # via
+    #   -r tox.in
+    #   daphne
 automat==20.2.0
     # via twisted
 babel==2.9.1
@@ -33,7 +35,7 @@ cffi==1.14.6
     # via cryptography
 channels==2.4.0
     # via planning-poker
-charset-normalizer==2.0.2
+charset-normalizer==2.0.3
     # via requests
 click==8.0.1
     # via pip-tools
@@ -116,7 +118,7 @@ parsimonious==0.7.0
     # via sphinx-js
 pbr==5.6.0
     # via jira
-pep517==0.10.0
+pep517==0.11.0
     # via pip-tools
 pep8==1.7.1
     # via pytest-pep8
@@ -227,9 +229,10 @@ sqlparse==0.4.1
     # via django
 toml==0.10.2
     # via
-    #   pep517
     #   pytest
     #   pytest-cov
+tomli==1.0.4
+    # via pep517
 twisted[tls]==21.2.0
     # via daphne
 txaio==21.2.1
