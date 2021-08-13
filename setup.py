@@ -71,7 +71,6 @@ tests_require = [
     'pydocstyle',
     'pylint',
     'pytest-django',
-    'pytest-pep8',
     'pytest-cov',
     'pytest-pythonpath',
     'pytest',
