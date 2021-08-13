@@ -1,7 +1,13 @@
 -r tox.in
 
-isort==4.3.20
+django
+django-searchable-encrypted-fields
+flake8
+isort
 pip-tools
+planning-poker
+pydocstyle
+pylint
 Sphinx
 sphinx-js
 sphinx-rtd-theme

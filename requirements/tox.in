@@ -1,14 +1,7 @@
 autobahn<21.2.2
 coverage
-django==3.0.3
-django-searchable-encrypted-fields
-flake8
-jira==2.0.0
-planning-poker
-pydocstyle==2.1.1
-pylint==1.8.2
+jira
 pytest
 pytest-django
-pytest-pep8
 pytest-cov
 pytest-pythonpath
