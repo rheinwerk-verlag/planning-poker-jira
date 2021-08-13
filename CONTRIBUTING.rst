@@ -12,9 +12,9 @@ If you have found a bug, please check the project's
 
 When reporting a bug, it is helpful to include additional information about the problem you have encountered:
 
-* A traceback and or screenshots of the issue
+* A traceback and/or screenshots of the issue
 * The versions of the involved packages
-* ideally a code example which can be used to consistently reproduce the bug
+* Ideally a code example which can be used to consistently reproduce the bug
 
 Making changes
 --------------

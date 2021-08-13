@@ -9,6 +9,6 @@ Any changes to the existing code should still pass the test suite (there are of 
 modify the tests in order for them to pass) and any new features should be covered by new tests.
 
 The tests are written using `pytest <https://docs.pytest.org/en/latest/>`_ and
-`django-pytest <https://pytest-django.readthedocs.io/en/latest/>`_. In order to run them, use ::
+`pytest-django <https://pytest-django.readthedocs.io/en/latest/>`_. In order to run them, use ::
 
 $ pytest
