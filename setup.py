@@ -49,7 +49,7 @@ Framework :: Django :: 3.1
 Framework :: Django :: 3.2
 Intended Audience :: Developers
 Intended Audience :: End Users/Desktop
-License :: Other/Proprietary License
+License :: OSI Approved :: BSD License
 Operating System :: OS Independent
 Programming Language :: Python
 Programming Language :: Python :: 3.6
@@ -86,7 +86,7 @@ setup(
     maintainer='Rheinwerk Verlag GmbH Webteam',
     maintainer_email='webteam@rheinwerk-verlag.de',
     url='https://gitlab.intern.rheinwerk.de/rheinwerk/planning-poker-jira',
-    license='Proprietary',
+    license='BSD-3-Clause',
     classifiers=[c.strip() for c in classifiers.splitlines()
                  if c.strip() and not c.startswith('#')],
     packages=find_packages(include=['planning_poker_jira*']),
