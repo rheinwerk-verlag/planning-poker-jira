@@ -113,11 +113,12 @@ class TestJiraConnectionAdmin:
         urls = jira_connection_admin.get_urls()
         assert urls[0].name == 'planning_poker_jira_jiraconnection_import_stories'
 
-    @pytest.mark.parametrize('obj', [None, JiraConnection('foo', 'https://test.jira.com', 'username', 'password', 'field')])
+    @pytest.mark.parametrize('obj', [None, JiraConnection('foo', 'https://test.com', 'username', 'password', 'field')])
     def test_get_fields(self, obj, jira_connection_admin):
         fields = jira_connection_admin.get_fields(None, obj)
         if obj:
-            expected_result = ('label', 'api_url', 'username', ('password', 'delete_password'), 'story_points_field', 'test_connection')
+            expected_result = ('label', 'api_url', 'username', ('password', 'delete_password'), 'story_points_field',
+                               'test_connection')
         else:
             expected_result = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_connection')
         assert fields == expected_result
