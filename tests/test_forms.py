@@ -112,6 +112,11 @@ class TestJiraAuthenticationForm:
     def test_requires_connection_test(self):
         assert JiraAuthenticationForm()._requires_connection_test()
 
+    def test_get_connection(self):
+        jira_authentication_form = JiraAuthenticationForm()
+        with pytest.raises(NotImplementedError):
+            jira_authentication_form._get_connection()
+
 
 class TestJiraConnectionForm:
     def test_init(self):
