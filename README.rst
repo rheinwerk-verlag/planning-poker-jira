@@ -1,6 +1,10 @@
 Planning Poker: Jira Extension
 ==============================
 
+.. image:: https://readthedocs.org/projects/planning-poker-jira/badge/?version=latest
+   :target: https://planning-poker-jira.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 This application extends the Planning Poker app with the ability to import stories and their description from Jira and
 export the estimated amount of story points back to the Jira instance.
 
