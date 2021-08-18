@@ -49,7 +49,8 @@ You'll need an existing system with the Planning Poker app installed. See its
 
         FIELD_ENCRYPTION_KEYS = [SECRET_KEY.encode().hex()[:64]]
 
-   See :ref:`user_docs/configuration:Configuration` for more ways to customize the application to fit your needs.
+   See `configuration <https://planning-poker-jira.readthedocs.io/en/latest/user_docs/configuration.html>`_ for more
+   ways to customize the application to fit your needs.
 
 #. Run the migrations. ::
 
