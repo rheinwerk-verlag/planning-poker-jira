@@ -1,4 +1,5 @@
-from django.utils.translation import gettext_lazy as _, gettext
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 from jira.exceptions import JIRAError
 from requests.exceptions import ConnectionError, RequestException
 
