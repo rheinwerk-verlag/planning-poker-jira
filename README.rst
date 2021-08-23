@@ -1,6 +1,10 @@
 Planning Poker: Jira Extension
 ==============================
 
+.. image:: https://codecov.io/gh/rheinwerk-verlag/planning-poker-jira/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/rheinwerk-verlag/planning-poker-jira
+   :alt: Code Coverage
+
 .. image:: https://readthedocs.org/projects/planning-poker-jira/badge/?version=stable
    :target: https://planning-poker-jira.readthedocs.io/en/stable/?badge=stable
    :alt: Documentation Status
