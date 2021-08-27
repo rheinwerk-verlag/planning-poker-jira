@@ -1,16 +1,15 @@
-from unittest.mock import call, Mock, patch
+from unittest.mock import Mock, call, patch
 
-import pytest
 from django.contrib import messages
 from django.contrib.admin.sites import site
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.urls import reverse
 from jira import JIRAError
+import pytest
 from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.models import Story
-
-from planning_poker_jira.admin import export_story_points, JiraConnectionAdmin
+from planning_poker_jira.admin import JiraConnectionAdmin, export_story_points
 from planning_poker_jira.forms import ExportStoryPointsForm, ImportStoriesForm
 from planning_poker_jira.models import JiraConnection
 
