@@ -1,5 +1,5 @@
-from jira import JIRAError
 import pytest
+from jira import JIRAError
 from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker_jira.utils import get_error_text

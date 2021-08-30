@@ -9,8 +9,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import URLPattern, URLResolver, path, reverse
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from jira import JIRAError
 from requests.exceptions import ConnectionError, RequestException
 

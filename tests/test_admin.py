@@ -1,11 +1,11 @@
 from unittest.mock import Mock, call, patch
 
+import pytest
 from django.contrib import messages
 from django.contrib.admin.sites import site
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.urls import reverse
 from jira import JIRAError
-import pytest
 from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.models import Story
