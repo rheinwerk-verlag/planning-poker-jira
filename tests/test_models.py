@@ -1,8 +1,14 @@
-from contextlib import nullcontext as does_not_raise
 from unittest.mock import Mock, patch
 
 import pytest
 from jira import JIRAError, Issue
+
+try:
+    from contextlib import nullcontext as does_not_raise
+except ImportError:
+    # Since there is no `nullcontext` in the 3.6 `contextlib`, `suppress` can be used with an empty constructor to mimic
+    # its behaviour.
+    from contextlib import suppress as does_not_raise
 
 
 class TestJiraConnection:
