@@ -1,13 +1,13 @@
 from typing import Dict, Iterable, List, Union
 
 from django.contrib import messages
-from django.contrib.admin import helpers, ModelAdmin, register
+from django.contrib.admin import ModelAdmin, helpers, register
 from django.contrib.admin.templatetags.admin_urls import admin_urlname
 from django.contrib.admin.utils import unquote
 from django.db.models import QuerySet
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template.response import TemplateResponse
-from django.urls import path, reverse, URLResolver, URLPattern
+from django.urls import URLPattern, URLResolver, path, reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from jira import JIRAError

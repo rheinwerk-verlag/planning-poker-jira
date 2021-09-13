@@ -3,7 +3,6 @@ from datetime import datetime
 import pytest
 
 from planning_poker.models import PokerSession, Story
-
 from planning_poker_jira.models import JiraConnection
 
 

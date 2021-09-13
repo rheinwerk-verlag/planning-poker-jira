@@ -53,7 +53,7 @@ class JiraAuthenticationForm(forms.Form):
 
         :return: A `JiraConnection` which can be used to retrieve a `JIRA` instance.
         """
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     def _requires_connection_test(self) -> bool:
         """Determine whether the connection to the jira backend should be tested.

@@ -1,4 +1,4 @@
-from unittest.mock import call, Mock, patch
+from unittest.mock import Mock, call, patch
 
 import pytest
 from django.contrib import messages
@@ -9,8 +9,7 @@ from jira import JIRAError
 from requests.exceptions import ConnectionError, RequestException
 
 from planning_poker.models import Story
-
-from planning_poker_jira.admin import export_story_points, JiraConnectionAdmin
+from planning_poker_jira.admin import JiraConnectionAdmin, export_story_points
 from planning_poker_jira.forms import ExportStoryPointsForm, ImportStoriesForm
 from planning_poker_jira.models import JiraConnection
 
@@ -103,3 +102,26 @@ class TestJiraConnectionAdmin:
             assert response.context_data['form'].form.errors == expected_errors
         if expected_message:
             mock_message_user.assert_called_with(response.wsgi_request, *expected_message)
+
+    def test_import_stories_view_no_object_found(self, admin_client, jira_connection_admin):
+        response = admin_client.get(reverse(admin_urlname(jira_connection_admin.opts, 'import_stories'),
+                                            args=[9001]))
+        assert response.status_code == 302
+
+    def test_get_urls(self, jira_connection_admin):
+        urls = jira_connection_admin.get_urls()
+        assert urls[0].name == 'planning_poker_jira_jiraconnection_import_stories'
+
+    @pytest.mark.parametrize('obj', [None, JiraConnection('foo', 'https://test.com', 'username', 'password', 'field')])
+    def test_get_fields(self, obj, jira_connection_admin):
+        fields = jira_connection_admin.get_fields(None, obj)
+        if obj:
+            expected_result = ('label', 'api_url', 'username', ('password', 'delete_password'), 'story_points_field',
+                               'test_connection')
+        else:
+            expected_result = ('label', 'api_url', 'username', 'password', 'story_points_field', 'test_connection')
+        assert fields == expected_result
+
+    def test_get_import_stories_url(self, jira_connection, jira_connection_admin):
+        import_stories_tag = jira_connection_admin.get_import_stories_url(jira_connection)
+        assert import_stories_tag == '<a href="/admin/planning_poker_jira/jiraconnection/1/import_stories/">Import</a>'

@@ -1,6 +1,14 @@
 Planning Poker: Jira Extension
 ==============================
 
+.. image:: https://codecov.io/gh/rheinwerk-verlag/planning-poker-jira/branch/main/graph/badge.svg
+   :target: https://codecov.io/gh/rheinwerk-verlag/planning-poker-jira
+   :alt: Code Coverage
+
+.. image:: https://readthedocs.org/projects/planning-poker-jira/badge/?version=stable
+   :target: https://planning-poker-jira.readthedocs.io/en/stable/?badge=stable
+   :alt: Documentation Status
+
 This application extends the Planning Poker app with the ability to import stories and their description from Jira and
 export the estimated amount of story points back to the Jira instance.
 
@@ -22,7 +30,7 @@ Quickstart
 ----------
 
 You'll need an existing system with the Planning Poker app installed. See its
-`documentation <http://rheinwerk.pages.intern.rheinwerk.de/planning-poker/>`_ if you haven't already.
+`documentation <https://planning-poker.readthedocs.io/en/stable/>`_ if you haven't already.
 
 #. Install the Planning Poker Jira app. ::
 
@@ -49,7 +57,8 @@ You'll need an existing system with the Planning Poker app installed. See its
 
         FIELD_ENCRYPTION_KEYS = [SECRET_KEY.encode().hex()[:64]]
 
-   See :ref:`user_docs/configuration:Configuration` for more ways to customize the application to fit your needs.
+   See `configuration <https://planning-poker-jira.readthedocs.io/en/stable/user_docs/configuration.html>`_ for more
+   ways to customize the application to fit your needs.
 
 #. Run the migrations. ::
 

@@ -1,7 +1,7 @@
 from unittest.mock import Mock, patch
 
 import pytest
-from jira import JIRAError, Issue
+from jira import Issue, JIRAError
 
 try:
     from contextlib import nullcontext as does_not_raise
