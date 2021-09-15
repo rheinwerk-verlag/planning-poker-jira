@@ -10,8 +10,8 @@ from os.path import dirname, join
 from setuptools import find_packages, setup
 
 
-def read(*args):
-    return open(join(dirname(__file__), *args)).read()
+def read(*args, **kwargs):
+    return open(join(dirname(__file__), *args), **kwargs).read()
 
 
 class ToxTestCommand(distutils.cmd.Command):
@@ -80,7 +80,7 @@ setup(
     name='planning-poker-jira',
     version=__version__,  # noqa
     description='A jira extension for the planning poker app',
-    long_description=read('README.rst'),
+    long_description=read('README.rst', encoding='utf-8'),
     author='Rheinwerk Webteam',
     author_email='webteam@rheinwerk-verlag.de',
     maintainer='Rheinwerk Verlag GmbH Webteam',

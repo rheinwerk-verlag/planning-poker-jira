@@ -12,13 +12,13 @@ certifi==2021.5.30
     # via requests
 cffi==1.14.6
     # via cryptography
-charset-normalizer==2.0.4
+charset-normalizer==2.0.5
     # via requests
 coverage==5.5
     # via
     #   -r tox.in
     #   pytest-cov
-cryptography==3.4.7
+cryptography==3.4.8
     # via
     #   autobahn
     #   secretstorage
@@ -30,7 +30,7 @@ idna==3.2
     # via
     #   hyperlink
     #   requests
-importlib-metadata==4.6.3
+importlib-metadata==4.8.1
     # via keyring
 iniconfig==1.1.1
     # via pytest
@@ -40,13 +40,13 @@ jeepney==0.7.1
     #   secretstorage
 jira==3.0.1
     # via -r tox.in
-keyring==23.0.1
+keyring==23.2.1
     # via jira
 oauthlib==3.1.1
     # via requests-oauthlib
 packaging==21.0
     # via pytest
-pluggy==0.13.1
+pluggy==1.0.0
     # via pytest
 py==1.10.0
     # via pytest
@@ -54,7 +54,7 @@ pycparser==2.20
     # via cffi
 pyparsing==2.4.7
     # via packaging
-pytest==6.2.4
+pytest==6.2.5
     # via
     #   -r tox.in
     #   pytest-cov
