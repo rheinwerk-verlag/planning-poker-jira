@@ -122,7 +122,7 @@ pep517==0.11.0
     # via pip-tools
 pip-tools==6.2.0
     # via -r dev.in
-planning-poker==1.0.0
+planning-poker==1.0.1
     # via -r dev.in
 platformdirs==2.3.0
     # via pylint
