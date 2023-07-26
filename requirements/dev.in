@@ -1,6 +1,6 @@
 -r tox.in
 
-django
+Django>3.2,<4.0
 django-searchable-encrypted-fields
 flake8
 isort
