@@ -1,7 +1,7 @@
 autobahn<21.2.2
 coverage
-jira
-pytest
+jira>=3.0,<3.1
+pytest<7
 pytest-django
-pytest-cov
+pytest-cov>=2,<3
 pytest-pythonpath
